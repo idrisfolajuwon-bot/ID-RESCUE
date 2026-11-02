@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080d19"><meta name="description" content="IDRIS AI STUDIO — a creative workspace by I D LABS.">
+<meta name="theme-color" content="#080d19"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><link rel="apple-touch-icon" href="./icon.svg"><meta name="description" content="IDRIS AI STUDIO — a creative workspace by I D LABS.">
 <title>IDRIS AI STUDIO — I D LABS</title>
 <style>
 :root{color-scheme:dark;--bg:#080d19;--surface:#101a2b;--surface2:#15233a;--surface3:#1b2d47;--line:#263b59;--text:#f2f6ff;--muted:#96a8c4;--mint:#68f0d1;--blue:#8cb4ff;--violet:#b59aff;--gold:#ffd58a;--danger:#ff8c9b;--shadow:0 18px 50px #0004}
@@ -171,6 +171,7 @@ $('exportVault').onclick=()=>{const data={app:'IDRIS AI STUDIO',version:1,export
 $('importVault').onclick=()=>$('importFile').click();$('importFile').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text()),incoming=Array.isArray(data)?data:data.items;if(!Array.isArray(incoming))throw Error('Invalid backup');const clean=incoming.filter(x=>x&&typeof x.title==='string'&&typeof x.content==='string').slice(0,250);if(!clean.length)throw Error('No saved items found');const merged=[...clean,...getItems()].slice(0,250);if(putItems(merged)){renderVault();toast('Backup restored.')}}catch{toast('That backup file could not be read.')}e.target.value=''});
 $('clearVault').onclick=()=>{if(confirm('Delete every saved item from this browser? Export a backup first if you may need them.')){putItems([]);renderVault();toast('Vault cleared.')}};
 refreshCounts();renderArt();checkAI();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 })();
 </script>
 </body></html>
