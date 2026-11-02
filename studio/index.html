@@ -29,12 +29,12 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
   <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
  </nav>
  <div class="side-bottom">
-  <div class="connection"><b>● AI ENGINE NOT CONNECTED</b>Creative tools work locally. Live AI responses and AI image generation need a secure server connection.</div>
+  <div class="connection" id="sideConnection"><b>● CHECKING AI CONNECTION</b>Connecting to the secure IDRIS AI backend…</div>
   <div class="profile"><div class="avatar">ID</div><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div>
  </div>
 </aside>
 <main>
- <header class="topbar"><div class="crumb" id="crumb">I D LABS / OVERVIEW</div><div class="top-actions"><span class="status">● AI ENGINE OFFLINE</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
+ <header class="topbar"><div class="crumb" id="crumb">I D LABS / OVERVIEW</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
  <section class="page active" id="home">
   <div class="hero"><div class="eyebrow">A CREATIVE COMMAND CENTRE</div><h1>Your ideas.<br><span class="gradient">Your studio.</span></h1><p>Build visual concepts, shape powerful prompts, organise your ideas and keep your creative work together. Designed to feel at home on your phone and grow as real AI services are connected.</p></div>
   <div class="section-head"><div><h2>CHOOSE YOUR WORKSPACE</h2><p>Jump straight into making something.</p></div><span class="tag">BUILD 1.0</span></div>
@@ -46,7 +46,7 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
   </div>
   <div class="section-head"><div><h2>YOUR STUDIO AT A GLANCE</h2><p>Saved work stays in this browser on this device.</p></div></div>
   <div class="panel"><div class="statrow"><div class="stat"><strong id="statSaved">0</strong><span>SAVED ITEMS</span></div><div class="stat"><strong>2</strong><span>LOCAL CREATIVE TOOLS</span></div><div class="stat"><strong>0</strong><span>AI SERVICES CONNECTED</span></div></div></div>
-  <div class="callout">HONEST STATUS · The Visual Maker and Prompt Lab work without an AI account. AI chat and AI image generation are not active yet; this studio will never fake an AI result.</div>
+  <div class="callout info" id="homeAIStatus">AI STATUS · Checking the secure AI connection…</div>
  </section>
 
  <section class="page" id="prompts">
@@ -78,9 +78,9 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
  </section>
 
  <section class="page" id="chat">
-  <div class="hero"><div class="eyebrow">CONVERSATION WORKSPACE</div><h1>AI <span class="gradient">Chat.</span></h1><p>Write down your question, prepare a message and save it for later. The live AI connection is not active in this build.</p></div>
-  <div class="grid"><div class="panel"><h2>NEW CONVERSATION DRAFT</h2><div class="chatlog" id="chatLog"><div class="bubble note">Your saved draft conversation will appear here. No AI messages are being generated.</div></div><label class="field-label" for="chatDraft">YOUR MESSAGE</label><textarea id="chatDraft" placeholder="Write what you want help with…"></textarea><div class="actions"><button class="primary-btn" id="saveChatDraft">SAVE MESSAGE</button><button class="soft-btn" id="clearChat">CLEAR DRAFT</button></div></div>
-   <aside class="panel"><h2>AI CONNECTION</h2><div class="callout">NOT CONNECTED · Messages are not sent anywhere. The Send to AI feature will only be enabled after a secure backend is built and tested.</div><p class="muted small">A proper connection needs a server-side AI provider, protected credentials, usage limits and error handling. A private API key must never be placed in this public page.</p><button class="soft-btn" data-go="about">READ CONNECTION GUIDE</button></aside></div>
+  <div class="hero"><div class="eyebrow">CONVERSATION WORKSPACE</div><h1>AI <span class="gradient">Chat.</span></h1><p>Ask questions, develop ideas, get help with code and school topics, and work through creative requests with the connected AI assistant.</p></div>
+  <div class="grid"><div class="panel"><h2>LIVE AI CONVERSATION</h2><div class="chatlog" id="chatLog"><div class="bubble note">Your saved draft conversation will appear here. No AI messages are being generated.</div></div><label class="field-label" for="chatDraft">YOUR MESSAGE</label><textarea id="chatDraft" placeholder="Write what you want help with…"></textarea><div class="actions"><button class="primary-btn" id="sendToAI">SEND TO AI ↗</button><button class="soft-btn" id="saveChatDraft">SAVE MESSAGE</button><button class="soft-btn" id="clearChat">CLEAR CHAT</button></div></div>
+   <aside class="panel"><h2>AI CONNECTION</h2><div class="callout info" id="chatAIStatus">Checking secure backend…</div><p class="muted small">Messages are sent to the IDRIS AI backend on Cloudflare for a response. Do not send passwords, payment details or other sensitive information. Usage is subject to Cloudflare AI limits.</p><button class="soft-btn" data-go="about">READ CONNECTION GUIDE</button></aside></div>
  </section>
 
  <section class="page" id="vault">
@@ -90,8 +90,8 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
 
  <section class="page" id="about">
   <div class="hero"><div class="eyebrow">TRANSPARENT BY DESIGN</div><h1>Studio <span class="gradient">Guide.</span></h1><p>What works now, what is still being built, and how your information is handled.</p></div>
-  <div class="grid"><div class="panel"><h2>AVAILABLE NOW</h2><div class="saved"><b>Prompt Lab</b><small>Turns your own idea into a structured prompt in your browser.</small></div><div class="saved"><b>Visual Maker</b><small>Builds original logo/poster template artwork and exports SVG or PNG files.</small></div><div class="saved"><b>Creation Vault</b><small>Saves work in local browser storage and supports JSON backup/restore.</small></div><div class="saved"><b>Chat drafts</b><small>Lets you write and save messages locally. It does not generate AI replies.</small></div></div>
-  <div class="panel"><h2>NOT CONNECTED YET</h2><div class="callout">Live AI chat and AI image generation are not active. Those features need a real provider and a secure server-side connection.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Version 1.0 · Mobile-first creative workspace.</p></div></div>
+  <div class="grid"><div class="panel"><h2>AVAILABLE NOW</h2><div class="saved"><b>Prompt Lab</b><small>Turns your own idea into a structured prompt in your browser.</small></div><div class="saved"><b>Visual Maker</b><small>Builds original logo/poster template artwork and exports SVG or PNG files.</small></div><div class="saved"><b>Creation Vault</b><small>Saves work in local browser storage and supports JSON backup/restore.</small></div><div class="saved"><b>AI Chat</b><small>Connects to Cloudflare Workers AI for live text responses. Image generation is not connected yet.</small></div></div>
+  <div class="panel"><h2>NOT CONNECTED YET</h2><div class="callout info">Live AI chat is connected through a secure Cloudflare Worker. AI image generation is not connected yet.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Version 1.0 · Mobile-first creative workspace.</p></div></div>
  </section>
  <footer class="footer">IDRIS AI STUDIO · BY I D LABS · BUILD 1.0 · MADE TO CREATE</footer>
 </main>
@@ -101,6 +101,8 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id), KEY='idris-ai-studio-v2';
+const API_URL='https://idris-ai-studio-api.idrisfolajuwon.workers.dev';
+let chatMessages=[];
 let currentKind='logo', currentSvg='';
 const safe=(s)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),2400)}
@@ -130,14 +132,45 @@ $('renderArt').onclick=()=>{renderArt();toast('Preview updated.')};
 $('saveArt').onclick=()=>{if(!currentSvg)renderArt();save('Design',currentKind.toUpperCase()+' · '+($('artName').value.trim()||'Untitled'),currentSvg)};
 $('downloadSvg').onclick=()=>{if(!currentSvg)renderArt();download('idris-studio-design.svg',new Blob([currentSvg],{type:'image/svg+xml;charset=utf-8'}));toast('SVG artwork exported.')};
 $('downloadPng').onclick=()=>{if(!currentSvg)renderArt();const blob=new Blob([currentSvg],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const svg= new DOMParser().parseFromString(currentSvg,'image/svg+xml').documentElement,w=Number(svg.getAttribute('width')),h=Number(svg.getAttribute('height')),canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);canvas.toBlob(p=>{if(p){download('idris-studio-design.png',p);toast('PNG artwork downloaded.')}else toast('PNG export failed; try SVG instead.')},'image/png');URL.revokeObjectURL(url)};img.onerror=()=>{URL.revokeObjectURL(url);toast('Could not export PNG. Try SVG instead.')};img.src=url};
+
+function setAIStatus(online,message){
+ const badge=$('statusBadge'),side=$('sideConnection'),home=$('homeAIStatus'),chat=$('chatAIStatus');
+ if(badge){badge.textContent=online?'● AI ENGINE ONLINE':'● AI ENGINE OFFLINE';badge.style.borderColor=online?'#397b68':'#665633';badge.style.color=online?'#a6f4d9':'#f5d79a';}
+ if(side)side.innerHTML='<b>'+(online?'● AI ENGINE ONLINE':'● AI ENGINE OFFLINE')+'</b>'+safe(message);
+ if(home)home.textContent='AI STATUS · '+message;
+ if(chat)chat.textContent=message;
+}
+async function checkAI(){
+ try{const r=await fetch(API_URL+'/health',{cache:'no-store'});const d=await r.json();if(!r.ok||!d.ok)throw Error();setAIStatus(true,'Live text AI is connected. AI image generation is not connected yet.');}
+ catch{setAIStatus(false,'The backend is deployed, but the health check did not complete. Try again shortly.');}
+}
+function addBubble(role,text){
+ const el=document.createElement('div');el.className='bubble '+(role==='user'?'user':'');el.textContent=text;$('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
+}
+$('sendToAI').onclick=async()=>{
+ const field=$('chatDraft'),message=field.value.trim(),btn=$('sendToAI');
+ if(!message)return toast('Type a message first.');
+ if(btn.disabled)return;
+ chatMessages.push({role:'user',content:message});addBubble('user',message);field.value='';btn.disabled=true;btn.textContent='THINKING…';
+ const wait=document.createElement('div');wait.className='bubble note';wait.textContent='IDRIS AI is preparing a response…';$('chatLog').appendChild(wait);
+ try{
+  const response=await fetch(API_URL+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatMessages})});
+  const data=await response.json();wait.remove();
+  if(!response.ok||!data.reply)throw Error(data.error||'The AI could not respond.');
+  chatMessages.push({role:'assistant',content:data.reply});addBubble('assistant',data.reply);
+ }catch(err){
+  wait.remove();chatMessages.pop();field.value=message;addBubble('assistant','I could not get a response just now. '+(err.message||'Please try again later.'));
+ }finally{btn.disabled=false;btn.textContent='SEND TO AI ↗';}
+};
+
 $('saveChatDraft').onclick=()=>{const s=$('chatDraft').value.trim();if(!s)return toast('Write a message first.');if(save('Chat','Chat draft',s)){$('chatLog').innerHTML='<div class="bubble user">'+safe(s)+'</div><div class="bubble note">Saved locally. No AI reply was generated or sent.</div>';$('chatDraft').value=''}};
-$('clearChat').onclick=()=>{$('chatDraft').value='';$('chatLog').innerHTML='<div class="bubble note">Draft cleared. No AI messages have been generated.</div>'};
+$('clearChat').onclick=()=>{$('chatDraft').value='';chatMessages=[];$('chatLog').innerHTML='<div class="bubble note">Chat cleared. Start a new conversation.</div>'};
 function renderVault(){const q=$('vaultSearch').value.trim().toLowerCase(),f=$('vaultFilter').value,a=getItems().filter(x=>(f==='all'||x.type.startsWith(f))&&(!q||(x.title+' '+x.content).toLowerCase().includes(q)));$('vaultGrid').innerHTML=a.length?a.map(x=>'<article class="saved"><b>'+safe(x.title)+'</b><small>'+safe(x.type)+' · '+safe(new Date(x.created).toLocaleString())+'</small><p>'+safe(x.content.length>900?x.content.slice(0,900)+'…':x.content)+'</p><button class="danger-btn" data-remove="'+safe(x.id)+'">DELETE ITEM</button></article>').join(''):'<div class="empty">No matching items. Save a prompt or design to start your vault.</div>';document.querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>{putItems(getItems().filter(x=>x.id!==b.dataset.remove));renderVault();toast('Item deleted.')}))}
 $('vaultSearch').addEventListener('input',renderVault);$('vaultFilter').addEventListener('change',renderVault);
 $('exportVault').onclick=()=>{const data={app:'IDRIS AI STUDIO',version:1,exportedAt:new Date().toISOString(),items:getItems()};download('idris-ai-studio-backup.json',new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));toast('Vault backup exported.')};
 $('importVault').onclick=()=>$('importFile').click();$('importFile').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text()),incoming=Array.isArray(data)?data:data.items;if(!Array.isArray(incoming))throw Error('Invalid backup');const clean=incoming.filter(x=>x&&typeof x.title==='string'&&typeof x.content==='string').slice(0,250);if(!clean.length)throw Error('No saved items found');const merged=[...clean,...getItems()].slice(0,250);if(putItems(merged)){renderVault();toast('Backup restored.')}}catch{toast('That backup file could not be read.')}e.target.value=''});
 $('clearVault').onclick=()=>{if(confirm('Delete every saved item from this browser? Export a backup first if you may need them.')){putItems([]);renderVault();toast('Vault cleared.')}};
-refreshCounts();renderArt();
+refreshCounts();renderArt();checkAI();
 })();
 </script>
 </body></html>
