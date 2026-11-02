@@ -1,0 +1,19 @@
+{
+  "name": "IDRIS TRACE X",
+  "short_name": "TRACE X",
+  "description": "Digital safety intelligence by I D LABS",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06101d",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
