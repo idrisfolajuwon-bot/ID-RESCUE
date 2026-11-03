@@ -6,7 +6,7 @@ on:
       - '.github/workflows/trace-android.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,3 +32,16 @@ jobs:
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+      - name: Publish APK download
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.1.0
+          name: IDRIS AI STUDIO Android
+          body: |
+            Official Android APK for IDRIS AI STUDIO.
+            Download IDRIS-AI-STUDIO.apk and install it on your Android device.
+            Online AI features require an internet connection.
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+          asset_name: IDRIS-AI-STUDIO.apk
+          overwrite_files: true
+          make_latest: true
