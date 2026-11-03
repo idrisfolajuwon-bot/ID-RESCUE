@@ -25,6 +25,7 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
   <button data-page="prompts"><span class="ico">✦</span>Prompt Lab</button>
   <button data-page="maker"><span class="ico">◈</span>Visual Maker</button>
   <button data-page="chat"><span class="ico">▤</span>AI Chat</button>
+  <button data-page="research"><span class="ico">⌕</span>Research Desk</button>
   <button data-page="vault"><span class="ico">▣</span>Creation Vault</button>
   <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
  </nav>
@@ -41,7 +42,8 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
   <div class="tiles">
    <button class="tile" data-go="prompts"><div class="tile-icon">✦</div><b>Prompt Lab</b><small>Turn a rough idea into a clear, detailed prompt for chat or image tools.</small></button>
    <button class="tile" data-go="maker"><div class="tile-icon">◈</div><b>Visual Maker</b><small>Create real logo and poster artwork, then export it as SVG or PNG.</small></button>
-   <button class="tile" data-go="chat"><div class="tile-icon">▤</div><b>AI Chat</b><small>Prepare and save conversation drafts. Live AI is clearly marked as not connected.</small></button>
+   <button class="tile" data-go="chat"><div class="tile-icon">▤</div><b>AI Chat</b><small>Ask questions and work with the connected live AI assistant.</small></button>
+   <button class="tile" data-go="research"><div class="tile-icon">⌕</div><b>Research Desk</b><small>Find current sources, bring useful text back, and ask AI to analyse it.</small></button>
    <button class="tile" data-go="vault"><div class="tile-icon">▣</div><b>Creation Vault</b><small>Search, organise, export and manage saved creative work on this device.</small></button>
   </div>
   <div class="section-head"><div><h2>YOUR STUDIO AT A GLANCE</h2><p>Saved work stays in this browser on this device.</p></div></div>
@@ -83,6 +85,28 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
    <aside class="panel"><h2>YOUR CHAT HISTORY</h2><div class="actions" style="margin-top:0"><button class="primary-btn" id="newConversation">+ NEW CHAT</button></div><label class="field-label" for="historySearch">SEARCH OLD CHATS</label><input id="historySearch" placeholder="Find a past conversation…"><div id="historyList" class="vault-grid" style="grid-template-columns:1fr;margin-top:10px"><div class="empty">Your conversations will appear here.</div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>MY AI MEMORY</h2><p class="muted small">Add useful details you want IDRIS AI to consider in future chats. Stored only in this browser.</p><textarea id="aiMemory" style="min-height:90px" maxlength="1800" placeholder="For example: I am learning Physics and Chemistry. I prefer simple explanations…"></textarea><div class="actions"><button class="soft-btn" id="saveMemory">SAVE MEMORY</button></div><div class="callout info" id="chatAIStatus" style="margin-top:14px">Checking secure backend…</div><p class="muted small">Chats and memory are stored on this device. Messages are sent to Cloudflare for AI replies. Never save passwords or payment details here.</p></aside></div>
  </section>
 
+
+ <section class="page" id="research">
+  <div class="hero"><div class="eyebrow">FIND SOURCES · CHECK CLAIMS · UNDERSTAND</div><h1>Research <span class="gradient">Desk.</span></h1><p>Search the live web through Google News, then bring the article or text here for your connected AI assistant to explain.</p></div>
+  <div class="grid">
+   <div class="panel"><h2>1 · FIND CURRENT SOURCES</h2>
+    <label class="field-label" for="researchQuery">WHAT DO YOU WANT TO RESEARCH?</label>
+    <input id="researchQuery" maxlength="180" placeholder="e.g. latest Nigeria technology news">
+    <label class="field-label" for="researchArea">SEARCH FOCUS</label>
+    <select id="researchArea"><option value="">All locations</option><option value="Nigeria">Nigeria</option><option value="Lagos Nigeria">Lagos</option><option value="Ikorodu Lagos Nigeria">Ikorodu</option></select>
+    <div class="actions"><button class="primary-btn" id="openResearch">SEARCH GOOGLE NEWS ↗</button></div>
+    <p class="muted small">This opens a live Google News search in a new tab. Check the publisher, date and article before relying on a claim.</p>
+   </div>
+   <div class="panel"><h2>2 · ASK IDRIS AI TO ANALYSE IT</h2>
+    <label class="field-label" for="researchText">PASTE ARTICLE TEXT OR IMPORTANT EXCERPTS</label>
+    <textarea id="researchText" maxlength="7000" placeholder="Paste the article text or the relevant paragraphs here…"></textarea>
+    <div class="actions"><button class="primary-btn" id="analyseResearch">ANALYSE WITH IDRIS AI ↗</button><button class="soft-btn" id="clearResearch">CLEAR</button></div>
+    <div class="callout info" style="margin-top:13px">Research mode currently uses a live external search plus AI analysis of text you provide. Automatic source fetching inside the studio is not connected yet.</div>
+   </div>
+  </div>
+  <div class="panel"><h2>HOW TO USE IT</h2><p class="muted small">Search for a topic → open a trustworthy result → copy the relevant text → paste it above → ask the AI to summarise it, explain unfamiliar terms, identify claims that need checking, and separate facts from opinions.</p></div>
+ </section>
+
  <section class="page" id="vault">
   <div class="hero"><div class="eyebrow">YOUR IDEAS, KEPT TOGETHER</div><h1>Creation <span class="gradient">Vault.</span></h1><p>Find your saved prompts, drafts and designs. Your vault is stored locally in this browser, not in a cloud account.</p></div>
   <div class="panel"><div class="vault-tools"><input id="vaultSearch" placeholder="Search saved work…"><select id="vaultFilter" style="max-width:170px"><option value="all">All items</option><option value="Prompt">Prompts</option><option value="Design">Designs</option><option value="Chat">Chat drafts</option></select></div><div class="vault-grid" id="vaultGrid"><div class="empty">Your saved work will appear here.</div></div><div class="actions"><button class="soft-btn" id="exportVault">BACK UP MY VAULT</button><button class="soft-btn" id="importVault">RESTORE BACKUP</button><input id="importFile" type="file" accept="application/json" hidden><button class="danger-btn" id="clearVault">CLEAR VAULT</button></div><p class="muted small">Tip: export a backup before changing phones or clearing browser data.</p></div>
@@ -96,7 +120,7 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
  <footer class="footer">IDRIS AI STUDIO · BY I D LABS · BUILD 1.0 · MADE TO CREATE</footer>
 </main>
 </div>
-<nav class="mobile-nav" id="mobileNav"><button class="active" data-page="home"><span>⌂</span>HOME</button><button data-page="prompts"><span>✦</span>PROMPTS</button><button data-page="maker"><span>◈</span>MAKER</button><button data-page="chat"><span>▤</span>CHAT</button><button data-page="vault"><span>▣</span>VAULT</button></nav>
+<nav class="mobile-nav" id="mobileNav"><button class="active" data-page="home"><span>⌂</span>HOME</button><button data-page="prompts"><span>✦</span>PROMPTS</button><button data-page="maker"><span>◈</span>MAKER</button><button data-page="chat"><span>▤</span>CHAT</button><button data-page="research"><span>⌕</span>RESEARCH</button><button data-page="vault"><span>▣</span>VAULT</button></nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 (()=>{'use strict';
@@ -173,6 +197,9 @@ $('sendToAI').onclick=async()=>{
  }finally{btn.disabled=false;btn.textContent='SEND TO AI ↗';}
 };
 
+$('openResearch').onclick=()=>{const q=$('researchQuery').value.trim();if(!q)return toast('Enter a research topic first.');const area=$('researchArea').value;const full=[q,area].filter(Boolean).join(' ');window.open('https://news.google.com/search?q='+encodeURIComponent(full),'_blank','noopener');};
+$('analyseResearch').onclick=()=>{const article=$('researchText').value.trim();if(!article)return toast('Paste some article text first.');const topic=$('researchQuery').value.trim();const prompt='Please analyse the following material. Summarise the main points, identify factual claims and opinions separately, explain any difficult terms, note what cannot be verified from this text alone, and suggest what independent sources should be checked. Do not invent missing facts. '+(topic?'Research topic: '+topic+'\\n':'')+'\\nMATERIAL:\\n'+article;go('chat');$('chatDraft').value=prompt;toast('Research text prepared. Review it, then send to AI.');};
+$('clearResearch').onclick=()=>{$('researchText').value='';$('researchQuery').value='';toast('Research fields cleared.');};
 $('saveChatDraft').onclick=()=>{const s=$('chatDraft').value.trim();if(!s)return toast('Write a message first.');if(save('Chat','Chat draft',s)){$('chatLog').innerHTML='<div class="bubble user">'+safe(s)+'</div><div class="bubble note">Saved locally. No AI reply was generated or sent.</div>';$('chatDraft').value=''}};
 $('clearChat').onclick=()=>{$('chatDraft').value='';chatMessages=[];activeConversationId=null;$('chatLog').innerHTML='<div class="bubble note">Chat cleared. Start a new conversation.</div>';renderHistory()};
 $('newConversation').onclick=newConversation;
