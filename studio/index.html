@@ -200,17 +200,16 @@ main{max-width:1040px;padding:18px clamp(16px,4vw,46px) 40px}
  </section>
 
  <section class="page" id="maker">
-  <div class="hero"><div class="eyebrow">MAKE SOMETHING YOU CAN KEEP</div><h1>Visual <span class="gradient">Maker.</span></h1><p>Create an original logo or poster from your own words. Preview it instantly and export real artwork files.</p></div>
+  <div class="hero"><div class="eyebrow">REAL AI IMAGE GENERATION</div><h1>Visual <span class="gradient">Maker.</span></h1><p>Describe what you want and let IDRIS AI create an original image directly inside your Studio.</p></div>
   <div class="grid">
-   <div class="panel"><h2>DESIGN CONTROLS</h2>
-    <div class="tabs-inline"><button class="active" data-kind="logo">LOGO</button><button data-kind="poster">POSTER</button></div>
-    <label class="field-label" for="artName">MAIN NAME / HEADLINE</label><input id="artName" maxlength="42" value="IDRIS" placeholder="Your brand or headline">
-    <label class="field-label" for="artSub">TAGLINE / SUPPORTING TEXT</label><input id="artSub" maxlength="70" value="IDEAS INTO REALITY" placeholder="A short supporting line">
-    <label class="field-label" for="artDesc">SHORT DESCRIPTION</label><textarea id="artDesc" maxlength="220" placeholder="Optional details to include in your poster…">Creative technology. Bold ideas. Made with purpose.</textarea>
-    <div class="row"><div><label class="field-label" for="artPalette">COLOUR THEME</label><select id="artPalette"><option value="mint">Midnight + Mint</option><option value="gold">Black + Gold</option><option value="blue">Ocean Blue</option><option value="violet">Violet Pulse</option><option value="sunset">Sunset Energy</option></select></div><div><label class="field-label" for="artShape">FORMAT</label><select id="artShape"><option value="square">Square</option><option value="portrait">Portrait</option><option value="wide">Landscape</option></select></div></div>
-    <div class="actions"><button class="primary-btn" id="renderArt">UPDATE PREVIEW ↗</button><button class="soft-btn" id="saveArt">SAVE DESIGN</button></div>
+   <div class="panel"><h2>CREATE YOUR IMAGE</h2>
+    <label class="field-label" for="artName">WHAT SHOULD IDRIS CREATE?</label><input id="artName" maxlength="240" placeholder="e.g. A futuristic white Mercedes on a Lagos street at night">
+    <label class="field-label" for="artDesc">EXTRA DETAILS</label><textarea id="artDesc" maxlength="500" placeholder="Style, lighting, mood, background, camera angle…"></textarea>
+    <div class="row"><div><label class="field-label" for="artPalette">STYLE</label><select id="artPalette"><option value="photorealistic">Photorealistic</option><option value="cinematic">Cinematic</option><option value="digital art">Digital art</option><option value="illustration">Illustration</option></select></div><div><label class="field-label" for="artShape">FORMAT</label><select id="artShape"><option value="square">Square</option><option value="portrait">Portrait</option><option value="wide">Landscape</option></select></div></div>
+    <div class="actions"><button class="primary-btn" id="generateAIImage">✦ GENERATE IMAGE</button><button class="soft-btn" id="renderArt">USE TEMPLATE</button></div>
+    <p class="muted small">AI generation runs through the secure IDRIS AI backend. Generation availability depends on your connected Workers AI account limits.</p>
    </div>
-   <div class="panel"><h2>LIVE PREVIEW</h2><div class="preview-wrap" id="artPreview"><div class="preview-empty">Your artwork preview will appear here.</div></div><div class="actions"><button class="soft-btn" id="downloadSvg">EXPORT SVG</button><button class="primary-btn" id="downloadPng">DOWNLOAD PNG</button></div><p class="muted small">This is original template-based artwork generated in your browser, not an AI-generated image. You can use it as a starting design and customise the text and colours.</p></div>
+   <div class="panel"><h2>YOUR AI CREATION</h2><div class="preview-wrap" id="artPreview"><div class="preview-empty">Your generated image will appear here.</div></div><div class="actions"><button class="soft-btn" id="saveArt">SAVE TO VAULT</button><button class="primary-btn" id="downloadPng">DOWNLOAD PNG</button></div><p class="muted small" id="imageStatus">Ready when you are.</p></div>
   </div>
  </section>
 
@@ -347,6 +346,32 @@ $('saveArt').onclick=()=>{if(!currentSvg)renderArt();save('Design',currentKind.t
 $('downloadSvg').onclick=()=>{if(!currentSvg)renderArt();download('idris-studio-design.svg',new Blob([currentSvg],{type:'image/svg+xml;charset=utf-8'}));toast('SVG artwork exported.')};
 $('downloadPng').onclick=()=>{if(!currentSvg)renderArt();const blob=new Blob([currentSvg],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const svg= new DOMParser().parseFromString(currentSvg,'image/svg+xml').documentElement,w=Number(svg.getAttribute('width')),h=Number(svg.getAttribute('height')),canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);canvas.toBlob(p=>{if(p){download('idris-studio-design.png',p);toast('PNG artwork downloaded.')}else toast('PNG export failed; try SVG instead.')},'image/png');URL.revokeObjectURL(url)};img.onerror=()=>{URL.revokeObjectURL(url);toast('Could not export PNG. Try SVG instead.')};img.src=url};
 
+// Real AI image generation
+let generatedImageUrl='',generatedImageBlob=null;
+$('generateAIImage').onclick=async()=>{
+ const prompt=$('artName').value.trim(),details=$('artDesc').value.trim(),style=$('artPalette').value,shape=$('artShape').value,btn=$('generateAIImage'),status=$('imageStatus');
+ if(!prompt)return toast('Describe the image you want first.');
+ const fullPrompt=[prompt,details,style?'Style: '+style:''].filter(Boolean).join('. ');
+ btn.disabled=true;btn.textContent='GENERATING…';status.textContent='IDRIS AI is creating your image…';
+ $('artPreview').innerHTML='<div class="preview-empty">Generating your image… This can take a moment.</div>';
+ try{
+  const r=await fetch(API_URL+'/image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:fullPrompt,shape})});
+  if(!r.ok){let msg='Image generation failed.';try{const d=await r.json();msg=d.error||msg}catch{}throw Error(msg)}
+  generatedImageBlob=await r.blob();generatedImageUrl=URL.createObjectURL(generatedImageBlob);
+  $('artPreview').innerHTML='<img id="generatedImage" alt="AI generated creation">';
+  $('generatedImage').src=generatedImageUrl;status.textContent='Image created successfully.';
+ }catch(err){$('artPreview').innerHTML='<div class="preview-empty">Could not generate the image.</div>';status.textContent=err.message||'Generation failed.';toast(status.textContent)}
+ finally{btn.disabled=false;btn.textContent='✦ GENERATE IMAGE'}
+};
+$('downloadPng').onclick=()=>{
+ if(generatedImageBlob){download('idris-ai-image.png',generatedImageBlob);toast('Image downloaded.');return}
+ toast('Generate an AI image first.');
+};
+$('saveArt').onclick=()=>{
+ if(generatedImageUrl){save('AI Image',$('artName').value.trim()||'AI Creation','<img src="'+generatedImageUrl+'" alt="AI creation">');toast('Saved to your vault on this device.');return}
+ toast('Generate an image first.');
+};
+
 function setAIStatus(online,message){
  const badge=$('statusBadge'),side=$('sideConnection'),home=$('homeAIStatus'),chat=$('chatAIStatus');
  if(badge){badge.textContent=online?'● AI ENGINE ONLINE':'● AI ENGINE OFFLINE';badge.style.borderColor=online?'#397b68':'#665633';badge.style.color=online?'#a6f4d9':'#f5d79a';}
@@ -355,7 +380,7 @@ function setAIStatus(online,message){
  if(chat)chat.textContent=message;
 }
 async function checkAI(){
- try{const r=await fetch(API_URL+'/health',{cache:'no-store'});const d=await r.json();if(!r.ok||!d.ok)throw Error();setAIStatus(true,'Live text AI is connected. AI image generation is not connected yet.');}
+ try{const r=await fetch(API_URL+'/health',{cache:'no-store'});const d=await r.json();if(!r.ok||!d.ok)throw Error();setAIStatus(true,'Live text and image AI are connected.');}
  catch{setAIStatus(false,'The backend is deployed, but the health check did not complete. Try again shortly.');}
 }
 function addBubble(role,text){
