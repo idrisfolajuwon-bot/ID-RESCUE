@@ -462,4 +462,48 @@ refreshCounts();renderArt();checkAI();initAuth();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const gate=$('authGate'); if(!gate) return;
+ const URL_='https://fgkylbebokqcviqcbmoi.supabase.co';
+ const KEY='sb_publishable_biF9EZXH3jxwGrvXGGmdiQ_LZwlPQNj';
+ let mode='login',client;
+ const error=t=>{const e=$('authError');if(e)e.textContent=t||''};
+ const paint=()=>{
+  const signup=mode==='signup',reset=mode==='reset';
+  $('authHeading').textContent=signup?'Create your account':reset?'Reset your password':'Welcome back';
+  $('authIntro').textContent=signup?'Join IDRIS AI STUDIO and keep your workspace with you.':reset?'We will email you a password reset link.':'Sign in to continue to your AI workspace.';
+  $('authNameWrap').hidden=!signup;
+  $('authPassword').hidden=reset;$('authPassword').required=!reset;
+  $('authSubmit').textContent=signup?'Create account':reset?'Send reset link':'Sign in';
+  $('authSwitch').textContent=signup?'I already have an account':'Create account';
+  $('authForgot').hidden=signup||reset;$('authGoogle').hidden=reset;
+ };
+ const getClient=()=>{if(!client)client=window.supabase.createClient(URL_,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});return client};
+ $('authSwitch').onclick=()=>{mode=mode==='signup'?'login':'signup';error('');paint()};
+ $('authForgot').onclick=()=>{mode='reset';error('');paint()};
+ $('authForm').onsubmit=async e=>{
+  e.preventDefault();error('');
+  const email=$('authEmail').value.trim(),password=$('authPassword').value,name=$('authName').value.trim(),btn=$('authSubmit');
+  try{
+   if(!window.supabase)throw new Error('Sign-in service is still loading. Refresh once and try again.');
+   btn.disabled=true;
+   const c=getClient();let r;
+   if(mode==='signup'){if(password.length<8)throw new Error('Use at least 8 characters for your password.');r=await c.auth.signUp({email,password,options:{data:{full_name:name},emailRedirectTo:location.origin+location.pathname}})}
+   else if(mode==='reset')r=await c.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+   else r=await c.auth.signInWithPassword({email,password});
+   if(r.error)throw r.error;
+   if(mode==='signup'&&!r.data.session)error('Account created. Check your email to verify it.');
+   else if(mode==='reset')error('Password reset email sent. Check your inbox.');
+   else {gate.hidden=true;document.querySelector('.shell').style.visibility='visible'}
+  }catch(ex){error(ex.message||'Authentication failed.')}
+  finally{btn.disabled=false}
+ };
+ $('authGoogle').onclick=async()=>{try{if(!window.supabase)throw new Error('Sign-in service is still loading.');const r=await getClient().auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(r.error)throw r.error}catch(ex){error(ex.message||'Google sign-in is not available yet.')}};
+ paint();
+ setTimeout(async()=>{try{if(window.supabase){const {data}=await getClient().auth.getSession();if(data.session){gate.hidden=true;document.querySelector('.shell').style.visibility='visible'}}}catch{}},400);
+})();
+</script>
 </body></html>
