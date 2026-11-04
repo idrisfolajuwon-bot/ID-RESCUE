@@ -50,6 +50,62 @@ input::placeholder,textarea::placeholder{color:#9aa4b6}
 .nav button .ico{filter:saturate(.85)}
 @media(max-width:760px){.side{background:#fff}.shell{background:#f5f7fb}main{padding-top:18px}.hero{padding-top:28px}.panel{border-radius:17px}.tile{background:#fff}}
 
+
+/* Full workspace redesign — structure, spacing and responsive behaviour */
+:root{--mint:#6657d9;--blue:#477fe0;--violet:#8a68e8}
+body{font-size:14px;background:#f5f7fb}
+.shell{max-width:1500px;grid-template-columns:232px minmax(0,1fr);gap:0}
+.side{padding:27px 17px;background:#fff;border-right:1px solid #e8ebf2}
+.brand{padding:2px 8px 34px}.brand-mark{width:44px;height:44px;border-radius:15px}
+.nav-label{padding-top:15px}.nav{gap:7px}.nav button{padding:12px 13px;border-radius:12px;font-size:12px}
+main{padding:25px clamp(18px,4vw,54px) 56px;max-width:1280px;width:100%;margin:0 auto}
+.topbar{padding:4px 0 16px;border-bottom:1px solid #e9edf4}
+.crumb{font-size:10px;font-weight:800;letter-spacing:1.3px}
+.hero{padding:35px 0 24px}.hero h1{font-size:clamp(34px,4vw,54px)}
+.page.active{animation:pageIn .22s ease-out}
+@keyframes pageIn{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.panel{border-radius:18px;padding:20px;box-shadow:0 8px 26px rgba(29,43,75,.045)}
+.section-head{margin:26px 0 14px}.section-head h2,.panel h2{font-size:13px;letter-spacing:.7px}
+.tiles{gap:13px}.tile{min-height:138px;padding:19px;border-radius:16px}
+.tile .tile-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#efedff;color:#6254d5}
+.statrow{gap:10px}.stat{background:#f7f8fc;border-radius:13px;padding:14px}
+.stat strong{font-size:22px}
+input,textarea,select{padding:13px 14px;border-radius:12px}
+textarea{min-height:140px}
+.chatlog{background:#f8f9fc;border:1px solid #e9edf4;border-radius:15px;padding:14px;min-height:300px}
+.bubble{background:#eef1f8;color:#26324a}.bubble.user{background:#eceaff;color:#493eaa}
+.output{background:#f8f9fc;color:#26324a;border-color:#e5e9f1}
+.preview-wrap{background:#f8f9fc;border:1px solid #e5e9f1}
+.vault-grid{gap:13px}.saved{border-radius:15px;padding:15px}
+.mobile-nav{background:rgba(255,255,255,.96);border-top:1px solid #e5e9f1;box-shadow:0 -5px 20px #24365b0a}
+.mobile-nav button{color:#758198}.mobile-nav button.active{color:#5c50d2}
+.welcome-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:48px 0 30px}
+.welcome-row .eyebrow,.home-lower .eyebrow{font-size:10px;letter-spacing:1.8px;font-weight:850;color:#7568d9}
+.welcome-row h1{font-size:clamp(34px,5vw,58px);letter-spacing:-2.5px;line-height:1.08;margin:12px 0 8px;color:#202a40}
+.welcome-row p{margin:0;color:#77839a;font-size:15px}
+.welcome-mark{width:88px;height:88px;border-radius:27px;display:grid;place-items:center;background:linear-gradient(145deg,#eeecff,#f5f2ff);border:1px solid #e3defe;color:#7668df;font-size:42px;box-shadow:0 12px 30px #6557e812}
+.home-composer{display:flex;align-items:center;gap:15px;padding:17px 19px;border:1px solid #e7e9f2;border-radius:18px;background:#fff;box-shadow:0 8px 25px #26365b08}
+.composer-symbol{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:#efedff;color:#6557d9;font-size:22px}
+.home-composer>div:nth-child(2){display:grid;gap:3px;flex:1}.home-composer b{font-size:13px;color:#26324a}.home-composer span{font-size:11px;color:#7b879b}
+.home-composer .primary-btn{white-space:nowrap;padding:12px 16px}
+.home-section-head{margin-top:34px}.home-workspaces{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.workspace-card{min-width:0;display:flex;align-items:center;gap:14px;text-align:left;padding:18px;border:1px solid #e6e9f2;border-radius:16px;background:#fff;color:#253149;transition:transform .16s,border-color .16s,box-shadow .16s}
+.workspace-card:hover{transform:translateY(-2px);border-color:#c9c3f5;box-shadow:0 10px 25px #29365a0c}
+.workspace-icon{width:46px;height:46px;flex:0 0 46px;border-radius:14px;display:grid;place-items:center;font-size:23px;background:#efedff;color:#6657d9}
+.workspace-copy{display:grid;gap:4px;flex:1;min-width:0}.workspace-copy b{font-size:13px}.workspace-copy small{font-size:11px;color:#78849a;line-height:1.4}
+.workspace-arrow{font-size:18px;color:#9aa4b6}
+.workspace-research .workspace-icon{background:#eaf3ff;color:#3979d9}.workspace-create .workspace-icon{background:#f4edff;color:#875bd6}.workspace-prompt .workspace-icon{background:#fff4df;color:#b37c21}.workspace-vault .workspace-icon{background:#eaf8f1;color:#328b63}
+.home-lower{display:grid;grid-template-columns:1.1fr .9fr;gap:13px;margin-top:15px}
+.home-panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px}.home-panel-title h2,.home-stats-panel h2{margin:5px 0 14px}
+.home-status-line{display:flex;align-items:center;gap:11px;margin:10px 0 15px;padding:12px;border-radius:13px;background:#f7f8fc}
+.status-dot{width:10px;height:10px;border-radius:50%;background:#e2b34d;box-shadow:0 0 0 4px #fff2d6}
+.home-status-line div{display:grid;gap:2px}.home-status-line b{font-size:12px;color:#303c53}.home-status-line small{font-size:10px;color:#7c8799}
+.home-lower .callout{font-size:10px}
+.home-stats-panel .statrow{margin-top:17px}.home-stats-panel .stat{padding:12px 9px}.home-stats-panel .stat strong{font-size:19px}
+.home-footer-note{text-align:center;padding:25px 0 5px;color:#8791a3;font-size:11px}.home-footer-note span{color:#6c60ce;font-weight:800;letter-spacing:.6px}
+@media(max-width:900px){.shell{grid-template-columns:205px minmax(0,1fr)}.home-lower{grid-template-columns:1fr}}
+@media(max-width:650px){main{padding:14px 14px 95px}.topbar{padding-bottom:12px}.welcome-row{padding:34px 2px 23px}.welcome-row h1{letter-spacing:-1.7px}.welcome-mark{width:62px;height:62px;border-radius:20px;font-size:30px}.home-composer{padding:13px;gap:10px;flex-wrap:wrap}.home-composer>div:nth-child(2){min-width:calc(100% - 65px)}.home-composer .primary-btn{width:100%;justify-content:center}.home-workspaces{grid-template-columns:1fr;gap:9px}.workspace-card{padding:14px}.home-lower{grid-template-columns:1fr}.home-stats-panel .statrow{gap:6px}.home-stats-panel .stat strong{font-size:17px}.section-head{margin-top:24px}.panel{padding:15px}}
+
 </style>
 </head>
 <body>
@@ -74,18 +130,24 @@ input::placeholder,textarea::placeholder{color:#9aa4b6}
 <main>
  <header class="topbar"><div class="crumb" id="crumb">I D LABS / OVERVIEW</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
  <section class="page active" id="home">
-  <div class="hero"><div class="eyebrow">A CREATIVE COMMAND CENTRE</div><h1>Your ideas.<br><span class="gradient">Your studio.</span></h1><p>Build visual concepts, shape powerful prompts, organise your ideas and keep your creative work together. Designed to feel at home on your phone and grow as real AI services are connected.</p></div>
-  <div class="section-head"><div><h2>CHOOSE YOUR WORKSPACE</h2><p>Jump straight into making something.</p></div><span class="tag">BUILD 1.0</span></div>
-  <div class="tiles">
-   <button class="tile" data-go="prompts"><div class="tile-icon">✦</div><b>Prompt Lab</b><small>Turn a rough idea into a clear, detailed prompt for chat or image tools.</small></button>
-   <button class="tile" data-go="maker"><div class="tile-icon">◈</div><b>Visual Maker</b><small>Create real logo and poster artwork, then export it as SVG or PNG.</small></button>
-   <button class="tile" data-go="chat"><div class="tile-icon">▤</div><b>AI Chat</b><small>Ask questions and work with the connected live AI assistant.</small></button>
-   <button class="tile" data-go="research"><div class="tile-icon">⌕</div><b>Research Desk</b><small>Find current sources, bring useful text back, and ask AI to analyse it.</small></button>
-   <button class="tile" data-go="vault"><div class="tile-icon">▣</div><b>Creation Vault</b><small>Search, organise, export and manage saved creative work on this device.</small></button>
+  <div class="welcome-row">
+   <div><div class="eyebrow">YOUR PERSONAL AI WORKSPACE</div><h1>Good morning, <span class="gradient">Idris.</span></h1><p>What would you like to work on today?</p></div>
+   <div class="welcome-mark" aria-hidden="true">✦</div>
   </div>
-  <div class="section-head"><div><h2>YOUR STUDIO AT A GLANCE</h2><p>Saved work stays in this browser on this device.</p></div></div>
-  <div class="panel"><div class="statrow"><div class="stat"><strong id="statSaved">0</strong><span>SAVED ITEMS</span></div><div class="stat"><strong>2</strong><span>LOCAL CREATIVE TOOLS</span></div><div class="stat"><strong>0</strong><span>AI SERVICES CONNECTED</span></div></div></div>
-  <div class="callout info" id="homeAIStatus">AI STATUS · Checking the secure AI connection…</div>
+  <div class="home-composer"><div class="composer-symbol">✦</div><div><b>Your creative space is ready</b><span>Ask, explore, design or organise your next idea.</span></div><button class="primary-btn" data-go="chat">Open AI Chat <span>→</span></button></div>
+  <div class="section-head home-section-head"><div><h2>START SOMETHING</h2><p>Your tools, one tap away.</p></div><span class="tag">IDRIS AI STUDIO</span></div>
+  <div class="home-workspaces">
+   <button class="workspace-card workspace-chat" data-go="chat"><span class="workspace-icon">▤</span><span class="workspace-copy"><b>AI Chat</b><small>Think through ideas with IDRIS AI</small></span><span class="workspace-arrow">↗</span></button>
+   <button class="workspace-card workspace-research" data-go="research"><span class="workspace-icon">⌕</span><span class="workspace-copy"><b>Research Desk</b><small>Find sources and analyse information</small></span><span class="workspace-arrow">↗</span></button>
+   <button class="workspace-card workspace-create" data-go="maker"><span class="workspace-icon">◈</span><span class="workspace-copy"><b>Visual Maker</b><small>Make posters, logos and artwork</small></span><span class="workspace-arrow">↗</span></button>
+   <button class="workspace-card workspace-prompt" data-go="prompts"><span class="workspace-icon">✦</span><span class="workspace-copy"><b>Prompt Lab</b><small>Turn rough ideas into strong prompts</small></span><span class="workspace-arrow">↗</span></button>
+   <button class="workspace-card workspace-vault" data-go="vault"><span class="workspace-icon">▣</span><span class="workspace-copy"><b>Creation Vault</b><small>Keep and manage your saved work</small></span><span class="workspace-arrow">↗</span></button>
+  </div>
+  <div class="home-lower">
+   <div class="panel home-status-panel"><div class="home-panel-title"><div><span class="eyebrow">CONNECTION</span><h2>Your studio status</h2></div><span class="status" id="homeStatusPill">● CHECKING</span></div><div class="home-status-line"><span class="status-dot"></span><div><b id="homeStatusTitle">Checking AI connection</b><small id="homeStatusText">Connecting to the secure IDRIS AI backend…</small></div></div><div id="homeAIStatus" class="callout info">AI STATUS · Checking the secure AI connection…</div></div>
+   <div class="panel home-stats-panel"><div class="eyebrow">YOUR WORKSPACE</div><h2>Saved work at a glance</h2><div class="statrow"><div class="stat"><strong id="statSaved">0</strong><span>SAVED ITEMS</span></div><div class="stat"><strong>2</strong><span>LOCAL TOOLS</span></div><div class="stat"><strong>1</strong><span>LIVE AI SERVICE</span></div></div><p class="muted small">Your saved creations stay in this browser on this device.</p></div>
+  </div>
+  <div class="home-footer-note">A place to think clearly, create freely and keep moving. <span>— IDRIS AI STUDIO</span></div>
  </section>
 
  <section class="page" id="prompts">
