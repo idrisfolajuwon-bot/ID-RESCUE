@@ -361,7 +361,7 @@ function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='I D LABS / '+page.replace('-',' ').toUpperCase();if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
 const menuToggle=$('menuToggle'),drawerScrim=$('drawerScrim');
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
-menuToggle?.addEventListener('click',()=>{const open=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',open);menuToggle.setAttribute('aria-expanded',String(open))});
+menuToggle?.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();const open=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',open);menuToggle.setAttribute('aria-expanded',String(open));console.log('IDRIS menu',open)});
 drawerScrim?.addEventListener('click',closeMenu);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{go(b.dataset.page);closeMenu()}));
@@ -505,5 +505,8 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
  paint();
  setTimeout(async()=>{try{if(window.supabase){const {data}=await getClient().auth.getSession();if(data.session){gate.hidden=true;document.querySelector('.shell').style.visibility='visible'}}}catch{}},400);
 })();
+
+// Emergency navigation fallback
+document.addEventListener('click',e=>{const btn=e.target.closest&&e.target.closest('#menuToggle');if(btn){const open=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',open);btn.setAttribute('aria-expanded',String(open));}});
 </script>
 </body></html>
