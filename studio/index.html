@@ -137,9 +137,13 @@ main{max-width:1040px;padding:18px clamp(16px,4vw,46px) 40px}
 .bubble.user{background:#efedff;color:#40378e}
 @media(max-width:650px){main{padding:12px 13px 25px}.topbar{padding-bottom:11px}.top-actions .soft-btn{display:none}.chat-welcome{padding:clamp(105px,19vh,165px) 0 25px}.chat-main-panel{padding:10px;border-radius:19px}.chat-compose{border-radius:16px}.chat-under-tools{gap:6px}.chat-mini-status{width:100%;margin:2px 0 0 4px}}
 
+
+/* Account gate */
+#authGate{position:fixed;inset:0;z-index:9999;background:#f5f7fb;color:#172033;display:grid;place-items:center;padding:22px;font-family:inherit}#authGate[hidden]{display:none}.auth-card{width:min(430px,100%);background:#fff;border:1px solid #e5eaf2;border-radius:24px;padding:28px;box-shadow:0 24px 80px #16213a18}.auth-brand{font-weight:850;letter-spacing:.08em;color:#1b2942}.auth-card h1{font-size:28px;margin:24px 0 5px}.auth-card p{color:#68758b;margin:0 0 22px}.auth-card label{display:block;font-weight:650;font-size:13px;margin:14px 0 6px}.auth-card input{width:100%;padding:13px 14px;border:1px solid #d8dfeb;border-radius:12px;background:#fff;color:#172033}.auth-action{width:100%;border:0;border-radius:12px;padding:14px;margin-top:16px;background:#172b4d;color:white;font-weight:750}.auth-google{background:#fff;color:#172033;border:1px solid #d8dfeb;margin-top:10px}.auth-links{display:flex;justify-content:space-between;gap:12px;margin-top:17px}.auth-links button{border:0;background:none;color:#365ca0;font-weight:650;padding:4px}.auth-error{color:#b42338;font-size:13px;min-height:18px;margin-top:10px}.auth-note{font-size:12px;color:#778399;margin-top:16px}
 </style>
 </head>
-<body>
+<body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
+
 <div class="shell">
 <aside class="side">
  <div class="brand"><div class="brand-mark">ID</div><div><div class="brand-name">IDRIS AI STUDIO</div><div class="brand-sub">BY I D LABS</div></div></div>
@@ -256,7 +260,26 @@ main{max-width:1040px;padding:18px clamp(16px,4vw,46px) 40px}
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id), KEY='idris-ai-studio-v2';
-const API_URL='https://idris-ai-studio-api.idrisfolajuwon.workers.dev';
+const API_URL='https://idris-ai-studio-api.idrisfolajuwon.workers.dev';\n
+const SUPABASE_URL='https://fgkylbebokqcviqcbmoi.supabase.co';
+const SUPABASE_KEY='sb_publishable_biF9EZXH3jxwGrvXGGmdiQ_LZwlPQNj';
+let supabaseClient=null,authMode='login';
+async function initAuth(){
+ const gate=$('authGate'),shell=document.querySelector('.shell');
+ const showAuth=()=>{gate.hidden=false;shell.style.visibility='hidden'};
+ const showApp=()=>{gate.hidden=true;shell.style.visibility='visible'};
+ const err=t=>{$('authError').textContent=t||''};
+ const paint=()=>{const signup=authMode==='signup';$('authHeading').textContent=signup?'Create your account':authMode==='reset'?'Reset your password':'Welcome back';$('authIntro').textContent=signup?'Join IDRIS AI STUDIO and keep your workspace with you.':authMode==='reset'?'We will email you a password reset link.':'Sign in to continue to your AI workspace.';$('authNameWrap').hidden=!signup;$('authPassword').hidden=false;$('authPassword').required=true;$('authSubmit').textContent=signup?'Create account':authMode==='reset'?'Send reset link':'Sign in';$('authSwitch').textContent=signup?'I already have an account':'Create account';$('authForgot').hidden=signup||authMode==='reset';};
+ showAuth();paint();
+ try{const {createClient}=await import('https://esm.sh/@supabase/supabase-js@2.57.0');supabaseClient=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ const {data:{session}}=await supabaseClient.auth.getSession();if(session)showApp();
+ supabaseClient.auth.onAuthStateChange((event,session)=>{if(session){showApp();const profile=document.querySelector('.profile');if(profile){const nm=session.user.user_metadata?.full_name||session.user.email||'Account';profile.innerHTML='<div class="avatar">'+safe(nm.slice(0,2).toUpperCase())+'</div><div><b style="font-size:11px">'+safe(nm)+'</b><small>Signed-in account</small></div><button id="authSignOut" class="soft-btn" style="margin-left:auto">Sign out</button>';profile.querySelector('#authSignOut').onclick=async()=>{await supabaseClient.auth.signOut();showAuth();};}}else showAuth();});
+ $('authForm').addEventListener('submit',async e=>{e.preventDefault();err('');const email=$('authEmail').value.trim(),password=$('authPassword').value,name=$('authName').value.trim();$('authSubmit').disabled=true;try{let result;if(authMode==='signup')result=await supabaseClient.auth.signUp({email,password,options:{data:{full_name:name},emailRedirectTo:location.origin+location.pathname}});else if(authMode==='reset')result=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.href});else result=await supabaseClient.auth.signInWithPassword({email,password});if(result.error)throw result.error;if(authMode==='signup'&&!result.data.session)err('Account created. Check your email to verify it, then sign in.');else if(authMode==='reset')err('Password reset email sent. Check your inbox.');}catch(ex){err(ex.message||'Authentication failed.')}finally{$('authSubmit').disabled=false;}});
+ $('authSwitch').onclick=()=>{authMode=authMode==='signup'?'login':'signup';err('');paint()};$('authForgot').onclick=()=>{authMode='reset';err('');paint()};
+ $('authGoogle').onclick=async()=>{err('');const {error}=await supabaseClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href}});if(error)err(error.message)};
+ }catch(ex){err('Could not load secure sign-in. Check your connection and refresh. '+(ex.message||''));}
+}
+
 let chatMessages=[];
 const CHAT_KEY='idris-ai-conversations-v1', MEMORY_KEY='idris-ai-memory-v1';
 let conversations=[];
@@ -349,7 +372,7 @@ $('vaultSearch').addEventListener('input',renderVault);$('vaultFilter').addEvent
 $('exportVault').onclick=()=>{const data={app:'IDRIS AI STUDIO',version:2,exportedAt:new Date().toISOString(),items:getItems(),conversations:conversations,memory:localStorage.getItem(MEMORY_KEY)||''};download('idris-ai-studio-full-backup.json',new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));toast('Full backup exported: Vault, chats and memory.')};
 $('importVault').onclick=()=>$('importFile').click();$('importFile').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());const incoming=Array.isArray(data)?data:data.items;if(!Array.isArray(incoming)&&!Array.isArray(data.conversations)&&typeof data.memory!=='string')throw Error('Invalid backup');let restored=0;if(Array.isArray(incoming)){const clean=incoming.filter(x=>x&&typeof x.title==='string'&&typeof x.content==='string').slice(0,250);const seen=new Set(getItems().map(x=>x.id));const merged=[...getItems(),...clean.filter(x=>!seen.has(x.id))].slice(0,250);if(putItems(merged))restored+=clean.length;}if(Array.isArray(data.conversations)){const cleanChats=data.conversations.filter(c=>c&&typeof c.id==='string'&&Array.isArray(c.messages)).map(c=>({...c,messages:c.messages.filter(m=>m&&(m.role==='user'||m.role==='assistant')&&typeof m.content==='string').slice(-80)})).slice(0,100);const seenChats=new Set(conversations.map(c=>c.id));conversations=[...conversations,...cleanChats.filter(c=>!seenChats.has(c.id))].sort((a,b)=>new Date(b.updated||0)-new Date(a.updated||0)).slice(0,100);persistConversations();renderHistory();restored+=cleanChats.length;}if(typeof data.memory==='string'){localStorage.setItem(MEMORY_KEY,data.memory.slice(0,1800));$('aiMemory').value=data.memory.slice(0,1800);restored++;}renderVault();toast('Backup restored. Imported '+restored+' saved sections/items.');}catch{toast('That backup file could not be read.')}e.target.value=''});
 $('clearVault').onclick=()=>{if(confirm('Delete every saved item from this browser? Export a backup first if you may need them.')){putItems([]);renderVault();toast('Vault cleared.')}};
-refreshCounts();renderArt();checkAI();
+refreshCounts();renderArt();checkAI();initAuth();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 })();
 </script>
