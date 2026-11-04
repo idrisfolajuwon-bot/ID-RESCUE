@@ -268,15 +268,55 @@ async function initAuth(){
  const showAuth=()=>{gate.hidden=false;shell.style.visibility='hidden'};
  const showApp=()=>{gate.hidden=true;shell.style.visibility='visible'};
  const err=t=>{$('authError').textContent=t||''};
- const paint=()=>{const signup=authMode==='signup';$('authHeading').textContent=signup?'Create your account':authMode==='reset'?'Reset your password':'Welcome back';$('authIntro').textContent=signup?'Join IDRIS AI STUDIO and keep your workspace with you.':authMode==='reset'?'We will email you a password reset link.':'Sign in to continue to your AI workspace.';$('authNameWrap').hidden=!signup;$('authPassword').hidden=false;$('authPassword').required=true;$('authSubmit').textContent=signup?'Create account':authMode==='reset'?'Send reset link':'Sign in';$('authSwitch').textContent=signup?'I already have an account':'Create account';$('authForgot').hidden=signup||authMode==='reset';};
+ const paint=()=>{
+  const signup=authMode==='signup',reset=authMode==='reset';
+  $('authHeading').textContent=signup?'Create your account':reset?'Reset your password':'Welcome back';
+  $('authIntro').textContent=signup?'Join IDRIS AI STUDIO and keep your workspace with you.':reset?'We will email you a password reset link.':'Sign in to continue to your AI workspace.';
+  $('authNameWrap').hidden=!signup;$('authPassword').hidden=reset;$('authPassword').required=!reset;
+  $('authSubmit').textContent=signup?'Create account':reset?'Send reset link':'Sign in';
+  $('authSwitch').textContent=signup?'I already have an account':'Create account';
+  $('authForgot').hidden=signup||reset;$('authGoogle').hidden=reset;
+ };
  showAuth();paint();
- try{const {createClient}=await import('https://esm.sh/@supabase/supabase-js@2.57.0');supabaseClient=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
- const {data:{session}}=await supabaseClient.auth.getSession();if(session)showApp();
- supabaseClient.auth.onAuthStateChange((event,session)=>{if(session){currentUserId=session.user.id;showApp();setTimeout(()=>syncConversations(),0);const profile=document.querySelector('.profile');if(profile){const nm=session.user.user_metadata?.full_name||session.user.email||'Account';profile.innerHTML='<div class="avatar">'+safe(nm.slice(0,2).toUpperCase())+'</div><div><b style="font-size:11px">'+safe(nm)+'</b><small>Signed-in account</small></div><button id="authSignOut" class="soft-btn" style="margin-left:auto">Sign out</button>';profile.querySelector('#authSignOut').onclick=async()=>{await supabaseClient.auth.signOut();showAuth();};}}else{currentUserId=null;showAuth();}});
- $('authForm').addEventListener('submit',async e=>{e.preventDefault();err('');const email=$('authEmail').value.trim(),password=$('authPassword').value,name=$('authName').value.trim();$('authSubmit').disabled=true;try{let result;if(authMode==='signup')result=await supabaseClient.auth.signUp({email,password,options:{data:{full_name:name},emailRedirectTo:location.origin+location.pathname}});else if(authMode==='reset')result=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.href});else result=await supabaseClient.auth.signInWithPassword({email,password});if(result.error)throw result.error;if(authMode==='signup'&&!result.data.session)err('Account created. Check your email to verify it, then sign in.');else if(authMode==='reset')err('Password reset email sent. Check your inbox.');}catch(ex){err(ex.message||'Authentication failed.')}finally{$('authSubmit').disabled=false;}});
- $('authSwitch').onclick=()=>{authMode=authMode==='signup'?'login':'signup';err('');paint()};$('authForgot').onclick=()=>{authMode='reset';err('');paint()};
- $('authGoogle').onclick=async()=>{err('');const {error}=await supabaseClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href}});if(error)err(error.message)};
- }catch(ex){err('Could not load secure sign-in. Check your connection and refresh. '+(ex.message||''));}
+ $('authSwitch').onclick=()=>{authMode=authMode==='signup'?'login':'signup';err('');paint()};
+ $('authForgot').onclick=()=>{authMode='reset';err('');paint()};
+ async function loadClient(){
+  if(supabaseClient)return supabaseClient;
+  if(window.supabase&&window.supabase.createClient){supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});return supabaseClient}
+  try{const mod=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');supabaseClient=mod.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});return supabaseClient}catch(ex){throw new Error('Secure sign-in could not load. Check your internet and try again.')}
+ }
+ $('authForm').addEventListener('submit',async e=>{
+  e.preventDefault();err('');
+  const email=$('authEmail').value.trim(),password=$('authPassword').value,name=$('authName').value.trim(),btn=$('authSubmit');
+  if(!email){err('Enter your email address.');return}
+  btn.disabled=true;const old=btn.textContent;btn.textContent='PLEASE WAIT…';
+  try{
+   const client=await loadClient();let result;
+   if(authMode==='signup'){
+    if(password.length<8)throw new Error('Use at least 8 characters for your password.');
+    result=await client.auth.signUp({email,password,options:{data:{full_name:name},emailRedirectTo:location.origin+location.pathname}});
+   }else if(authMode==='reset'){
+    result=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+   }else result=await client.auth.signInWithPassword({email,password});
+   if(result.error)throw result.error;
+   if(authMode==='signup'&&!result.data.session)err('Account created. Check your email to verify it, then sign in.');
+   else if(authMode==='reset')err('Password reset email sent. Check your inbox.');
+   else if(result.data.session)showApp();
+  }catch(ex){err(ex.message||'Authentication failed.')}
+  finally{btn.disabled=false;btn.textContent=old}
+ });
+ $('authGoogle').onclick=async()=>{
+  err('');
+  try{const client=await loadClient();const {error}=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(error)throw error}catch(ex){err(ex.message||'Google sign-in is not available yet.')}
+ };
+ try{
+  const client=await loadClient();
+  const {data:{session}}=await client.auth.getSession();if(session){currentUserId=session.user.id;showApp();setTimeout(()=>syncConversations(),0)}
+  client.auth.onAuthStateChange((event,session)=>{
+   if(session){currentUserId=session.user.id;showApp();setTimeout(()=>syncConversations(),0)}
+   else{currentUserId=null;showAuth()}
+  });
+ }catch(ex){err(ex.message||'Could not load secure sign-in.');}
 }
 
 let chatMessages=[];
