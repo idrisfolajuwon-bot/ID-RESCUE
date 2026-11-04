@@ -140,6 +140,8 @@ main{max-width:1040px;padding:18px clamp(16px,4vw,46px) 40px}
 
 /* Account gate */
 #authGate{position:fixed;inset:0;z-index:9999;background:#f5f7fb;color:#172033;display:grid;place-items:center;padding:22px;font-family:inherit}#authGate[hidden]{display:none}.auth-card{width:min(430px,100%);background:#fff;border:1px solid #e5eaf2;border-radius:24px;padding:28px;box-shadow:0 24px 80px #16213a18}.auth-brand{font-weight:850;letter-spacing:.08em;color:#1b2942}.auth-card h1{font-size:28px;margin:24px 0 5px}.auth-card p{color:#68758b;margin:0 0 22px}.auth-card label{display:block;font-weight:650;font-size:13px;margin:14px 0 6px}.auth-card input{width:100%;padding:13px 14px;border:1px solid #d8dfeb;border-radius:12px;background:#fff;color:#172033}.auth-action{width:100%;border:0;border-radius:12px;padding:14px;margin-top:16px;background:#172b4d;color:white;font-weight:750}.auth-google{background:#fff;color:#172033;border:1px solid #d8dfeb;margin-top:10px}.auth-links{display:flex;justify-content:space-between;gap:12px;margin-top:17px}.auth-links button{border:0;background:none;color:#365ca0;font-weight:650;padding:4px}.auth-error{color:#b42338;font-size:13px;min-height:18px;margin-top:10px}.auth-note{font-size:12px;color:#778399;margin-top:16px}
+body.menu-open .side{transform:translateX(0)!important;visibility:visible!important;left:0!important}
+body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -164,7 +166,7 @@ main{max-width:1040px;padding:18px clamp(16px,4vw,46px) 40px}
 </aside>
 <div class="drawer-scrim" id="drawerScrim"></div>
 <main>
- <header class="topbar"><button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
+ <header class="topbar"><button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false" onclick="document.body.classList.toggle('menu-open');this.setAttribute('aria-expanded',String(document.body.classList.contains('menu-open')))"><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
  <section class="page" id="home">
   <div class="welcome-row">
    <div><div class="eyebrow">YOUR PERSONAL AI WORKSPACE</div><h1>Good morning, <span class="gradient">Idris.</span></h1><p>What would you like to work on today?</p></div>
@@ -360,20 +362,8 @@ function save(type,title,content){const a=getItems();a.unshift({id:(crypto.rando
 function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='I D LABS / '+page.replace('-',' ').toUpperCase();if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
 const menuToggle=$('menuToggle'),drawerScrim=$('drawerScrim');
-function toggleStudioMenu(force){
- const open=typeof force==='boolean'?force:!document.body.classList.contains('menu-open');
- document.body.classList.toggle('menu-open',open);
- if(menuToggle)menuToggle.setAttribute('aria-expanded',String(open));
-}
-if(menuToggle){
- menuToggle.onclick=function(e){e.preventDefault();toggleStudioMenu();return false};
- menuToggle.ontouchend=function(e){e.preventDefault();toggleStudioMenu();return false};
-}
-drawerScrim&&drawerScrim.addEventListener('click',()=>toggleStudioMenu(false));
-function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
-
-drawerScrim?.addEventListener('click',closeMenu);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{go(b.dataset.page);closeMenu()}));
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 function download(name,blob){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
