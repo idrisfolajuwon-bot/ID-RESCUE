@@ -106,6 +106,37 @@ textarea{min-height:140px}
 @media(max-width:900px){.shell{grid-template-columns:205px minmax(0,1fr)}.home-lower{grid-template-columns:1fr}}
 @media(max-width:650px){main{padding:14px 14px 95px}.topbar{padding-bottom:12px}.welcome-row{padding:34px 2px 23px}.welcome-row h1{letter-spacing:-1.7px}.welcome-mark{width:62px;height:62px;border-radius:20px;font-size:30px}.home-composer{padding:13px;gap:10px;flex-wrap:wrap}.home-composer>div:nth-child(2){min-width:calc(100% - 65px)}.home-composer .primary-btn{width:100%;justify-content:center}.home-workspaces{grid-template-columns:1fr;gap:9px}.workspace-card{padding:14px}.home-lower{grid-template-columns:1fr}.home-stats-panel .statrow{gap:6px}.home-stats-panel .stat strong{font-size:17px}.section-head{margin-top:24px}.panel{padding:15px}}
 
+
+/* Chat-first navigation */
+.shell{display:block;max-width:100%;min-height:100vh}
+.side{position:fixed;left:0;top:0;bottom:0;width:min(290px,84vw);height:100dvh;transform:translateX(-105%);transition:transform .24s ease;z-index:40;box-shadow:18px 0 55px #26365b18}
+body.menu-open .side{transform:translateX(0)}
+.drawer-scrim{position:fixed;inset:0;background:#17233b55;backdrop-filter:blur(2px);z-index:35;opacity:0;pointer-events:none;transition:opacity .2s}
+body.menu-open .drawer-scrim{opacity:1;pointer-events:auto}
+main{max-width:1040px;padding:18px clamp(16px,4vw,46px) 40px}
+.topbar{justify-content:flex-start;gap:15px;border-bottom:1px solid #e8ebf2;padding:5px 0 14px}
+.menu-toggle{width:42px;height:42px;border:1px solid #e5e8f0;border-radius:13px;background:#fff;display:grid;align-content:center;justify-items:center;gap:5px;flex:0 0 42px}
+.menu-toggle span{display:block;width:17px;height:2px;border-radius:3px;background:#39445a}
+.top-actions{margin-left:auto}
+.page{min-height:calc(100dvh - 100px)}
+.chat-welcome{text-align:center;padding:clamp(95px,17vh,170px) 0 28px}
+.chat-welcome-mark{width:54px;height:54px;border-radius:18px;margin:0 auto 18px;display:grid;place-items:center;background:#efedff;color:#6657d9;font-size:28px}
+.chat-welcome .eyebrow{color:#786bd7;font-weight:850;letter-spacing:1.8px}
+.chat-welcome h1{font-size:clamp(34px,5vw,48px);letter-spacing:-1.8px;margin:10px 0 7px;color:#222c41}
+.chat-welcome p{margin:0;color:#78849a;font-size:15px}
+.chat-main-panel{max-width:760px;margin:0 auto;background:#fff;border:1px solid #e7eaf1;border-radius:22px;padding:14px;box-shadow:0 12px 38px #29385b0b}
+.chat-main-panel .chatlog{min-height:75px;max-height:48vh;border:0;background:transparent;padding:8px 5px 14px}
+.chat-compose{display:flex;align-items:flex-end;gap:10px;border:1px solid #e1e5ee;border-radius:18px;background:#fff;padding:8px 9px 8px 14px;box-shadow:0 3px 12px #25365b08}
+.chat-compose textarea{border:0!important;box-shadow:none!important;outline:none!important;background:transparent!important;min-height:42px;max-height:160px;resize:none;padding:10px 0;color:#202a40}
+.send-round{width:42px;height:42px;flex:0 0 42px;border:0;border-radius:14px;background:#6657d9;color:#fff;font-size:24px;font-weight:700}
+.chat-under-tools{display:flex;align-items:center;gap:8px;padding:10px 3px 0;flex-wrap:wrap}
+.chat-under-tools .soft-btn{padding:7px 10px;font-size:10px}
+.chat-mini-status{font-size:10px;color:#8a94a6;margin-left:auto}
+.chat-extra-panel{display:none}
+.bubble{max-width:92%;font-size:13px;line-height:1.65}
+.bubble.user{background:#efedff;color:#40378e}
+@media(max-width:650px){main{padding:12px 13px 25px}.topbar{padding-bottom:11px}.top-actions .soft-btn{display:none}.chat-welcome{padding:clamp(105px,19vh,165px) 0 25px}.chat-main-panel{padding:10px;border-radius:19px}.chat-compose{border-radius:16px}.chat-under-tools{gap:6px}.chat-mini-status{width:100%;margin:2px 0 0 4px}}
+
 </style>
 </head>
 <body>
@@ -114,10 +145,10 @@ textarea{min-height:140px}
  <div class="brand"><div class="brand-mark">ID</div><div><div class="brand-name">IDRIS AI STUDIO</div><div class="brand-sub">BY I D LABS</div></div></div>
  <div class="nav-label">WORKSPACE</div>
  <nav class="nav" id="sideNav">
-  <button class="active" data-page="home"><span class="ico">⌂</span>Overview</button>
+  <button data-page="home"><span class="ico">⌂</span>Overview</button>
   <button data-page="prompts"><span class="ico">✦</span>Prompt Lab</button>
   <button data-page="maker"><span class="ico">◈</span>Visual Maker</button>
-  <button data-page="chat"><span class="ico">▤</span>AI Chat</button>
+  <button class="active" data-page="chat"><span class="ico">▤</span>AI Chat</button>
   <button data-page="research"><span class="ico">⌕</span>Research Desk</button>
   <button data-page="vault"><span class="ico">▣</span>Creation Vault</button>
   <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
@@ -127,9 +158,10 @@ textarea{min-height:140px}
   <div class="profile"><div class="avatar">ID</div><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div>
  </div>
 </aside>
+<div class="drawer-scrim" id="drawerScrim"></div>
 <main>
- <header class="topbar"><div class="crumb" id="crumb">I D LABS / OVERVIEW</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
- <section class="page active" id="home">
+ <header class="topbar"><button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
+ <section class="page" id="home">
   <div class="welcome-row">
    <div><div class="eyebrow">YOUR PERSONAL AI WORKSPACE</div><h1>Good morning, <span class="gradient">Idris.</span></h1><p>What would you like to work on today?</p></div>
    <div class="welcome-mark" aria-hidden="true">✦</div>
@@ -178,10 +210,10 @@ textarea{min-height:140px}
   </div>
  </section>
 
- <section class="page" id="chat">
-  <div class="hero"><div class="eyebrow">CONVERSATION WORKSPACE</div><h1>AI <span class="gradient">Chat.</span></h1><p>Ask questions, develop ideas, get help with code and school topics, and work through creative requests with the connected AI assistant.</p></div>
-  <div class="grid"><div class="panel"><h2>LIVE AI CONVERSATION</h2><div class="chatlog" id="chatLog"><div class="bubble note">Your saved draft conversation will appear here. No AI messages are being generated.</div></div><label class="field-label" for="chatDraft">YOUR MESSAGE</label><textarea id="chatDraft" placeholder="Write what you want help with…"></textarea><div class="actions"><button class="primary-btn" id="sendToAI">SEND TO AI ↗</button><button class="soft-btn" id="saveChatDraft">SAVE MESSAGE</button><button class="soft-btn" id="clearChat">CLEAR CHAT</button></div></div>
-   <aside class="panel"><h2>YOUR CHAT HISTORY</h2><div class="actions" style="margin-top:0"><button class="primary-btn" id="newConversation">+ NEW CHAT</button></div><label class="field-label" for="historySearch">SEARCH OLD CHATS</label><input id="historySearch" placeholder="Find a past conversation…"><div id="historyList" class="vault-grid" style="grid-template-columns:1fr;margin-top:10px"><div class="empty">Your conversations will appear here.</div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>MY AI MEMORY</h2><p class="muted small">Add useful details you want IDRIS AI to consider in future chats. Stored only in this browser.</p><textarea id="aiMemory" style="min-height:90px" maxlength="1800" placeholder="For example: I am learning Physics and Chemistry. I prefer simple explanations…"></textarea><div class="actions"><button class="soft-btn" id="saveMemory">SAVE MEMORY</button></div><div class="callout info" id="chatAIStatus" style="margin-top:14px">Checking secure backend…</div><p class="muted small">Chats and memory are stored on this device. Messages are sent to Cloudflare for AI replies. Never save passwords or payment details here.</p></aside></div>
+ <section class="page active" id="chat">
+  <div class="chat-welcome"><div class="chat-welcome-mark">✦</div><div class="eyebrow">YOUR AI ASSISTANT</div><h1>Welcome, <span class="gradient">Idris.</span></h1><p>What can I help you with today?</p></div>
+  <div class="chat-main-panel"><div class="chatlog" id="chatLog"><div class="bubble note">Your conversation starts here.</div></div><div class="chat-compose"><textarea id="chatDraft" placeholder="Message IDRIS AI…" rows="1"></textarea><button class="send-round" id="sendToAI" aria-label="Send message">↑</button></div><div class="chat-under-tools"><button class="soft-btn" id="saveChatDraft">Save message</button><button class="soft-btn" id="clearChat">New chat</button><span id="chatAIStatus" class="chat-mini-status">Checking secure AI connection…</span></div></div>
+   <aside class="panel chat-extra-panel"><h2>YOUR CHAT HISTORY</h2><div class="actions" style="margin-top:0"><button class="primary-btn" id="newConversation">+ NEW CHAT</button></div><label class="field-label" for="historySearch">SEARCH OLD CHATS</label><input id="historySearch" placeholder="Find a past conversation…"><div id="historyList" class="vault-grid" style="grid-template-columns:1fr;margin-top:10px"><div class="empty">Your conversations will appear here.</div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>MY AI MEMORY</h2><p class="muted small">Add useful details you want IDRIS AI to consider in future chats. Stored only in this browser.</p><textarea id="aiMemory" style="min-height:90px" maxlength="1800" placeholder="For example: I am learning Physics and Chemistry. I prefer simple explanations…"></textarea><div class="actions"><button class="soft-btn" id="saveMemory">SAVE MEMORY</button></div><div class="callout info" id="chatAIStatus" style="margin-top:14px">Checking secure backend…</div><p class="muted small">Chats and memory are stored on this device. Messages are sent to Cloudflare for AI replies. Never save passwords or payment details here.</p></aside></div>
  </section>
 
 
@@ -219,7 +251,7 @@ textarea{min-height:140px}
  <footer class="footer">IDRIS AI STUDIO · BY I D LABS · BUILD 1.0 · MADE TO CREATE</footer>
 </main>
 </div>
-<nav class="mobile-nav" id="mobileNav"><button class="active" data-page="home"><span>⌂</span>HOME</button><button data-page="prompts"><span>✦</span>PROMPTS</button><button data-page="maker"><span>◈</span>MAKER</button><button data-page="chat"><span>▤</span>CHAT</button><button data-page="research"><span>⌕</span>RESEARCH</button><button data-page="vault"><span>▣</span>VAULT</button></nav>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 (()=>{'use strict';
