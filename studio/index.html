@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080d19"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><link rel="apple-touch-icon" href="./icon.svg"><meta name="description" content="IDRIS AI STUDIO — a creative workspace by I D LABS.">
+<meta name="theme-color" content="#f5f7fb"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><link rel="apple-touch-icon" href="./icon.svg"><meta name="description" content="IDRIS AI STUDIO — a creative workspace by I D LABS.">
 <title>IDRIS AI STUDIO — I D LABS</title>
 <style>
 :root{color-scheme:dark;--bg:#080d19;--surface:#101a2b;--surface2:#15233a;--surface3:#1b2d47;--line:#263b59;--text:#f2f6ff;--muted:#96a8c4;--mint:#68f0d1;--blue:#8cb4ff;--violet:#b59aff;--gold:#ffd58a;--danger:#ff8c9b;--shadow:0 18px 50px #0004}
@@ -13,6 +13,43 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 60px}.topbar{display:flex;jus
 .mobile-nav{display:none}
 @media(max-width:900px){.shell{grid-template-columns:205px minmax(0,1fr)}.grid{grid-template-columns:1fr}}
 @media(max-width:650px){.shell{display:block}.side{display:none}main{padding:17px 13px 92px}.topbar{align-items:flex-start}.status{font-size:8px}.hero{padding:34px 0 22px}.hero h1{letter-spacing:-1.8px}.panel{padding:15px}.tiles{gap:8px}.tile{padding:13px;min-height:120px}.statrow{gap:6px}.stat{padding:10px}.stat strong{font-size:17px}.vault-grid{grid-template-columns:1fr}.mobile-nav{display:flex;position:fixed;z-index:10;bottom:0;left:0;right:0;background:#091321ee;backdrop-filter:blur(18px);border-top:1px solid #293c58;padding:7px 4px calc(7px + env(safe-area-inset-bottom));justify-content:space-around}.mobile-nav button{background:transparent;border:0;color:#9eb0ca;font-size:9px;font-weight:800;display:grid;gap:2px;justify-items:center;padding:4px}.mobile-nav button span{font-size:17px}.mobile-nav button.active{color:var(--mint)}.top-actions .soft-btn{display:none}}
+
+/* IDRIS AI STUDIO — clean light redesign */
+:root{color-scheme:light;--bg:#f5f7fb;--surface:#ffffff;--surface2:#f0f3fa;--surface3:#e8edf7;--line:#e2e7f0;--text:#172033;--muted:#68758d;--mint:#6557e8;--blue:#4385ef;--violet:#8b5cf6;--gold:#c58b21;--danger:#d94d69;--shadow:0 12px 34px rgba(30,45,80,.07)}
+html,body{background:#f5f7fb;color:#172033}
+body{background:radial-gradient(ellipse at 85% -15%,#e8e6ff 0,transparent 36%),radial-gradient(ellipse at 0 45%,#e9f3ff 0,transparent 34%),#f5f7fb}
+.shell{background:transparent}
+.side{background:rgba(255,255,255,.9);border-right:1px solid #e7ebf3;backdrop-filter:blur(18px)}
+.brand-mark{background:linear-gradient(140deg,#6557e8,#8b5cf6);color:white;box-shadow:0 8px 24px #6557e822}
+.brand-name{color:#172033}.brand-sub,.nav-label{color:#8994a8}
+.nav button{color:#59657b}.nav button:hover{background:#f2f4fb;color:#342b85}
+.nav button.active{background:#efedff;border-color:#dfdbff;color:#5144c7}
+.connection{border-color:#e8dfc7;background:#fffaf0;color:#8b6824}
+.profile{border-color:#e9edf4}.avatar{background:#eeecff;color:#5c50d7}
+main{background:transparent}
+.status{border-color:#cdebdc;background:#edfbf3;color:#16834a}
+.icon-btn,.soft-btn{border-color:#e1e6ef;background:#fff;color:#48556d}
+.primary-btn{background:linear-gradient(100deg,#6659e9,#8d79f4);color:#fff;box-shadow:0 6px 16px #6659e922}
+.danger-btn{color:#c43d5c;border-color:#f2d6df;background:#fff5f7}
+.panel{background:rgba(255,255,255,.94);border-color:#e6eaf2;box-shadow:var(--shadow)}
+.panel h2,.section-head h2{color:#26324a}
+.tile{background:linear-gradient(145deg,#fff,#f7f8ff);border-color:#e5e8f2;color:#202b43}
+.tile:hover{border-color:#bdb6ff;box-shadow:0 10px 25px #6557e811}
+.tile small,.section-head p,.muted{color:#738097}
+.stat{background:#f8f9fd;border-color:#e8ebf3}
+.stat strong{color:#202b43}
+.stat span{color:#78849a}
+.callout{border-color:#f0dfb9;background:#fff9eb;color:#86651f}
+.callout.info{border-color:#d5e8fa;background:#f0f8ff;color:#376b91}
+input,textarea,select{background:#fff;border-color:#dfe5ef;color:#172033}
+input::placeholder,textarea::placeholder{color:#9aa4b6}
+.preview-wrap{background:#f8f9fc;border-color:#dce3ef}
+.tabs-inline button{background:#fff;border-color:#e2e7f0;color:#65718a}
+.saved{background:#fff;border-color:#e5e9f1}
+.empty{color:#77839a}
+.nav button .ico{filter:saturate(.85)}
+@media(max-width:760px){.side{background:#fff}.shell{background:#f5f7fb}main{padding-top:18px}.hero{padding-top:28px}.panel{border-radius:17px}.tile{background:#fff}}
+
 </style>
 </head>
 <body>
