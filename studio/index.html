@@ -154,10 +154,10 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
  <nav class="nav" id="sideNav">
   <button data-page="home"><span class="ico">⌂</span>Overview</button>
   <button class="active" data-page="chat"><span class="ico">▤</span>AI Assistant</button>
-  <button data-page="research"><span class="ico">⌕</span>Web Explorer</button>
+  <button data-studio-action="web"><span class="ico">⌕</span>Web Explorer</button>
   <button data-studio-action="image"><span class="ico">✦</span>Image Creator</button>
   <button data-page="prompts"><span class="ico">✧</span>Prompt Builder</button>
-  <button data-page="vault"><span class="ico">▣</span>My Projects</button>
+  <button data-studio-action="projects"><span class="ico">▣</span>My Projects</button>
   <button data-studio-action="history"><span class="ico">◷</span>Chat History</button>
   <button data-studio-action="memory"><span class="ico">✎</span>AI Memory</button>
   <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
@@ -382,10 +382,26 @@ drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{go(b.dataset.page);closeMenu()}));
 document.querySelectorAll('[data-studio-action]').forEach(b=>b.addEventListener('click',()=>{
- const action=b.dataset.studioAction;go('chat');closeMenu();
- if(action==='image'){$('chatDraft').value='Create an image of ';$('chatDraft').focus();toast('Image Creator ready. Describe the image you want.')}
- if(action==='history'){$('chatHistoryPanel').scrollIntoView({behavior:'smooth',block:'start'});$('historySearch').focus()}
- if(action==='memory'){$('aiMemory').scrollIntoView({behavior:'smooth',block:'center'});$('aiMemory').focus()}
+ const action=b.dataset.studioAction;
+ closeMenu();
+ if(action==='web'){go('research');return}
+ if(action==='projects'){go('vault');return}
+ go('chat');
+ setTimeout(()=>{
+  if(action==='image'){
+   $('chatDraft').value='Create an image of ';
+   $('chatDraft').focus();
+   toast('Image Creator ready. Describe the image you want.');
+  }
+  if(action==='history'){
+   $('chatHistoryPanel').scrollIntoView({behavior:'auto',block:'start'});
+   $('historySearch').focus();
+  }
+  if(action==='memory'){
+   $('aiMemory').scrollIntoView({behavior:'auto',block:'center'});
+   $('aiMemory').focus();
+  }
+ },80);
 }));
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 function download(name,blob){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
