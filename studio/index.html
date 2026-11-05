@@ -150,12 +150,16 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
 <aside class="side">
  <div class="brand"><div class="brand-mark">ID</div><div><div class="brand-name">IDRIS AI STUDIO</div><div class="brand-sub">BY I D LABS</div></div></div>
  <div class="nav-label">WORKSPACE</div>
+ <div class="nav-label">YOUR AI TOOLS</div>
  <nav class="nav" id="sideNav">
   <button data-page="home"><span class="ico">⌂</span>Overview</button>
-  <button data-page="prompts"><span class="ico">✦</span>Prompt Lab</button>
-  <button class="active" data-page="chat"><span class="ico">▤</span>AI Chat</button>
-  <button data-page="research"><span class="ico">⌕</span>Research Desk</button>
-  <button data-page="vault"><span class="ico">▣</span>Creation Vault</button>
+  <button class="active" data-page="chat"><span class="ico">▤</span>AI Assistant</button>
+  <button data-page="research"><span class="ico">⌕</span>Web Explorer</button>
+  <button data-studio-action="image"><span class="ico">✦</span>Image Creator</button>
+  <button data-page="prompts"><span class="ico">✧</span>Prompt Builder</button>
+  <button data-page="vault"><span class="ico">▣</span>My Projects</button>
+  <button data-studio-action="history"><span class="ico">◷</span>Chat History</button>
+  <button data-studio-action="memory"><span class="ico">✎</span>AI Memory</button>
   <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
  </nav>
  <div class="side-bottom">
@@ -217,7 +221,7 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
  <section class="page active" id="chat">
   <div class="chat-welcome"><div class="chat-welcome-mark">✦</div><div class="eyebrow">YOUR AI ASSISTANT</div><h1>Welcome, <span class="gradient">Idris.</span></h1><p>What can I help you with today?</p></div>
   <div class="chat-main-panel"><div class="chatlog" id="chatLog"><div class="bubble note">Your conversation starts here.</div></div><div class="chat-compose"><textarea id="chatDraft" placeholder="Message IDRIS AI…" rows="1"></textarea><button class="send-round" id="sendToAI" aria-label="Send message">↑</button></div><div class="chat-under-tools"><button class="soft-btn" id="saveChatDraft">Save message</button><button class="soft-btn" id="clearChat">New chat</button><span id="chatAIStatus" class="chat-mini-status">Checking secure AI connection…</span></div></div>
-   <aside class="panel chat-extra-panel"><h2>YOUR CHAT HISTORY</h2><div class="actions" style="margin-top:0"><button class="primary-btn" id="newConversation">+ NEW CHAT</button></div><label class="field-label" for="historySearch">SEARCH OLD CHATS</label><input id="historySearch" placeholder="Find a past conversation…"><div id="historyList" class="vault-grid" style="grid-template-columns:1fr;margin-top:10px"><div class="empty">Your conversations will appear here.</div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>MY AI MEMORY</h2><p class="muted small">Add useful details you want IDRIS AI to consider in future chats. Stored only in this browser.</p><textarea id="aiMemory" style="min-height:90px" maxlength="1800" placeholder="For example: I am learning Physics and Chemistry. I prefer simple explanations…"></textarea><div class="actions"><button class="soft-btn" id="saveMemory">SAVE MEMORY</button></div><div class="callout info" id="chatAIStatus" style="margin-top:14px">Checking secure backend…</div><p class="muted small">Chats and memory are stored on this device. Messages are sent to Cloudflare for AI replies. Never save passwords or payment details here.</p></aside></div>
+   <aside class="panel chat-extra-panel" id="chatHistoryPanel"><h2>YOUR CHAT HISTORY</h2><div class="actions" style="margin-top:0"><button class="primary-btn" id="newConversation">+ NEW CHAT</button></div><label class="field-label" for="historySearch">SEARCH OLD CHATS</label><input id="historySearch" placeholder="Find a past conversation…"><div id="historyList" class="vault-grid" style="grid-template-columns:1fr;margin-top:10px"><div class="empty">Your conversations will appear here.</div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>MY AI MEMORY</h2><p class="muted small">Add useful details you want IDRIS AI to consider in future chats. Stored only in this browser.</p><textarea id="aiMemory" style="min-height:90px" maxlength="1800" placeholder="For example: I am learning Physics and Chemistry. I prefer simple explanations…"></textarea><div class="actions"><button class="soft-btn" id="saveMemory">SAVE MEMORY</button></div><div class="callout info" id="chatAIStatus" style="margin-top:14px">Checking secure backend…</div><p class="muted small">Chats and memory are stored on this device. Messages are sent to Cloudflare for AI replies. Never save passwords or payment details here.</p></aside></div>
  </section>
 
 
@@ -249,8 +253,8 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
 
  <section class="page" id="about">
   <div class="hero"><div class="eyebrow">TRANSPARENT BY DESIGN</div><h1>Studio <span class="gradient">Guide.</span></h1><p>What works now, what is still being built, and how your information is handled.</p></div>
-  <div class="grid"><div class="panel"><h2>AVAILABLE NOW</h2><div class="saved"><b>Prompt Lab</b><small>Turns your own idea into a structured prompt in your browser.</small></div><div class="saved"><b>Visual Maker</b><small>Builds original logo/poster template artwork and exports SVG or PNG files.</small></div><div class="saved"><b>Creation Vault</b><small>Saves work in local browser storage and supports JSON backup/restore.</small></div><div class="saved"><b>AI Chat</b><small>Connects to Cloudflare Workers AI for live text responses. Image generation is not connected yet.</small></div></div>
-  <div class="panel"><h2>NOT CONNECTED YET</h2><div class="callout info">Live AI chat is connected through a secure Cloudflare Worker. AI image generation is not connected yet.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Version 1.0 · Mobile-first creative workspace.</p></div></div>
+  <div class="grid"><div class="panel"><h2>AVAILABLE NOW</h2><div class="saved"><b>Prompt Lab</b><small>Turns your own idea into a structured prompt in your browser.</small></div><div class="saved"><b>Image Creator</b><small>Creates images from natural-language requests in AI Chat, subject to image-service availability.</small></div><div class="saved"><b>Web Explorer</b><small>Opens live Google News searches and lets IDRIS AI analyse article text you provide.</small></div><div class="saved"><b>Chat History &amp; AI Memory</b><small>Search past conversations and save helpful context in this browser.</small></div><div class="saved"><b>Creation Vault</b><small>Saves work in local browser storage and supports JSON backup/restore.</small></div><div class="saved"><b>AI Assistant</b><small>Connects to the IDRIS AI backend for live text conversations and supported image-generation requests.</small></div></div>
+  <div class="panel"><h2>HOW THE TOOLS WORK</h2><div class="callout info">AI chat and supported image-generation requests use the secure IDRIS AI backend. Web Explorer opens an external Google News search; you can paste article text into the studio for AI analysis.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Version 1.0 · Mobile-first creative workspace.</p></div></div>
  </section>
  <footer class="footer">IDRIS AI STUDIO · BY I D LABS · BUILD 1.0 · MADE TO CREATE</footer>
 </main>
@@ -377,6 +381,12 @@ function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.set
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{go(b.dataset.page);closeMenu()}));
+document.querySelectorAll('[data-studio-action]').forEach(b=>b.addEventListener('click',()=>{
+ const action=b.dataset.studioAction;go('chat');closeMenu();
+ if(action==='image'){$('chatDraft').value='Create an image of ';$('chatDraft').focus();toast('Image Creator ready. Describe the image you want.')}
+ if(action==='history'){$('chatHistoryPanel').scrollIntoView({behavior:'smooth',block:'start'});$('historySearch').focus()}
+ if(action==='memory'){$('aiMemory').scrollIntoView({behavior:'smooth',block:'center'});$('aiMemory').focus()}
+}));
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 function download(name,blob){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard.')}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Copied.')}catch{toast('Copy is unavailable in this browser.')}ta.remove()}}
