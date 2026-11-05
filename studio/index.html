@@ -361,6 +361,7 @@ function save(type,title,content){const a=getItems();a.unshift({id:(crypto.rando
 function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='I D LABS / '+page.replace('-',' ').toUpperCase();if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
 const menuToggle=$('menuToggle'),drawerScrim=$('drawerScrim');
+function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{go(b.dataset.page);closeMenu()}));
