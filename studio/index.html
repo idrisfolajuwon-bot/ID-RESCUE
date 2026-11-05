@@ -258,6 +258,18 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
+(()=> {
+ const report=(label,message)=>{
+  const box=document.getElementById('toast');
+  const detail=String(message||'Unknown error').slice(0,180);
+  if(box){box.textContent=label+': '+detail;box.classList.add('show');}
+  console.error('[IDRIS AI STUDIO]',label,message);
+ };
+ window.addEventListener('error',e=>report('APP ERROR',e.message||e.error));
+ window.addEventListener('unhandledrejection',e=>report('APP ERROR',e.reason?.message||e.reason));
+})();
+</script>
+<script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id), KEY='idris-ai-studio-v2';
 const API_URL='https://idris-ai-studio-api.idrisfolajuwon.workers.dev';
