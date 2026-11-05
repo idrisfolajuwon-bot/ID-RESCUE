@@ -428,7 +428,7 @@ function addBubble(role,text){
 async function understandIntent(message){
  const recent=chatMessages.slice(-8).map(m=>({role:m.role,content:m.content}));
  const routerMessages=[
-  {role:'system',content:'You are the intent router for IDRIS AI STUDIO. Understand casual English, typos, slang, Nigerian-style English, incomplete sentences and conversation context. Decide what the user wants RIGHT NOW. Return ONLY valid JSON with exactly: {"intent":"chat"|"image"|"clarify","prompt":"string","reason":"short string"}. Choose image when the user wants you to create, make, draw, design or generate a visual, even if they do not explicitly say "image". Examples: "I don\'t know you can create something", "just make something cool", "surprise me with something", "make am look better" when referring to a visual, or "give me a futuristic wallpaper". For vague image requests, turn the user\'s idea into a safe, original, visually interesting prompt. Choose chat for questions, writing, explanations, plans, code and normal conversation. Choose clarify only when the missing information genuinely prevents a useful answer.'},
+  {role:'system',content:'You are the intent router for IDRIS AI STUDIO. Understand natural language semantically, including casual English, typos, slang, Nigerian-style English, incomplete sentences, punctuation and conversation context. Decide what the user wants RIGHT NOW. Return ONLY valid JSON with exactly: {"intent":"chat"|"image"|"clarify","prompt":"string","reason":"short string"}. IMPORTANT: distinguish a question about capability from an instruction or permission to create. If the user is only asking whether you can create images, what kinds of images you can create, or whether image creation is possible, choose "chat" and answer the question; do NOT generate an image. Examples that mean CHAT: "Can you create an image?", "I don't know, can you create image?", "Are you able to make pictures?", "What can you create?". If the user asks for a specific visual in the same question, it IS a request: "Can you create an image of a red car?" means IMAGE. Choose "image" when the user directly asks you to create, make, draw, design or generate a visual, or gives permission for you to choose: examples "Create a futuristic car", "I don't know, you can create something", "Just make something cool", "Surprise me with something", "Anything you want to create", "Make am look better" when the conversation clearly refers to an image/design, or "Give me a futuristic wallpaper". For open-ended permission such as "you can create something", invent a suitable safe, original visual prompt and generate it without asking the user to choose. Use the conversation to resolve references like "make that brighter". Choose "chat" for ordinary questions, writing, explanations, plans, code and normal conversation. Choose "clarify" only when the user clearly wants an action but the intended result genuinely cannot be inferred. Never treat the mere presence of words like "create", "image" or "make" as sufficient; classify the whole meaning.'},
   ...recent,
   {role:'user',content:'Current message to understand: '+message}
  ];
@@ -442,12 +442,17 @@ async function understandIntent(message){
   return {intent:parsed.intent,prompt:String(parsed.prompt||message),reason:String(parsed.reason||'')};
  }catch(err){
   // Reliable fallback for casual creation language if the intent router is temporarily unavailable.
-  const t=message.toLowerCase();
+  const t=message.toLowerCase().replace(/[’]/g,"'");
   const nonVisual=/\b(code|essay|story|plan|list|table|document|email|message|report|website|app)\b/.test(t);
+  // A capability-only question is conversation, not permission to generate.
+  const capabilityOnly=/\b(can|could|would|do)\s+you\s+(?:also\s+)?(?:create|make|generate|draw)\b/.test(t)
+   && !/\b(of|for me|show me|with|where|that|this)\b/.test(t.replace(/\b(can|could|would|do)\s+you\s+(?:also\s+)?(?:create|make|generate|draw)\b/,''));
+  if(capabilityOnly)return {intent:'chat',prompt:message,reason:'capability question'};
   const visual=/\b(image|picture|photo|artwork|illustration|wallpaper|logo|poster|thumbnail|portrait|avatar|cover)\b/.test(t)
    || /\b(draw|paint|design)\b/.test(t)
-   || /\b(i don'?t know|idk|anything|something|whatever|surprise me)\b.{0,45}\b(create|make|generate|design|draw)\b/.test(t)
-   || /\b(create|make|generate)\b.{0,40}\b(something|anything|one for me)\b/.test(t);
+   || /\b(i don't know|idk|anything|something|whatever|surprise me)\b.{0,55}\b(you can|create|make|generate|design|draw)\b/.test(t)
+   || /\b(create|make|generate)\b.{0,45}\b(something|anything|one for me)\b/.test(t)
+   || /\b(you can|go ahead and)\s+(create|make|generate|draw)\b/.test(t);
   if(visual&&!nonVisual)return {intent:'image',prompt:message,reason:'fallback visual intent'};
   return {intent:'chat',prompt:message,reason:'fallback chat intent'};
  }
