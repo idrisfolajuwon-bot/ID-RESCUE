@@ -927,6 +927,38 @@ input:focus,textarea:focus,select:focus{border-color:#72ead2!important;box-shado
  .compose-plus,.compose-voice,.send-round{width:36px;height:36px;flex-basis:36px}
  .chat-first-greeting h1{font-size:27px}
 }
+
+/* V29 — ChatGPT-inspired mobile sidebar refinement */
+.side{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#d9dce5 transparent}
+.sidebar-chat-tools{flex:1 1 180px;min-height:155px;margin-top:15px}
+.sidebar-new-chat{min-height:43px;border:1px solid #e6e7ed;border-radius:12px;box-shadow:none;transition:background .16s,border-color .16s}
+.sidebar-new-chat:hover{background:#f7f6ff;border-color:#d8d3fa}
+.sidebar-search{min-height:41px;border-color:#e8e9ef;transition:border-color .16s,box-shadow .16s}
+.sidebar-search:focus-within{border-color:#aaa1ee;box-shadow:0 0 0 3px #7668df12}
+.sidebar-history-heading{font-size:10px;letter-spacing:.08em}
+.sidebar-recent{max-height:29vh;min-height:90px;flex:1 1 auto;overscroll-behavior:contain}
+.sidebar-chat-item{min-height:36px;border-radius:9px;font-size:12px;padding:8px 10px;transition:background .14s,color .14s}
+.sidebar-chat-item.active{background:#efedff;color:#5145bd;font-weight:650}
+.studio-tools-menu{flex:0 0 auto;margin:12px 2px 10px;padding:10px 0 0;border-top:1px solid #ececf1}
+.studio-tools-menu summary{display:flex;align-items:center;justify-content:space-between;padding:8px 9px;color:#687287;font-size:11px;font-weight:750;letter-spacing:.02em}
+.studio-tools-menu summary:after{content:"⌄";float:none;font-size:15px;transition:transform .16s}
+.studio-tools-menu[open] summary:after{content:"⌃";transform:none}
+.studio-tools-menu .nav{display:flex!important;flex-direction:column;gap:2px;margin-top:5px}
+.studio-tools-menu .nav button{min-height:37px;padding:8px 10px;border:1px solid transparent;border-radius:9px;font-size:11px;font-weight:600}
+.studio-tools-menu .nav button .ico{width:21px;color:#7c75c9;font-size:15px}
+.studio-tools-menu .nav button:hover{background:#f5f4fb;color:#38334f}
+.studio-tools-menu .nav button.active{background:#efedff;border-color:#e7e3ff;color:#5145bd}
+.side-bottom{flex:0 0 auto;margin-top:auto;padding-top:9px}
+.side-bottom .profile{min-height:57px;border-top:1px solid #ececf1;padding:12px 7px 4px}
+.side-bottom .avatar{border-radius:50%;width:34px;height:34px}
+.side .connection{display:none!important}
+@media(max-width:650px){
+ .side{padding:20px 15px calc(16px + env(safe-area-inset-bottom))}
+ .sidebar-chat-tools{min-height:145px}
+ .sidebar-recent{max-height:24vh;min-height:78px}
+ .studio-tools-menu .nav button{min-height:39px}
+}
+
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -936,27 +968,25 @@ input:focus,textarea:focus,select:focus{border-color:#72ead2!important;box-shado
  <div class="brand"><div class="brand-mark">ID</div><div><div class="brand-name">IDRIS AI STUDIO</div><div class="brand-sub">BY I D LABS</div></div></div>
  <div class="sidebar-chat-tools">
   <button type="button" class="sidebar-new-chat" data-new-chat><span>＋</span> New chat</button>
-  <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off"></label>
-  <div class="sidebar-history-heading">RECENT</div>
+  <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations"></label>
+  <div class="sidebar-history-heading">RECENTS</div>
   <div class="sidebar-recent" id="sidebarRecent"><div class="sidebar-empty">Your chats will appear here.</div></div>
  </div>
- <details class="studio-tools-menu">
+ <details class="studio-tools-menu" open>
   <summary>Studio tools</summary>
-  <nav class="nav" id="sideNav">
+  <nav class="nav" id="sideNav" aria-label="Studio tools">
    <button data-page="home"><span class="ico">⌂</span>Overview</button>
-   <button class="active" data-page="chat"><span class="ico">▤</span>AI Assistant</button>
+   <button class="active" data-page="chat"><span class="ico">✦</span>AI Assistant</button>
+   <button data-studio-action="image"><span class="ico">▧</span>Image Creator</button>
    <button data-studio-action="web"><span class="ico">⌕</span>Web Explorer</button>
-   <button data-studio-action="image"><span class="ico">✦</span>Image Creator</button>
    <button data-page="prompts"><span class="ico">✧</span>Prompt Builder</button>
-   <button data-page="plans"><span class="ico">◈</span>Plans & Usage</button>
    <button data-studio-action="projects"><span class="ico">▣</span>My Projects</button>
-   <button data-studio-action="history"><span class="ico">◷</span>Chat History</button>
    <button data-studio-action="memory"><span class="ico">✎</span>AI Memory</button>
+   <button data-page="plans"><span class="ico">◈</span>Plans & Usage</button>
    <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
   </nav>
  </details>
  <div class="side-bottom">
-  <div class="connection" id="sideConnection"><b>● CHECKING AI CONNECTION</b>Connecting to the secure IDRIS AI backend…</div>
   <div class="profile"><div class="avatar">ID</div><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div>
  </div>
 </aside>
