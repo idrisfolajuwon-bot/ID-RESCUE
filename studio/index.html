@@ -1374,6 +1374,25 @@ function addGeneratedImageBubble(prompt,blob){
  promptBtn.onclick=()=>copy(prompt);
  actions.append(downloadBtn,promptBtn);el.append(img,caption,actions);$('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
 }
+$('composeTools')?.addEventListener('click',()=>{
+ const toolsMenu=document.querySelector('.studio-tools-menu');
+ if(toolsMenu){toolsMenu.open=!toolsMenu.open;toolsMenu.scrollIntoView({behavior:'smooth',block:'nearest'});}
+});
+$('voiceShortcut')?.addEventListener('click',()=>{
+ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SpeechRecognition){toast('Voice typing is not supported in this browser. You can use your keyboard microphone instead.');return;}
+ const recognition=new SpeechRecognition();recognition.lang=navigator.language||'en-US';recognition.interimResults=false;recognition.maxAlternatives=1;
+ recognition.onstart=()=>toast('Listening… speak your message.');
+ recognition.onresult=e=>{const spoken=e.results?.[0]?.[0]?.transcript||'';if(spoken){const field=$('chatDraft');field.value=(field.value?field.value+' ':'')+spoken;field.focus();}};
+ recognition.onerror=()=>toast('Voice input could not start. Check microphone permission.');
+ try{recognition.start()}catch{toast('Voice input is already active or unavailable.');}
+});
+$('chatDraft')?.addEventListener('keydown',e=>{
+ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('sendToAI')?.click();}
+});
+$('chatDraft')?.addEventListener('input',e=>{
+ const el=e.currentTarget;el.style.height='auto';el.style.height=Math.min(el.scrollHeight,180)+'px';
+});
 $('sendToAI').onclick=async()=>{
  const field=$('chatDraft'),message=field.value.trim(),btn=$('sendToAI');
  if(!message)return toast('Type a message first.');
