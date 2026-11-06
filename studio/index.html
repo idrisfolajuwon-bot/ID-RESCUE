@@ -668,6 +668,84 @@ textarea{line-height:1.65!important}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
+
+/* V24 — rebuilt dashboard composition */
+.dash-hero{position:relative;isolation:isolate;overflow:hidden;min-height:340px;padding:clamp(25px,4vw,48px);border:1px solid #37415e;border-radius:26px;background:radial-gradient(circle at 78% 43%,#51449b66,transparent 27%),radial-gradient(circle at 96% 8%,#267d7960,transparent 32%),linear-gradient(115deg,#171c32 0%,#151b2d 52%,#102b35 100%);box-shadow:0 24px 65px #0004}
+.dash-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,#ffffff08,transparent 55%);pointer-events:none}
+.dash-hero-copy{position:relative;z-index:2;max-width:610px}
+.dash-hero .eyebrow{display:flex;align-items:center;gap:9px;color:#b9b0ff!important}
+.live-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:#6ce8c5;box-shadow:0 0 0 5px #6ce8c51c,0 0 16px #6ce8c5}
+.dash-date{margin-top:28px;color:#91a1bd;font-size:9px;font-weight:800;letter-spacing:2px}
+.dash-hero h1{margin:12px 0 13px!important;font-size:clamp(42px,6vw,68px)!important;line-height:.99!important;letter-spacing:-2.8px!important}
+.dash-hero-copy>p{max-width:470px;color:#aab6cc;font-size:14px;line-height:1.8}
+.dash-hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.dash-hero-actions .primary-btn{min-height:45px}
+.dash-hero-foot{position:absolute;left:clamp(25px,4vw,48px);right:clamp(25px,4vw,48px);bottom:19px;display:flex;justify-content:space-between;color:#7586a4;font-size:8px;letter-spacing:1.6px;font-weight:800}
+.dash-hero-foot span:first-child{display:flex;align-items:center;gap:9px}
+.dash-orbit{position:absolute;width:310px;height:310px;right:7%;top:50%;transform:translateY(-50%);display:grid;place-items:center;opacity:.94}
+.orbit{position:absolute;border:1px solid #aaa0ff55;border-radius:50%;transform:rotate(-22deg)}
+.orbit-one{width:250px;height:250px}.orbit-two{width:190px;height:290px;transform:rotate(54deg);border-color:#70e6d455}
+.orbit-core{width:94px;height:94px;border-radius:30px;display:grid;place-items:center;background:linear-gradient(145deg,#a99aff,#68ddcf);color:#11182a;font-size:30px;font-weight:950;box-shadow:0 0 65px #9483ff66,0 18px 35px #0005;transform:rotate(-8deg)}
+.orbit-core span{position:absolute;font-size:17px;right:13px;top:10px}
+.orbit-node{position:absolute;width:12px;height:12px;border-radius:50%;background:#b8a8ff;box-shadow:0 0 18px #aa9aff}
+.node-one{top:34px;left:91px}.node-two{right:30px;top:129px;background:#6ee8cf;box-shadow:0 0 18px #6ee8cf}.node-three{bottom:34px;left:78px;width:8px;height:8px}
+.dash-section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:34px 0 15px}
+.dash-section-title h2{font-size:clamp(19px,2.5vw,25px);letter-spacing:-.6px;margin:6px 0 0;color:#f0f3ff}
+.dash-subtle{font-size:8px;letter-spacing:1.4px;color:#72819c;font-weight:800}
+.dash-quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.dash-quick-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-height:183px;padding:17px;text-align:left;border-radius:17px;border:1px solid #2b3952;background:linear-gradient(145deg,#18243a,#111a2b);color:#eff3ff;transition:transform .2s,border-color .2s,background .2s}
+.dash-quick-card:hover{transform:translateY(-4px);border-color:#8578d4;background:linear-gradient(145deg,#202d49,#151e30)}
+.dash-quick-chat{background:radial-gradient(circle at 100% 0%,#6654a544,transparent 52%),linear-gradient(145deg,#252342,#151b2d)}
+.dash-quick-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#34315c;color:#c6baff;font-size:18px;margin-bottom:16px}
+.dash-quick-label{font-size:8px;letter-spacing:1.4px;font-weight:850;color:#9c9dbd}
+.dash-quick-card b{font-size:15px;margin:7px 0 5px;letter-spacing:-.3px}
+.dash-quick-card small{max-width:190px;color:#93a2bc;font-size:10px;line-height:1.55}
+.dash-quick-arrow{position:absolute;right:15px;top:16px;color:#a99aff;font-size:16px}
+.dash-between{margin-top:36px}
+.dash-text-link{border:0;background:none;color:#a99aff;font-size:10px;font-weight:750;padding:8px 0}
+.dash-text-link:hover{color:#d1c9ff}
+.dash-bottom-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:13px}
+.dash-panel{min-width:0;padding:21px;border-radius:19px;border:1px solid #2b3850;background:linear-gradient(145deg,#151e2e,#101725);box-shadow:0 14px 38px #0002}
+.dash-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dash-panel-head h3,.dash-vault-panel h3{font-size:17px;letter-spacing:-.4px;color:#eff3ff;margin:6px 0 0}
+.dash-activity .home-status-line{margin:20px 0 12px}
+.dash-activity .callout{font-size:10px}
+.dash-divider{height:1px;background:#2a354b;margin:23px 0}
+.dash-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:15px}
+.dash-stat{padding:13px;border-radius:12px;background:#0d1523;border:1px solid #29364d}
+.dash-stat strong{display:block;color:#d8d0ff;font-size:24px;letter-spacing:-1px}
+.dash-stat span{display:block;color:#8392ac;font-size:8px;letter-spacing:1px;font-weight:800;margin-top:4px}
+.dash-footnote{font-size:9px;color:#7686a0;margin:12px 0 0;line-height:1.6}
+.dash-vault-panel{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;min-height:270px;background:radial-gradient(circle at 70% 8%,#5b4c9a55,transparent 38%),linear-gradient(145deg,#1a2339,#111a2a)}
+.dash-vault-art{position:absolute;right:22px;top:12px;width:145px;height:125px;display:flex;align-items:center;justify-content:center;gap:8px;transform:rotate(-8deg)}
+.dash-vault-art span{position:absolute;z-index:2;display:grid;place-items:center;width:54px;height:54px;border-radius:17px;background:linear-gradient(140deg,#b5a5ff,#6ce2cf);color:#11182a;font-size:25px;box-shadow:0 10px 35px #8d7cff55}
+.dash-vault-art i{display:block;width:45px;height:82px;border:1px solid #a99aff77;border-radius:10px;background:#a99aff13;transform:rotate(22deg)}
+.dash-vault-art i:nth-of-type(2){transform:rotate(-17deg);height:105px}.dash-vault-art i:nth-of-type(3){transform:rotate(39deg);height:65px}
+.dash-vault-panel>.eyebrow{margin-bottom:8px}
+.dash-vault-panel p{max-width:300px;color:#95a4bd;font-size:11px;line-height:1.7;margin:10px 0 17px}
+.dash-vault-panel .soft-btn{margin-top:0}
+@media(max-width:1000px){.dash-orbit{right:-3%;opacity:.55}.dash-hero-copy{max-width:65%}.dash-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+ .dash-hero{min-height:365px;padding:24px 20px;border-radius:21px}
+ .dash-hero-copy{max-width:100%}.dash-hero h1{font-size:47px!important;max-width:330px}
+ .dash-hero-copy>p{max-width:290px;font-size:12px}
+ .dash-orbit{width:165px;height:165px;right:-29px;top:63%;opacity:.27}
+ .orbit-one{width:140px;height:140px}.orbit-two{width:105px;height:160px}.orbit-core{width:58px;height:58px;border-radius:19px;font-size:20px}
+ .orbit-core span{font-size:11px;right:8px;top:7px}.node-one{top:15px;left:45px}.node-two{right:12px;top:68px}.node-three{bottom:15px;left:35px}
+ .dash-hero-foot{left:20px;right:20px;bottom:15px;font-size:7px}
+ .dash-section-title{align-items:flex-start;margin:27px 0 13px}.dash-section-title h2{font-size:19px}
+ .dash-subtle{display:none}.dash-quick-grid{gap:9px}
+ .dash-quick-card{min-height:164px;padding:13px;border-radius:14px}
+ .dash-quick-icon{width:32px;height:32px;margin-bottom:12px}
+ .dash-quick-card b{font-size:13px}.dash-quick-card small{font-size:9px}
+ .dash-bottom-grid{grid-template-columns:1fr;gap:10px}
+ .dash-panel{padding:16px;border-radius:16px}
+ .dash-vault-panel{min-height:245px}
+ .dash-vault-art{right:13px;top:4px;transform:scale(.8) rotate(-8deg);transform-origin:top right}
+ .dash-between{margin-top:29px}
+ .dash-text-link{font-size:9px}
+}
+
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -704,24 +782,49 @@ textarea{line-height:1.65!important}
 <main>
  <header class="topbar"><button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false" onclick="document.body.classList.toggle('menu-open');this.setAttribute('aria-expanded',String(document.body.classList.contains('menu-open')))"><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
  <section class="page" id="home">
-  <div class="welcome-row">
-   <div><div class="eyebrow">YOUR PERSONAL AI WORKSPACE</div><h1>Good morning, <span class="gradient">Idris.</span></h1><p>What would you like to work on today?</p></div>
-   <div class="welcome-mark" aria-hidden="true">✦</div>
+  <div class="dash-hero">
+   <div class="dash-hero-copy">
+    <div class="eyebrow"><span class="live-pulse"></span> YOUR PERSONAL AI WORKSPACE</div>
+    <div class="dash-date" id="dashDate">YOUR STUDIO · TODAY</div>
+    <h1>Make room for<br><span class="gradient">big ideas.</span></h1>
+    <p>One workspace for thinking, creating, researching and turning plans into something real.</p>
+    <div class="dash-hero-actions"><button class="primary-btn" data-go="chat">✦ Start a conversation <span>→</span></button><button class="soft-btn" data-go="research">Explore research ↗</button></div>
+   </div>
+   <div class="dash-orbit" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core">ID<span>✦</span></div><i class="orbit-node node-one"></i><i class="orbit-node node-two"></i><i class="orbit-node node-three"></i></div>
+   <div class="dash-hero-foot"><span><i class="live-pulse"></i> IDRIS AI STUDIO</span><span>BUILT BY I D LABS</span></div>
   </div>
-  <div class="home-composer"><div class="composer-symbol">✦</div><div><b>Your creative space is ready</b><span>Ask, explore, design or organise your next idea.</span></div><button class="primary-btn" data-go="chat">Open AI Chat <span>→</span></button></div>
-  <div class="section-head home-section-head"><div><h2>START SOMETHING</h2><p>Your tools, one tap away.</p></div><span class="tag">IDRIS AI STUDIO</span></div>
-  <div class="home-workspaces">
-   <button class="workspace-card workspace-chat" data-go="chat"><span class="workspace-icon">▤</span><span class="workspace-copy"><b>AI Chat</b><small>Think through ideas with IDRIS AI</small></span><span class="workspace-arrow">↗</span></button>
-   <button class="workspace-card workspace-research" data-go="research"><span class="workspace-icon">⌕</span><span class="workspace-copy"><b>Research Desk</b><small>Find sources and analyse information</small></span><span class="workspace-arrow">↗</span></button>
-   <button class="workspace-card workspace-create" data-go="chat"><span class="workspace-icon">✦</span><span class="workspace-copy"><b>Create with AI Chat</b><small>Ask IDRIS to create images right inside your conversation</small></span><span class="workspace-arrow">↗</span></button>
-   <button class="workspace-card workspace-prompt" data-go="prompts"><span class="workspace-icon">✦</span><span class="workspace-copy"><b>Prompt Lab</b><small>Turn rough ideas into strong prompts</small></span><span class="workspace-arrow">↗</span></button>
-   <button class="workspace-card workspace-vault" data-go="vault"><span class="workspace-icon">▣</span><span class="workspace-copy"><b>Creation Vault</b><small>Keep and manage your saved work</small></span><span class="workspace-arrow">↗</span></button>
+
+  <div class="dash-section-title"><div><span class="eyebrow">QUICK START</span><h2>What are we creating today?</h2></div><span class="dash-subtle">CHOOSE A WORKSPACE</span></div>
+  <div class="dash-quick-grid">
+   <button class="dash-quick-card dash-quick-chat" data-go="chat"><span class="dash-quick-icon">✦</span><span class="dash-quick-label">AI ASSISTANT</span><b>Think out loud.</b><small>Ask questions, plan projects and solve problems.</small><span class="dash-quick-arrow">↗</span></button>
+   <button class="dash-quick-card" data-go="maker"><span class="dash-quick-icon">▧</span><span class="dash-quick-label">IMAGE CREATOR</span><b>Bring it to life.</b><small>Turn a visual idea into an original image.</small><span class="dash-quick-arrow">↗</span></button>
+   <button class="dash-quick-card" data-go="research"><span class="dash-quick-icon">⌕</span><span class="dash-quick-label">RESEARCH DESK</span><b>Find the signal.</b><small>Explore current topics and analyse information.</small><span class="dash-quick-arrow">↗</span></button>
+   <button class="dash-quick-card" data-go="prompts"><span class="dash-quick-icon">⌘</span><span class="dash-quick-label">PROMPT LAB</span><b>Sharpen the idea.</b><small>Build clearer instructions for AI tools.</small><span class="dash-quick-arrow">↗</span></button>
   </div>
-  <div class="home-lower">
-   <div class="panel home-status-panel"><div class="home-panel-title"><div><span class="eyebrow">CONNECTION</span><h2>Your studio status</h2></div><span class="status" id="homeStatusPill">● CHECKING</span></div><div class="home-status-line"><span class="status-dot"></span><div><b id="homeStatusTitle">Checking AI connection</b><small id="homeStatusText">Connecting to the secure IDRIS AI backend…</small></div></div><div id="homeAIStatus" class="callout info">AI STATUS · Checking the secure AI connection…</div></div>
-   <div class="panel home-stats-panel"><div class="eyebrow">YOUR WORKSPACE</div><h2>Saved work at a glance</h2><div class="statrow"><div class="stat"><strong id="statSaved">0</strong><span>SAVED ITEMS</span></div><div class="stat"><strong>2</strong><span>LOCAL TOOLS</span></div><div class="stat"><strong>1</strong><span>LIVE AI SERVICE</span></div></div><p class="muted small">Your saved creations stay in this browser on this device.</p></div>
+
+  <div class="dash-section-title dash-between"><div><span class="eyebrow">YOUR COMMAND CENTER</span><h2>Everything in one place.</h2></div><button class="dash-text-link" data-go="vault">Open Creation Vault ↗</button></div>
+  <div class="dash-bottom-grid">
+   <div class="dash-panel dash-activity">
+    <div class="dash-panel-head"><div><span class="eyebrow">LIVE CONNECTION</span><h3>Studio status</h3></div><span class="status" id="homeStatusPill">● CHECKING</span></div>
+    <div class="home-status-line"><span class="status-dot"></span><div><b id="homeStatusTitle">Checking AI connection</b><small id="homeStatusText">Connecting to the secure IDRIS AI backend…</small></div></div>
+    <div id="homeAIStatus" class="callout info">AI STATUS · Checking the secure AI connection…</div>
+    <div class="dash-divider"></div>
+    <div class="dash-panel-head"><div><span class="eyebrow">YOUR ACTIVITY</span><h3>Workspace snapshot</h3></div><button class="dash-text-link" data-go="plans">Details ↗</button></div>
+    <div class="dash-stats">
+     <div class="dash-stat"><strong id="statSaved">0</strong><span>SAVED ITEMS</span></div>
+     <div class="dash-stat"><strong id="dashChatCount">0</strong><span>CHAT THREADS</span></div>
+     <div class="dash-stat"><strong>24/7</strong><span>YOUR WORKSPACE</span></div>
+    </div>
+    <p class="dash-footnote">Your saved creations and chat history are stored in this browser on this device.</p>
+   </div>
+   <div class="dash-panel dash-vault-panel">
+    <div class="dash-vault-art"><span>✧</span><i></i><i></i><i></i></div>
+    <span class="eyebrow">IDEAS WORTH KEEPING</span><h3>Your Creation Vault.</h3>
+    <p>Keep your prompts, drafts and generated work organised. Export a backup whenever you need it.</p>
+    <button class="soft-btn" data-go="vault">Explore saved work <span>→</span></button>
+   </div>
   </div>
-  <div class="home-footer-note">A place to think clearly, create freely and keep moving. <span>— IDRIS AI STUDIO</span></div>
+  <div class="home-footer-note">Think clearly. Create boldly. Keep moving. <span>— IDRIS AI STUDIO</span></div>
  </section>
 
  <section class="page" id="prompts">
@@ -1191,4 +1294,14 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
 (()=>{document.querySelectorAll('[data-starter]').forEach(button=>button.addEventListener('click',()=>{const draft=document.getElementById('chatDraft');if(!draft)return;draft.value=button.dataset.starter||'';draft.focus();draft.dispatchEvent(new Event('input',{bubbles:true}));}));})();
 </script>
 
+
+<script>
+(()=>{
+ const date=document.getElementById('dashDate');
+ if(date){const now=new Date();date.textContent=now.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'}).toUpperCase();}
+ const chats=()=>{try{const x=JSON.parse(localStorage.getItem('idris-ai-conversations-v1')||'[]');return Array.isArray(x)?x.length:0}catch{return 0}};
+ const count=document.getElementById('dashChatCount');if(count)count.textContent=String(chats());
+ document.querySelectorAll('[data-go]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.go==='maker'){const target=document.querySelector('[data-studio-action="image"]');if(target)target.click();}}));
+})();
+</script>
 </body></html>
