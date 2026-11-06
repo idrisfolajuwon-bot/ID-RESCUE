@@ -142,6 +142,12 @@ main{max-width:1040px;padding:18px clamp(16px,4vw,46px) 40px}
 #authGate{position:fixed;inset:0;z-index:9999;background:#f5f7fb;color:#172033;display:grid;place-items:center;padding:22px;font-family:inherit}#authGate[hidden]{display:none}.auth-card{width:min(430px,100%);background:#fff;border:1px solid #e5eaf2;border-radius:24px;padding:28px;box-shadow:0 24px 80px #16213a18}.auth-brand{font-weight:850;letter-spacing:.08em;color:#1b2942}.auth-card h1{font-size:28px;margin:24px 0 5px}.auth-card p{color:#68758b;margin:0 0 22px}.auth-card label{display:block;font-weight:650;font-size:13px;margin:14px 0 6px}.auth-card input{width:100%;padding:13px 14px;border:1px solid #d8dfeb;border-radius:12px;background:#fff;color:#172033}.auth-action{width:100%;border:0;border-radius:12px;padding:14px;margin-top:16px;background:#172b4d;color:white;font-weight:750}.auth-google{background:#fff;color:#172033;border:1px solid #d8dfeb;margin-top:10px}.auth-links{display:flex;justify-content:space-between;gap:12px;margin-top:17px}.auth-links button{border:0;background:none;color:#365ca0;font-weight:650;padding:4px}.auth-error{color:#b42338;font-size:13px;min-height:18px;margin-top:10px}.auth-note{font-size:12px;color:#778399;margin-top:16px}
 body.menu-open .side{transform:translateX(0)!important;visibility:visible!important;left:0!important}
 body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
+/* Plans & Usage control center */
+.plan-status-banner{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px;border:1px solid #dcd8ff;background:linear-gradient(110deg,#f1efff,#f8faff);border-radius:18px;margin:8px 0 14px}
+.plan-status-banner strong,.plan-status-banner small{display:block}.plan-status-banner strong{font-size:20px;letter-spacing:.5px;margin:4px 0}.plan-status-banner small{color:#68758d;font-size:11px}.plan-status-kicker,.plan-eyebrow{font-size:9px;letter-spacing:1.5px;font-weight:900;color:#6657d9}.plan-status-chip,.plan-badge{font-size:9px;font-weight:900;letter-spacing:1px;padding:7px 10px;border-radius:30px;background:#e4f8eb;color:#167747;white-space:nowrap}
+.plan-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:0 0 14px}.plan-metric{background:#fff;border:1px solid #e6eaf2;border-radius:15px;padding:16px}.plan-metric span,.plan-metric small{display:block;color:#78849a;font-size:9px;letter-spacing:.8px}.plan-metric strong{display:block;font-size:25px;margin:6px 0;color:#202b43}.plan-metric small{font-size:10px;letter-spacing:0}
+.plan-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.plan-card{border:1px solid #e5e8f1;background:#fff;border-radius:18px;padding:20px;display:flex;flex-direction:column;min-width:0}.plan-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.plan-card h2{font-size:21px;margin:5px 0}.plan-badge{background:#efedff;color:#594bc7}.plan-badge-future{background:#f2f4f8;color:#667085}.plan-price{font-size:28px;font-weight:900;margin:12px 0 4px}.plan-price small{font-size:11px;font-weight:600;color:#78849a}.plan-description{font-size:11px;color:#78849a;min-height:38px}.plan-card ul{padding-left:19px;line-height:2.05;font-size:11px;color:#3d4960;flex:1}.plan-card-foot{border-top:1px solid #edf0f5;padding-top:12px;font-size:10px;font-weight:800;color:#5e6a80}.plan-premium{background:linear-gradient(155deg,#fff,#faf8ff);border-color:#dcd6ff}.plan-safety{margin-top:14px}.plan-safety p{font-size:11px;line-height:1.7;color:#69758a}.plan-safety-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #edf0f5;font-size:11px}.plan-safety-row b{color:#667085;text-align:right}
+@media(max-width:650px){.plan-status-banner{padding:16px}.plan-status-banner strong{font-size:17px}.plan-metrics{gap:7px}.plan-metric{padding:11px}.plan-metric strong{font-size:20px}.plan-metric span{font-size:8px}.plan-metric small{font-size:9px}.plan-columns{grid-template-columns:1fr}.plan-card{padding:17px}}
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -157,6 +163,7 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
   <button data-studio-action="web"><span class="ico">⌕</span>Web Explorer</button>
   <button data-studio-action="image"><span class="ico">✦</span>Image Creator</button>
   <button data-page="prompts"><span class="ico">✧</span>Prompt Builder</button>
+  <button data-page="plans"><span class="ico">◈</span>Plans & Usage</button>
   <button data-studio-action="projects"><span class="ico">▣</span>My Projects</button>
   <button data-studio-action="history"><span class="ico">◷</span>Chat History</button>
   <button data-studio-action="memory"><span class="ico">✎</span>AI Memory</button>
@@ -249,6 +256,21 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
  <section class="page" id="vault">
   <div class="hero"><div class="eyebrow">YOUR IDEAS, KEPT TOGETHER</div><h1>Creation <span class="gradient">Vault.</span></h1><p>Find your saved prompts, drafts and designs. Your vault is stored locally in this browser, not in a cloud account.</p></div>
   <div class="panel"><div class="vault-tools"><input id="vaultSearch" placeholder="Search saved work…"><select id="vaultFilter" style="max-width:170px"><option value="all">All items</option><option value="Prompt">Prompts</option><option value="Design">Designs</option><option value="Chat">Chat drafts</option></select></div><div class="vault-grid" id="vaultGrid"><div class="empty">Your saved work will appear here.</div></div><div class="actions"><button class="soft-btn" id="exportVault">BACK UP MY VAULT</button><button class="soft-btn" id="importVault">RESTORE BACKUP</button><input id="importFile" type="file" accept="application/json" hidden><button class="danger-btn" id="clearVault">CLEAR VAULT</button></div><p class="muted small">Tip: export a backup before changing phones or clearing browser data.</p></div>
+ </section>
+
+ <section class="page" id="plans">
+  <div class="hero"><div class="eyebrow">I D LABS · MEMBERSHIP CONTROL CENTER</div><h1>Plans &amp; <span class="gradient">Usage.</span></h1><p>A transparent look at the IDRIS AI STUDIO free experience, the planned Premium tier and your activity on this device.</p></div>
+  <div class="plan-status-banner"><div><span class="plan-status-kicker">YOUR CURRENT PLAN</span><strong>FREE WORKSPACE</strong><small>No subscription. No payment method. No charge from this screen.</small></div><span class="plan-status-chip">ACTIVE</span></div>
+  <div class="plan-metrics">
+   <div class="plan-metric"><span>LOCAL CHAT HISTORY</span><strong id="planChatCount">—</strong><small>Conversations saved on this device</small></div>
+   <div class="plan-metric"><span>SAVED CREATIONS</span><strong id="planVaultCount">—</strong><small>Items in your Creation Vault</small></div>
+   <div class="plan-metric"><span>MEMBERSHIP</span><strong>FREE</strong><small>Premium checkout is not enabled</small></div>
+  </div>
+  <div class="plan-columns">
+   <article class="plan-card plan-free"><div class="plan-card-top"><div><span class="plan-eyebrow">START HERE</span><h2>Free</h2></div><span class="plan-badge">CURRENT PLAN</span></div><div class="plan-price">₦0 <small>/ always free</small></div><p class="plan-description">Explore the studio and use the core tools while we build the next generation.</p><ul><li>AI assistant conversations</li><li>Image creation when the service is available</li><li>Prompt Builder</li><li>Chat history and browser memory</li><li>Creation Vault and backups</li><li>Web Explorer</li></ul><div class="plan-card-foot">Your current experience</div></article>
+   <article class="plan-card plan-premium"><div class="plan-card-top"><div><span class="plan-eyebrow">IN DEVELOPMENT</span><h2>Premium</h2></div><span class="plan-badge plan-badge-future">COMING LATER</span></div><div class="plan-price">Not priced <small>/ not for sale</small></div><p class="plan-description">A future upgrade for people who need more capability and higher limits.</p><ul><li>Higher AI usage limits</li><li>Expanded image-generation allowance</li><li>Advanced creation workflows</li><li>More project organisation tools</li><li>Priority features when technically supported</li></ul><div class="plan-card-foot">No checkout or payment is active</div></article>
+  </div>
+  <div class="panel plan-safety"><h2>TRANSPARENCY &amp; COST CONTROL</h2><p>These activity numbers are read from this browser only. They are not server-side usage meters, billing records or enforced limits. The current app does not yet have secure Free/Premium entitlement checks, so Premium features are not being sold or unlocked.</p><div class="plan-safety-row"><span>Payments</span><b>Not connected</b></div><div class="plan-safety-row"><span>Premium access control</span><b>Not activated</b></div><div class="plan-safety-row"><span>Usage enforcement</span><b>Not activated</b></div><div class="actions"><button class="soft-btn" id="refreshPlanStats">↻ REFRESH ACTIVITY</button><button class="soft-btn" id="copyPlanRoadmap">COPY DEVELOPMENT ROADMAP</button></div><p class="muted small" id="planUpdatedAt">Activity is calculated locally on this device.</p></div>
  </section>
 
  <section class="page" id="about">
@@ -602,6 +624,26 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
  $('authGoogle').onclick=async()=>{try{if(!window.supabase)throw new Error('Sign-in service is still loading.');const r=await getClient().auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(r.error)throw r.error}catch(ex){error(ex.message||'Google sign-in is not available yet.')}};
  paint();
  setTimeout(async()=>{try{if(window.supabase){const {data}=await getClient().auth.getSession();if(data.session){gate.hidden=true;document.querySelector('.shell').style.visibility='visible'}}}catch{}},400);
+})();
+</script>
+<script>
+(()=>{'use strict';
+ const $=id=>document.getElementById(id);
+ const readArray=(key)=>{try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch{return[]}};
+ function refresh(){
+  const chats=readArray('idris-ai-conversations-v1');
+  const vault=readArray('idris-ai-studio-v2');
+  const c=$('planChatCount'),v=$('planVaultCount'),stamp=$('planUpdatedAt');
+  if(c)c.textContent=String(chats.length);
+  if(v)v.textContent=String(vault.length);
+  if(stamp)stamp.textContent='Last refreshed on this device: '+new Date().toLocaleString();
+ }
+ $('refreshPlanStats')?.addEventListener('click',()=>{refresh();const t=$('toast');if(t){t.textContent='Local activity refreshed.';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}});
+ $('copyPlanRoadmap')?.addEventListener('click',async()=>{
+  const roadmap='IDRIS AI STUDIO — FREEMIUM DEVELOPMENT ROADMAP\n1. Keep the current Free experience reliable.\n2. Add secure server-side usage tracking and rate limits.\n3. Define affordable Free and Premium allowances from real provider costs.\n4. Add verified account entitlements.\n5. Only then consider a compliant payment provider and checkout.\nNo payments or Premium unlocks are active yet.';
+  try{await navigator.clipboard.writeText(roadmap);const t=$('toast');if(t){t.textContent='Roadmap copied.';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}}catch{if($('planUpdatedAt'))$('planUpdatedAt').textContent=roadmap}
+ });
+ refresh();
 })();
 </script>
 </body></html>
