@@ -148,6 +148,48 @@ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
 .plan-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:0 0 14px}.plan-metric{background:#fff;border:1px solid #e6eaf2;border-radius:15px;padding:16px}.plan-metric span,.plan-metric small{display:block;color:#78849a;font-size:9px;letter-spacing:.8px}.plan-metric strong{display:block;font-size:25px;margin:6px 0;color:#202b43}.plan-metric small{font-size:10px;letter-spacing:0}
 .plan-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.plan-card{border:1px solid #e5e8f1;background:#fff;border-radius:18px;padding:20px;display:flex;flex-direction:column;min-width:0}.plan-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.plan-card h2{font-size:21px;margin:5px 0}.plan-badge{background:#efedff;color:#594bc7}.plan-badge-future{background:#f2f4f8;color:#667085}.plan-price{font-size:28px;font-weight:900;margin:12px 0 4px}.plan-price small{font-size:11px;font-weight:600;color:#78849a}.plan-description{font-size:11px;color:#78849a;min-height:38px}.plan-card ul{padding-left:19px;line-height:2.05;font-size:11px;color:#3d4960;flex:1}.plan-card-foot{border-top:1px solid #edf0f5;padding-top:12px;font-size:10px;font-weight:800;color:#5e6a80}.plan-premium{background:linear-gradient(155deg,#fff,#faf8ff);border-color:#dcd6ff}.plan-safety{margin-top:14px}.plan-safety p{font-size:11px;line-height:1.7;color:#69758a}.plan-safety-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #edf0f5;font-size:11px}.plan-safety-row b{color:#667085;text-align:right}
 @media(max-width:650px){.plan-status-banner{padding:16px}.plan-status-banner strong{font-size:17px}.plan-metrics{gap:7px}.plan-metric{padding:11px}.plan-metric strong{font-size:20px}.plan-metric span{font-size:8px}.plan-metric small{font-size:9px}.plan-columns{grid-template-columns:1fr}.plan-card{padding:17px}}
+
+/* Reference-video polish: airy lavender workspace and focused mobile chat */
+:root{--mint:#6858df;--blue:#4f83e8;--violet:#9a78f0;--line:#e7e9f3;--shadow:0 14px 38px rgba(45,48,95,.065)}
+html{background:#f7f8fc}
+body{background:radial-gradient(ellipse at 82% 0%,rgba(225,220,255,.58),transparent 34%),radial-gradient(ellipse at 5% 42%,rgba(224,239,255,.48),transparent 32%),#f7f8fc;color:#202a40}
+main{max-width:1100px}
+.topbar{position:sticky;top:0;z-index:15;background:rgba(247,248,252,.88);backdrop-filter:blur(16px);margin:0 -10px;padding:8px 10px 13px}
+.crumb{color:#8290a8}
+.menu-toggle{box-shadow:0 3px 12px rgba(38,48,83,.05)}
+.chat-welcome{min-height:clamp(300px,54vh,590px);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:35px 0 26px}
+.chat-welcome-mark{width:62px;height:62px;border-radius:21px;background:linear-gradient(145deg,#efedff,#e7e3ff);border:1px solid #e4dfff;box-shadow:0 12px 28px rgba(101,85,220,.09)}
+.chat-welcome .eyebrow{font-size:9px}
+.chat-welcome h1{font-size:clamp(36px,6vw,52px);letter-spacing:-2px}
+.chat-welcome p{font-size:14px}
+.chat-main-panel{border-radius:23px;padding:15px;background:rgba(255,255,255,.96);box-shadow:0 15px 45px rgba(35,46,85,.075);border-color:#e8e9f2}
+.chat-main-panel .chatlog{min-height:64px;max-height:42vh}
+.chat-compose{border-radius:17px;padding:7px 8px 7px 15px;transition:border-color .18s,box-shadow .18s}
+.chat-compose:focus-within{border-color:#b9b1f5;box-shadow:0 0 0 4px rgba(105,88,223,.08)}
+.chat-compose textarea{font-size:14px}
+.send-round{background:linear-gradient(145deg,#7566eb,#5c4ed0);box-shadow:0 5px 13px rgba(98,80,214,.22)}
+.bubble{border-radius:17px}
+.bubble.user{background:#efedff;color:#41369b;border:1px solid #e6e1ff}
+.bubble:not(.user):not(.note){background:#f5f6fb;border:1px solid #eceef5;color:#29344b}
+.panel,.plan-card,.workspace-card,.tile{box-shadow:0 8px 28px rgba(37,47,82,.045)}
+.plan-status-banner{background:linear-gradient(115deg,#f0eeff,#f7f8ff);border-color:#e3defe}
+@media(max-width:650px){
+ main{padding:10px 12px 22px}
+ .topbar{margin:0 -4px;padding:5px 4px 11px}
+ .chat-welcome{min-height:calc(100dvh - 300px);padding:26px 0 20px}
+ .chat-welcome-mark{width:55px;height:55px;border-radius:18px;margin-bottom:15px}
+ .chat-welcome h1{font-size:37px}
+ .chat-main-panel{padding:10px;border-radius:20px;margin-bottom:8px}
+ .chat-main-panel .chatlog{max-height:34dvh;min-height:48px}
+ .chat-under-tools{padding:8px 3px 1px}
+ .chat-mini-status{font-size:9px}
+ .hero{padding:27px 0 20px}
+ .panel{box-shadow:0 6px 22px rgba(37,47,82,.04)}
+}
+@media(min-width:900px){
+ .chat-welcome{min-height:48vh}
+ .chat-main-panel{margin-bottom:16px}
+}
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
