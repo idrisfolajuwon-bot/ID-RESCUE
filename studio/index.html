@@ -1362,8 +1362,10 @@ function addBubble(role,text){
 }
 async function understandIntent(message){
  const recent=chatMessages.slice(-8).map(m=>({role:m.role,content:m.content}));
+ const lastImagePrompt=(localStorage.getItem('idris-ai-last-image-prompt-v1')||'').trim();
  const routerMessages=[
   {role:'system',content:'You are the intent router for IDRIS AI STUDIO. Understand natural language semantically, including casual English, typos, slang, Nigerian-style English, incomplete sentences, punctuation and conversation context. Decide what the user wants RIGHT NOW. Return ONLY valid JSON with exactly: {"intent":"chat"|"image"|"clarify","prompt":"string","reason":"short string"}. IMPORTANT: distinguish a question about capability from an instruction or permission to create. If the user is only asking whether you can create images, what kinds of images you can create, or whether image creation is possible, choose "chat" and answer the question; do NOT generate an image. Examples that mean CHAT: "Can you create an image?", "I don\'t know, can you create image?", "Are you able to make pictures?", "What can you create?". If the user asks for a specific visual in the same question, it IS a request: "Can you create an image of a red car?" means IMAGE. Choose "image" when the user directly asks you to create, make, draw, design or generate a visual, or gives permission for you to choose: examples "Create a futuristic car", "I don\'t know, you can create something", "Just make something cool", "Surprise me with something", "Anything you want to create", "Make am look better" when the conversation clearly refers to an image/design, or "Give me a futuristic wallpaper". For open-ended permission such as "you can create something", invent a suitable safe, original visual prompt and generate it without asking the user to choose. Use the conversation to resolve references like "make that brighter". Choose "chat" for ordinary questions, writing, explanations, plans, code and normal conversation. Choose "clarify" only when the user clearly wants an action but the intended result genuinely cannot be inferred. Never treat the mere presence of words like "create", "image" or "make" as sufficient; classify the whole meaning.'},
+  ...(lastImagePrompt?[{role:'system',content:'The most recent image created in this conversation used this prompt: '+lastImagePrompt+'. If the user now asks to change, improve, continue, or adjust that image, classify it as image and create a revised prompt that preserves the original subject and requested changes.'}]:[]),
   ...recent,
   {role:'user',content:'Current message to understand: '+message}
  ];
@@ -1439,6 +1441,7 @@ $('sendToAI').onclick=async()=>{
    if(!response.ok){let msg='Image generation failed.';try{const d=await response.json();msg=d.error||msg}catch{}throw Error(msg)}
    const blob=await response.blob();if(!blob.type.startsWith('image/'))throw Error('The image service returned an unexpected response.');
    wait.remove();addGeneratedImageBubble(prompt,blob);
+   try{localStorage.setItem('idris-ai-last-image-prompt-v1',prompt)}catch{}
    chatMessages.push({role:'assistant',content:'I created an image from your prompt. Use the download button in the chat to save it.'});storeConversation();
   }else if(decision.intent==='clarify'){
    wait.remove();
