@@ -207,6 +207,61 @@ main{max-width:1100px}
  .chat-under-tools{padding-bottom:env(safe-area-inset-bottom)}
 }
 
+
+/* IDRIS AI STUDIO — refreshed chat workspace */
+:root{--chat-ink:#20283a;--chat-muted:#788398;--chat-purple:#6657d9;--chat-line:#e5e8f0}
+html,body{min-height:100%;background:#f7f8fc}
+body{background:linear-gradient(180deg,#fbfbfe 0%,#f5f6fb 100%);color:var(--chat-ink)}
+.shell{display:block;max-width:none;min-height:100dvh}
+.side{position:fixed;left:0;top:0;bottom:0;width:min(292px,86vw);height:100dvh;transform:translateX(-110%);visibility:hidden;transition:transform .22s ease,visibility .22s;z-index:60;background:rgba(255,255,255,.98);box-shadow:18px 0 60px rgba(25,35,65,.13);border-right:1px solid var(--chat-line)}
+body.menu-open .side{transform:translateX(0);visibility:visible}
+.drawer-scrim{z-index:55}
+main{width:100%;max-width:1000px;margin:0 auto;padding:12px clamp(14px,3vw,30px) 24px}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:13px;padding:9px 0 13px;background:rgba(247,248,252,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(229,232,240,.85)}
+.menu-toggle{width:42px;height:42px;flex:0 0 42px;border-radius:14px;background:#fff;border:1px solid #e6e9f1;box-shadow:0 2px 8px rgba(30,42,70,.04)}
+.menu-toggle span{background:#39445a}
+.crumb{font-size:12px;font-weight:850;letter-spacing:.5px;color:#303b52}
+.top-actions{margin-left:auto;gap:8px}
+.status{font-size:9px;padding:7px 10px;border-radius:20px}
+.top-actions .soft-btn{border-radius:22px;padding:9px 13px}
+.page{min-height:calc(100dvh - 68px)}
+.page#chat.active{display:flex;flex-direction:column;min-height:calc(100dvh - 68px)}
+.chat-welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:260px;padding:clamp(40px,10vh,100px) 12px 24px}
+.chat-welcome-mark{width:48px;height:48px;margin:0 auto 17px;border-radius:16px;background:linear-gradient(145deg,#efedff,#f4f1ff);border:1px solid #e5e1ff;box-shadow:0 8px 22px rgba(102,87,217,.08);color:var(--chat-purple)}
+.chat-welcome .eyebrow{font-size:10px;letter-spacing:1.8px;color:#7569d7}
+.chat-welcome h1{font-size:clamp(32px,5vw,46px);font-weight:760;letter-spacing:-1.7px;margin:10px 0 8px;color:#222b40}
+.chat-welcome p{font-size:15px;color:#7b8699}
+.chat-main-panel{width:100%;max-width:820px;margin:auto auto 0;padding:0 0 8px;border:0;border-radius:0;background:transparent;box-shadow:none}
+.chat-main-panel .chatlog{min-height:0;max-height:43dvh;padding:12px 4px 16px;background:transparent;border:0}
+.chat-compose{align-items:flex-end;gap:10px;padding:10px 12px 10px 17px;border:1px solid #dfe3ec;border-radius:26px;background:#fff;box-shadow:0 7px 24px rgba(32,43,72,.07)}
+.chat-compose:focus-within{border-color:#b9b1f3;box-shadow:0 0 0 3px rgba(102,87,217,.08),0 7px 24px rgba(32,43,72,.06)}
+.chat-compose textarea{min-height:36px;max-height:150px;padding:8px 0;color:#222b40;font-size:14px}
+.send-round{width:40px;height:40px;flex:0 0 40px;border-radius:50%;background:var(--chat-purple);box-shadow:0 4px 12px rgba(102,87,217,.2)}
+.chat-under-tools{padding:10px 4px 0;gap:7px}
+.chat-under-tools .soft-btn{border-radius:20px;background:#fff;padding:7px 11px}
+.chat-mini-status{font-size:10px;color:#8791a3}
+.bubble{border-radius:17px;padding:12px 15px;line-height:1.7}
+.bubble.user{background:#eeecff;color:#40378e}
+.chat-extra-panel{display:none}
+.panel{border-radius:18px}
+.tile,.workspace-card,.saved{box-shadow:0 3px 12px rgba(32,43,72,.035)}
+@media(max-width:650px){
+ main{padding:8px 12px 15px}
+ .topbar{padding:7px 0 10px}
+ .top-actions .soft-btn{display:none}
+ .status{font-size:8px}
+ .page#chat.active{min-height:calc(100dvh - 61px)}
+ .chat-welcome{min-height:220px;padding:clamp(35px,9vh,75px) 8px 18px}
+ .chat-welcome h1{font-size:34px}
+ .chat-welcome p{font-size:14px}
+ .chat-main-panel{padding:0 0 7px}
+ .chat-compose{padding:8px 9px 8px 14px;border-radius:23px}
+ .chat-compose textarea{font-size:14px}
+ .chat-under-tools{padding:8px 2px 0}
+ .chat-mini-status{width:100%;margin:1px 0 0 3px}
+ .side{padding:22px 15px}
+}
+
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
