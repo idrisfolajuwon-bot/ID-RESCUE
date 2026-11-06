@@ -288,6 +288,75 @@ main{width:100%;max-width:1000px;margin:0 auto;padding:12px clamp(14px,3vw,30px)
  .chat-compose{min-height:56px}
 }
 
+
+
+/* V19 — complete ChatGPT-style workspace layout */
+:root{--studio-purple:#6657d9;--studio-border:#e7e9f1;--studio-text:#20283a;--studio-muted:#818ba0}
+body{background:#fff;color:var(--studio-text)}
+.shell{min-height:100dvh}
+.side{width:276px;padding:20px 14px 14px;background:#f7f7f9;border:0;border-right:1px solid #ececf1;box-shadow:none;display:flex;flex-direction:column}
+.brand{padding:3px 8px 22px}.brand-mark{width:38px;height:38px;border-radius:12px}
+.brand-name{font-size:12px;letter-spacing:1px}.brand-sub{font-size:9px}
+.side .nav-label{display:none}.side .nav{gap:3px}.side .nav button{min-height:42px;padding:10px 11px;border-radius:11px;color:#424b5e;font-size:12px}.side .nav button:hover{background:#ececf2;color:#252c3b}.side .nav button.active{background:#eae8fb;border-color:#e3e0fa;color:#5145bd}
+.sidebar-chat-tools{display:flex;flex-direction:column;gap:9px;margin:13px 2px 12px;min-height:0;flex:1}
+.sidebar-new-chat{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:1px solid #e3e4eb;border-radius:12px;background:#fff;color:#30394d;font-size:12px;font-weight:750;text-align:left;box-shadow:0 2px 5px #2222}
+.sidebar-new-chat span{font-size:19px;color:var(--studio-purple);line-height:1}
+.sidebar-search{display:flex;align-items:center;gap:8px;padding:0 11px;border:1px solid #e5e6ed;border-radius:11px;background:#fff;color:#818ba0}
+.sidebar-search span{font-size:19px}.sidebar-search input{width:100%;min-width:0;padding:10px 0;border:0!important;outline:0!important;background:transparent!important;font-size:11px;box-shadow:none!important}
+.sidebar-history-heading{padding:13px 9px 3px;color:#9299a8;font-size:9px;font-weight:850;letter-spacing:1.2px}
+.sidebar-recent{display:grid;gap:3px;overflow:auto;align-content:start;max-height:38vh}
+.sidebar-chat-item{display:flex;align-items:center;gap:9px;min-width:0;width:100%;padding:9px 10px;border:0;border-radius:9px;background:transparent;color:#4a5365;text-align:left;font-size:11px;cursor:pointer}
+.sidebar-chat-item:hover{background:#ececf2}.sidebar-chat-icon{color:#8992a4;font-size:13px}.sidebar-chat-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-empty{padding:9px 10px;color:#9aa1ae;font-size:10px;line-height:1.5}
+.side-bottom{margin-top:auto}.connection{margin:8px 2px 12px;border:1px solid #e9e7df;background:#fffdf7;border-radius:11px;padding:10px;font-size:9px}.profile{padding:12px 5px 2px;border-color:#e7e8ed}
+main{max-width:1120px;padding:10px clamp(18px,4vw,52px) 24px}
+.topbar{height:58px;padding:6px 0 10px;background:rgba(255,255,255,.94);border-bottom:1px solid #f0f0f3}
+.menu-toggle{width:38px;height:38px;flex-basis:38px;border-radius:11px;box-shadow:none}
+.crumb{font-size:12px;font-weight:750;letter-spacing:0;color:#394255}
+.status{border:0;background:#f0effb;color:#6657d9;font-size:9px}
+.page#chat.active{display:flex;flex-direction:column;min-height:calc(100dvh - 72px);height:calc(100dvh - 72px)}
+.chat-welcome{min-height:0;flex:1;padding:30px 10px 22px;justify-content:center;transition:opacity .18s ease}
+.chat-welcome-mark{width:46px;height:46px;border-radius:15px;margin-bottom:16px;background:#f0efff;border:0;box-shadow:none}
+.chat-welcome h1{font-size:clamp(32px,4.6vw,43px);letter-spacing:-1.7px;margin:10px 0 7px}
+.chat-welcome p{font-size:14px;margin-bottom:24px}
+.chat-starters{width:min(100%,650px);gap:9px}
+.chat-starters button{min-height:66px;padding:12px 14px;border-radius:13px;box-shadow:none;background:#fff}
+.chat-starters button:hover{transform:translateY(-1px);background:#fafaff}
+.chat-starters button b{font-size:11px}.chat-starters button small{font-size:9px}
+.chat-main-panel{width:100%;max-width:790px;margin:auto auto 0;padding:0 0 max(9px,env(safe-area-inset-bottom));display:flex;flex-direction:column;min-height:0}
+.chat-main-panel .chatlog{flex:1;min-height:0;max-height:none;overflow-y:auto;padding:16px 8px 20px;display:flex;flex-direction:column;gap:13px}
+.chat-compose{flex:0 0 auto;min-height:58px;border-radius:23px;padding:8px 10px 8px 16px;border-color:#e3e5ec;box-shadow:0 4px 18px rgba(30,40,70,.06)}
+.chat-compose textarea{min-height:38px;max-height:180px;font-size:14px}
+.send-round{width:39px;height:39px;flex-basis:39px}
+.chat-under-tools{justify-content:center;padding-top:8px}.chat-under-tools .soft-btn{background:transparent;border-color:transparent;color:#828b9c}.chat-mini-status{font-size:9px}
+.chat.has-messages .chat-welcome{display:none}
+.chat.has-messages .chat-main-panel{flex:1;min-height:0;margin-top:0}
+.chat.has-messages .chat-main-panel .chatlog{max-height:none}
+.bubble{max-width:min(88%,680px);font-size:14px;line-height:1.75;padding:12px 15px;border-radius:17px}
+.bubble.user{align-self:flex-end;max-width:82%;border:0;background:#f0effb;color:#35305e}
+.bubble:not(.user){align-self:flex-start;background:transparent;border:0;color:#283247;padding-left:3px}
+.bubble.note{color:#8791a3;font-size:11px}
+#chatHistoryPanel{display:none!important}
+@media(min-width:900px){
+ body{padding-left:276px}.side{transform:translateX(0);visibility:visible;left:0}.drawer-scrim,.menu-toggle{display:none!important}
+ main{max-width:1120px}.topbar{position:sticky}
+}
+@media(max-width:899px){.side{width:min(292px,86vw)}}
+@media(max-width:650px){
+ body{padding-left:0}.side{padding:17px 14px}.side-bottom .connection{display:none}
+ main{padding:7px 13px 10px}.topbar{height:51px;padding:5px 0 8px}
+ .page#chat.active{height:calc(100dvh - 59px);min-height:calc(100dvh - 59px)}
+ .chat-welcome{padding:20px 2px 18px;min-height:0}
+ .chat-welcome h1{font-size:33px}.chat-welcome p{font-size:13px;margin-bottom:19px}
+ .chat-starters{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .chat-starters button{min-height:70px;padding:10px 9px;grid-template-columns:20px 1fr;column-gap:7px}
+ .chat-starters button span{width:20px;height:20px}.chat-starters button b{font-size:10px}.chat-starters button small{font-size:8px}
+ .chat-main-panel{padding-bottom:max(5px,env(safe-area-inset-bottom))}
+ .chat-compose{min-height:54px;padding:7px 8px 7px 13px}.chat-compose textarea{font-size:14px;min-height:36px}
+ .chat-under-tools{gap:3px;padding-top:5px}.chat-under-tools .soft-btn{font-size:9px;padding:5px 7px}
+ .chat-mini-status{font-size:8px}
+ .chat.has-messages .chat-main-panel{padding-bottom:max(5px,env(safe-area-inset-bottom))}
+}
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -309,6 +378,12 @@ main{width:100%;max-width:1000px;margin:0 auto;padding:12px clamp(14px,3vw,30px)
   <button data-studio-action="memory"><span class="ico">✎</span>AI Memory</button>
   <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
  </nav>
+ <div class="sidebar-chat-tools">
+  <button type="button" class="sidebar-new-chat" data-new-chat><span>＋</span> New chat</button>
+  <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off"></label>
+  <div class="sidebar-history-heading">RECENT</div>
+  <div class="sidebar-recent" id="sidebarRecent"><div class="sidebar-empty">Your chats will appear here.</div></div>
+ </div>
  <div class="side-bottom">
   <div class="connection" id="sideConnection"><b>● CHECKING AI CONNECTION</b>Connecting to the secure IDRIS AI backend…</div>
   <div class="profile"><div class="avatar">ID</div><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div>
@@ -525,10 +600,17 @@ async function syncConversations(){
 }
 function loadConversations(){try{const v=JSON.parse(localStorage.getItem(CHAT_KEY)||'[]');conversations=Array.isArray(v)?v:[]}catch{conversations=[]}}
 function persistConversations(){try{localStorage.setItem(CHAT_KEY,JSON.stringify(conversations.slice(0,100)))}catch{toast('Chat storage is full. Export your Vault and clear older items.')}if(currentUserId&&!chatSyncBusy)setTimeout(()=>syncConversations(),0)}
-function newConversation(){if(chatMessages.length)storeConversation();chatMessages=[];activeConversationId=null;$('chatLog').innerHTML='<div class="bubble note">New conversation. What would you like to explore?</div>';renderHistory()}
+function newConversation(){if(chatMessages.length)storeConversation();chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='<div class="bubble note">Your conversation starts here.</div>';renderHistory();$('chatDraft')?.focus()}
 function storeConversation(){if(!chatMessages.length)return;const id=activeConversationId||('chat-'+Date.now());activeConversationId=id;const first=chatMessages.find(m=>m.role==='user');const title=(first?.content||'New conversation').slice(0,65);const item={id,title,messages:chatMessages.slice(-80),updated:new Date().toISOString()};const idx=conversations.findIndex(x=>x.id===id);if(idx>=0)conversations[idx]=item;else conversations.unshift(item);conversations.sort((a,b)=>new Date(b.updated)-new Date(a.updated));conversations=conversations.slice(0,100);persistConversations();renderHistory()}
-function renderHistory(){const host=$('historyList');if(!host)return;const q=($('historySearch')?.value||'').trim().toLowerCase();const items=conversations.filter(c=>(c.title+' '+c.messages.map(m=>m.content).join(' ')).toLowerCase().includes(q));host.innerHTML=items.length?items.map(c=>'<button class="saved" data-open-chat="'+safe(c.id)+'" style="text-align:left;color:var(--text);width:100%;cursor:pointer"><b>'+safe(c.title)+'</b><small>'+safe(new Date(c.updated).toLocaleString())+' · '+c.messages.length+' messages</small></button>').join(''):'<div class="empty">No saved conversations found.</div>';host.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>openConversation(b.dataset.openChat)))}
-function openConversation(id){const c=conversations.find(x=>x.id===id);if(!c)return;activeConversationId=id;chatMessages=c.messages.slice();$('chatLog').innerHTML='';chatMessages.forEach(m=>addBubble(m.role,m.content));renderHistory()}
+function renderHistory(){
+ const q=(($('sidebarHistorySearch')?.value||$('historySearch')?.value||'').trim().toLowerCase());
+ const items=conversations.filter(c=>(c.title+' '+c.messages.map(m=>m.content).join(' ')).toLowerCase().includes(q));
+ const markup=items.length?items.map(c=>'<button class="sidebar-chat-item" data-open-chat="'+safe(c.id)+'"><span class="sidebar-chat-icon">▤</span><span class="sidebar-chat-title">'+safe(c.title)+'</span></button>').join(''):'<div class="sidebar-empty">No matching chats yet.</div>';
+ const recent=$('sidebarRecent'),host=$('historyList');
+ if(recent){recent.innerHTML=markup;recent.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>{openConversation(b.dataset.openChat);closeMenu()}))}
+ if(host){host.innerHTML=items.length?items.map(c=>'<button class="saved" data-open-chat="'+safe(c.id)+'" style="text-align:left;color:var(--text);width:100%;cursor:pointer"><b>'+safe(c.title)+'</b><small>'+safe(new Date(c.updated).toLocaleString())+' · '+c.messages.length+' messages</small></button>').join(''):'<div class="empty">No saved conversations found.</div>';host.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>openConversation(b.dataset.openChat)))}
+}
+function openConversation(id){const c=conversations.find(x=>x.id===id);if(!c)return;activeConversationId=id;chatMessages=c.messages.slice();$('chatLog').innerHTML='';chatMessages.forEach(m=>addBubble(m.role,m.content));$('chat')?.classList.toggle('has-messages',chatMessages.length>0);renderHistory()}
 
 let currentKind='logo', currentSvg='';
 const safe=(s)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -538,6 +620,9 @@ function putItems(a){try{localStorage.setItem(KEY,JSON.stringify(a.slice(0,250))
 function save(type,title,content){const a=getItems();a.unshift({id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),type,title:String(title).slice(0,100),content:String(content).slice(0,12000),created:new Date().toISOString()});if(putItems(a)){toast('Saved to your Creation Vault.');return true}return false}
 function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='I D LABS / '+page.replace('-',' ').toUpperCase();if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-new-chat]').forEach(b=>b.addEventListener('click',()=>{newConversation();closeMenu()}));
+$('sidebarHistorySearch')?.addEventListener('input',renderHistory);
+$('historySearch')?.addEventListener('input',renderHistory);
 const menuToggle=$('menuToggle'),drawerScrim=$('drawerScrim');
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
@@ -556,8 +641,9 @@ document.querySelectorAll('[data-studio-action]').forEach(b=>b.addEventListener(
    toast('Image Creator ready. Describe the image you want.');
   }
   if(action==='history'){
-   $('chatHistoryPanel').scrollIntoView({behavior:'auto',block:'start'});
-   $('historySearch').focus();
+   document.body.classList.add('menu-open');
+   menuToggle?.setAttribute('aria-expanded','true');
+   setTimeout(()=>$('sidebarHistorySearch')?.focus(),100);
   }
   if(action==='memory'){
    $('aiMemory').scrollIntoView({behavior:'auto',block:'center'});
@@ -624,6 +710,7 @@ async function checkAI(){
  catch{setAIStatus(false,'The backend is deployed, but the health check did not complete. Try again shortly.');}
 }
 function addBubble(role,text){
+ $('chat')?.classList.add('has-messages');
  const el=document.createElement('div');el.className='bubble '+(role==='user'?'user':'');el.textContent=text;$('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
 }
 async function understandIntent(message){
