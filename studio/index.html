@@ -962,7 +962,7 @@ input:focus,textarea:focus,select:focus{border-color:#72ead2!important;box-shado
 </aside>
 <div class="drawer-scrim" id="drawerScrim"></div>
 <main>
- <header class="topbar"><button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false" onclick="document.body.classList.toggle('menu-open');this.setAttribute('aria-expanded',String(document.body.classList.contains('menu-open')))"><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><span class="status" id="statusBadge">● CHECKING AI</span><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
+ <header class="topbar"><button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false" onclick="document.body.classList.toggle('menu-open');this.setAttribute('aria-expanded',String(document.body.classList.contains('menu-open')))"><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
  <section class="page" id="home">
   <div class="dash-hero">
    <div class="dash-hero-copy">
@@ -1397,7 +1397,7 @@ $('sendToAI').onclick=async()=>{
  const field=$('chatDraft'),message=field.value.trim(),btn=$('sendToAI');
  if(!message)return toast('Type a message first.');
  if(btn.disabled)return;
- chatMessages.push({role:'user',content:message});addBubble('user',message);field.value='';btn.disabled=true;btn.textContent='THINKING…';
+ chatMessages.push({role:'user',content:message});addBubble('user',message);field.value='';btn.disabled=true;btn.textContent='…';
  const wait=document.createElement('div');wait.className='bubble note';wait.textContent='IDRIS AI is preparing a response…';$('chatLog').appendChild(wait);
  try{
   const decision=await understandIntent(message);
@@ -1422,7 +1422,7 @@ $('sendToAI').onclick=async()=>{
   }
  }catch(err){
   wait.remove();chatMessages.pop();field.value=message;addBubble('assistant','I could not complete that request. '+(err.message||'Please try again later.'));
- }finally{btn.disabled=false;btn.textContent='SEND TO AI ↗';}
+ }finally{btn.disabled=false;btn.textContent='↑';}
 };
 
 $('openResearch').onclick=()=>{const q=$('researchQuery').value.trim();if(!q)return toast('Enter a research topic first.');const area=$('researchArea').value;const full=[q,area].filter(Boolean).join(' ');window.open('https://news.google.com/search?q='+encodeURIComponent(full),'_blank','noopener');};
