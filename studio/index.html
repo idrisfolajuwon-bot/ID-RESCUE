@@ -444,6 +444,77 @@ input:focus,textarea:focus,select:focus{border-color:#9a89ed!important;box-shado
  @keyframes brandGlow{from{box-shadow:0 0 18px #8978ff25}to{box-shadow:0 0 34px #8978ff55}}
 }
 
+
+/* V22 — conversation-first layout inspired by modern AI chat apps */
+.side{display:flex!important;flex-direction:column!important}
+.sidebar-chat-tools{order:1!important;flex:1 1 auto!important;margin:10px 2px 14px!important;gap:8px!important}
+.side .nav{order:2!important;display:grid!important;gap:3px!important;padding-top:10px!important;border-top:1px solid #30313a!important;max-height:31vh!important;overflow:auto!important}
+.side .nav-label{display:none!important}
+.side-bottom{order:3!important}
+.sidebar-new-chat{min-height:42px!important;border-radius:12px!important;font-size:13px!important}
+.sidebar-search{min-height:40px!important;border-radius:11px!important}
+.sidebar-search input{font-size:12px!important}
+.sidebar-history-heading{padding:13px 9px 5px!important;font-size:10px!important;letter-spacing:.45px!important;font-weight:700!important;color:#999ba7!important}
+.sidebar-recent{max-height:none!important;flex:1 1 auto!important;min-height:80px!important;overflow:auto!important;align-content:start!important;gap:2px!important}
+.sidebar-history-group{display:grid;gap:2px}
+.sidebar-chat-item{min-height:36px!important;padding:8px 10px!important;border-radius:9px!important;font-size:12px!important;gap:9px!important}
+.sidebar-chat-item.active{background:#30313a!important;color:#fff!important}
+.sidebar-chat-icon{font-size:13px!important;opacity:.75}
+.side .nav button{min-height:37px!important;padding:8px 10px!important;font-size:11px!important}
+.side .nav button .ico{width:18px!important}
+.profile{margin-top:4px!important}
+.topbar{height:58px!important}
+.crumb{font-size:13px!important;font-weight:650!important;letter-spacing:0!important}
+.page#chat.active{height:calc(100dvh - 78px)!important;min-height:calc(100dvh - 78px)!important}
+.chat-welcome{max-width:820px!important}
+.chat-welcome-mark{display:none!important}
+.chat-welcome .eyebrow{font-size:11px!important;letter-spacing:.4px!important;color:#aaa!important}
+.chat-welcome h1{font-size:clamp(30px,4vw,40px)!important;font-weight:600!important;letter-spacing:-1.25px!important}
+.chat-welcome p{font-size:14px!important;color:#a0a1ab!important}
+.chat-starters{max-width:680px!important;gap:9px!important}
+.chat-starters button{min-height:65px!important;border-radius:13px!important;background:#1d1e24!important;border-color:#34353e!important;box-shadow:none!important}
+.chat-starters button:hover{background:#25262e!important;border-color:#555166!important;transform:none!important}
+.chat-starters button>span{background:#2d2a3b!important;border-radius:8px!important;color:#c2b4ff!important}
+.chat-starters button b{font-size:12px!important;font-weight:600!important}
+.chat-starters button small{font-size:10px!important;color:#999ba6!important}
+.chat-main-panel{max-width:850px!important}
+.chat-main-panel .chatlog{padding:18px 8px 24px!important;gap:20px!important}
+.bubble{max-width:min(88%,720px)!important;font-size:14px!important;line-height:1.75!important;padding:12px 16px!important;border-radius:18px!important}
+.bubble.user{background:#292a32!important;border:1px solid #393a44!important;color:#f1f1f4!important;max-width:82%!important}
+.bubble:not(.user):not(.note){background:transparent!important;border:0!important;color:#e5e5ea!important;padding:4px 3px!important;max-width:100%!important}
+.bubble.note{color:#999ba6!important;background:transparent!important;border:0!important}
+.chat-compose{min-height:62px!important;border-radius:25px!important;background:#25262d!important;border:1px solid #41424c!important;box-shadow:none!important;padding:9px 10px 9px 18px!important}
+.chat-compose textarea{font-size:14px!important;line-height:1.55!important;color:#f3f3f5!important}
+.chat-compose textarea::placeholder{color:#a0a1aa!important}
+.send-round{width:40px!important;height:40px!important;flex-basis:40px!important;border-radius:50%!important;background:#f2f2f4!important;color:#18191d!important;box-shadow:none!important;font-size:23px!important}
+.send-round:disabled{opacity:.55!important}
+.chat-under-tools{justify-content:flex-start!important;padding:7px 5px 0!important}
+.chat-under-tools .soft-btn{background:transparent!important;border:0!important;color:#999ba6!important;padding:5px 8px!important;font-size:10px!important}
+.chat-mini-status{margin-left:auto!important;color:#858792!important}
+#chat.has-messages .chat-welcome{display:none!important}
+#chat.has-messages .chat-main-panel{max-width:850px!important}
+@media(min-width:900px){body{padding-left:276px!important}.side{transform:translateX(0)!important;visibility:visible!important}.drawer-scrim,.menu-toggle{display:none!important}}
+@media(max-width:899px){.side{width:min(292px,86vw)!important}.side .nav{max-height:24vh!important}}
+@media(max-width:650px){
+ main{padding:7px 13px 12px!important}
+ .topbar{height:50px!important;padding:4px 0 8px!important}
+ .page#chat.active{height:calc(100dvh - 59px)!important;min-height:calc(100dvh - 59px)!important}
+ .chat-welcome{min-height:0!important;padding:clamp(45px,12vh,105px) 3px 20px!important}
+ .chat-welcome h1{font-size:32px!important}
+ .chat-welcome p{font-size:13px!important;margin-bottom:22px!important}
+ .chat-starters{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ .chat-starters button{min-height:72px!important;padding:10px!important;grid-template-columns:21px 1fr!important}
+ .chat-starters button b{font-size:10px!important}.chat-starters button small{font-size:9px!important}
+ .chat-main-panel{padding-bottom:max(6px,env(safe-area-inset-bottom))!important}
+ .chat-main-panel .chatlog{max-height:none!important;padding:12px 3px 17px!important}
+ .chat-compose{min-height:56px!important;border-radius:22px!important;padding:7px 8px 7px 14px!important}
+ .chat-compose textarea{min-height:38px!important;font-size:14px!important}
+ .chat-under-tools{gap:3px!important;padding-top:6px!important}
+ .chat-mini-status{width:100%!important;margin:1px 0 0 4px!important}
+ .side{padding:17px 14px!important}
+ .side .nav{max-height:23vh!important}
+}
+
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -692,7 +763,9 @@ function storeConversation(){if(!chatMessages.length)return;const id=activeConve
 function renderHistory(){
  const q=(($('sidebarHistorySearch')?.value||$('historySearch')?.value||'').trim().toLowerCase());
  const items=conversations.filter(c=>(c.title+' '+c.messages.map(m=>m.content).join(' ')).toLowerCase().includes(q));
- const markup=items.length?items.map(c=>'<button class="sidebar-chat-item" data-open-chat="'+safe(c.id)+'"><span class="sidebar-chat-icon">▤</span><span class="sidebar-chat-title">'+safe(c.title)+'</span></button>').join(''):'<div class="sidebar-empty">No matching chats yet.</div>';
+ const bucket=c=>{const d=new Date(c.updated||Date.now()),now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),now.getDate()),day=new Date(d.getFullYear(),d.getMonth(),d.getDate()),diff=Math.round((start-day)/86400000);return diff<=0?'Today':diff===1?'Yesterday':diff<7?'Previous 7 days':diff<30?'Previous 30 days':'Older'};
+ const groups=['Today','Yesterday','Previous 7 days','Previous 30 days','Older'];
+ const markup=items.length?groups.map(g=>{const list=items.filter(c=>bucket(c)===g);return list.length?'<div class="sidebar-history-group"><div class="sidebar-history-heading">'+g+'</div>'+list.map(c=>'<button class="sidebar-chat-item'+(c.id===activeConversationId?' active':'')+'" data-open-chat="'+safe(c.id)+'" title="'+safe(c.title)+'"><span class="sidebar-chat-icon">▤</span><span class="sidebar-chat-title">'+safe(c.title)+'</span></button>').join('')+'</div>':''}).join(''):'<div class="sidebar-empty">Your conversations will appear here.</div>';
  const recent=$('sidebarRecent'),host=$('historyList');
  if(recent){recent.innerHTML=markup;recent.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>{openConversation(b.dataset.openChat);closeMenu()}))}
  if(host){host.innerHTML=items.length?items.map(c=>'<button class="saved" data-open-chat="'+safe(c.id)+'" style="text-align:left;color:var(--text);width:100%;cursor:pointer"><b>'+safe(c.title)+'</b><small>'+safe(new Date(c.updated).toLocaleString())+' · '+c.messages.length+' messages</small></button>').join(''):'<div class="empty">No saved conversations found.</div>';host.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>openConversation(b.dataset.openChat)))}
