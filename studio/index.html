@@ -912,7 +912,7 @@ input:focus,textarea:focus,select:focus{border-color:#72ead2!important;box-shado
 .chat-extra-panel{display:none!important}
 #chat.has-messages .chat-log-area{padding-top:18px}
 #chat.has-messages .chat-first-greeting{display:none}
-#chat.has-messages .chatlog{margin:auto}
+#chat.has-messages .chatlog{margin:0 auto}
 #chat.has-messages .chat-compose-dock{padding-bottom:12px}
 #chat .bubble{max-width:88%;font-size:14px;line-height:1.7}
 #chat .bubble.user{border-radius:20px 20px 5px 20px}
@@ -1215,7 +1215,7 @@ async function syncConversations(){
 }
 function loadConversations(){try{const v=JSON.parse(localStorage.getItem(CHAT_KEY)||'[]');conversations=Array.isArray(v)?v:[]}catch{conversations=[]}}
 function persistConversations(){try{localStorage.setItem(CHAT_KEY,JSON.stringify(conversations.slice(0,100)))}catch{toast('Chat storage is full. Export your Vault and clear older items.')}if(currentUserId&&!chatSyncBusy)setTimeout(()=>syncConversations(),0)}
-function newConversation(){if(chatMessages.length)storeConversation();chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='<div class="bubble note">Your conversation starts here.</div>';renderHistory();$('chatDraft')?.focus()}
+function newConversation(){if(chatMessages.length)storeConversation();chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='';renderHistory();$('chatDraft')?.focus()}
 function storeConversation(){if(!chatMessages.length)return;const id=activeConversationId||('chat-'+Date.now());activeConversationId=id;const first=chatMessages.find(m=>m.role==='user');const title=(first?.content||'New conversation').slice(0,65);const item={id,title,messages:chatMessages.slice(-80),updated:new Date().toISOString()};const idx=conversations.findIndex(x=>x.id===id);if(idx>=0)conversations[idx]=item;else conversations.unshift(item);conversations.sort((a,b)=>new Date(b.updated)-new Date(a.updated));conversations=conversations.slice(0,100);persistConversations();renderHistory()}
 function renderHistory(){
  const q=(($('sidebarHistorySearch')?.value||$('historySearch')?.value||'').trim().toLowerCase());
@@ -1429,7 +1429,7 @@ $('openResearch').onclick=()=>{const q=$('researchQuery').value.trim();if(!q)ret
 $('analyseResearch').onclick=()=>{const article=$('researchText').value.trim();if(!article)return toast('Paste some article text first.');const topic=$('researchQuery').value.trim();const prompt='Please analyse the following material. Summarise the main points, identify factual claims and opinions separately, explain any difficult terms, note what cannot be verified from this text alone, and suggest what independent sources should be checked. Do not invent missing facts. '+(topic?'Research topic: '+topic+'\\n':'')+'\\nMATERIAL:\\n'+article;go('chat');$('chatDraft').value=prompt;toast('Research text prepared. Review it, then send to AI.');};
 $('clearResearch').onclick=()=>{$('researchText').value='';$('researchQuery').value='';toast('Research fields cleared.');};
 $('saveChatDraft').onclick=()=>{const s=$('chatDraft').value.trim();if(!s)return toast('Write a message first.');if(save('Chat','Chat draft',s)){$('chatLog').innerHTML='<div class="bubble user">'+safe(s)+'</div><div class="bubble note">Saved locally. No AI reply was generated or sent.</div>';$('chatDraft').value=''}};
-$('clearChat').onclick=()=>{$('chatDraft').value='';chatMessages=[];activeConversationId=null;$('chatLog').innerHTML='<div class="bubble note">Chat cleared. Start a new conversation.</div>';renderHistory()};
+$('clearChat').onclick=()=>{$('chatDraft').value='';chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='';renderHistory();$('chatDraft')?.focus()};
 $('newConversation').onclick=newConversation;
 $('historySearch').addEventListener('input',renderHistory);
 $('saveMemory').onclick=()=>{const value=$('aiMemory').value.trim();try{localStorage.setItem(MEMORY_KEY,value);toast('AI memory saved on this device.')}catch{toast('Could not save memory.')}};
