@@ -515,6 +515,159 @@ input:focus,textarea:focus,select:focus{border-color:#9a89ed!important;box-shado
  .side .nav{max-height:23vh!important}
 }
 
+
+/* V23 — full studio visual system: dashboard, navigation, tools and mobile */
+:root{
+ --bg:#090b14;--surface:#111522;--surface2:#171d2d;--surface3:#202940;
+ --line:#29334a;--text:#f4f6ff;--muted:#9aa7c0;
+ --mint:#75f0d2;--blue:#8eb9ff;--violet:#b6a0ff;
+ --shadow:0 18px 55px #0005;
+}
+html{background:#090b14}
+body{padding-left:0!important;background:
+ radial-gradient(ellipse at 88% 0%,#34316a30,transparent 32%),
+ radial-gradient(ellipse at 0% 80%,#087d7540,transparent 30%),
+ #090b14!important;color:var(--text)!important}
+.shell{max-width:none!important;width:100%!important;grid-template-columns:268px minmax(0,1fr)!important;min-height:100dvh!important}
+.side{width:auto!important;position:sticky!important;height:100dvh!important;padding:22px 15px 16px!important;
+ background:linear-gradient(180deg,#101626f5,#0c111df5)!important;border-right:1px solid #27334a!important;
+ box-shadow:12px 0 45px #0002!important;backdrop-filter:blur(24px)!important}
+.brand{padding:3px 8px 24px!important;gap:12px!important}
+.brand-mark{width:43px!important;height:43px!important;border-radius:15px!important;background:linear-gradient(140deg,#8d7aff,#52d9ca)!important;color:#101321!important;font-size:16px!important;font-weight:900!important}
+.brand-name{font-size:13px!important;letter-spacing:.55px!important;font-weight:850!important}
+.brand-sub{font-size:9px!important;letter-spacing:2px!important;color:#9ba9c5!important}
+.sidebar-chat-tools{margin:0 0 13px!important;flex:1 1 auto!important;min-height:130px!important}
+.sidebar-new-chat{width:100%!important;justify-content:center!important;gap:9px!important;background:linear-gradient(110deg,#8d7aff,#5f9cfb)!important;color:#101321!important;border:0!important;border-radius:13px!important;font-weight:800!important;box-shadow:0 9px 25px #7868ef35!important}
+.sidebar-new-chat span{font-size:18px!important}
+.sidebar-search{background:#171f30!important;border:1px solid #2b3851!important;border-radius:12px!important}
+.sidebar-search:focus-within{border-color:#8276cb!important;box-shadow:0 0 0 3px #8878ff18!important}
+.sidebar-search input{color:#f2f5ff!important}
+.sidebar-history-heading{color:#7f8da8!important;font-size:9px!important;letter-spacing:1.5px!important}
+.sidebar-chat-item{color:#aeb9ce!important;min-height:38px!important}
+.sidebar-chat-item:hover,.sidebar-chat-item.active{background:#202b40!important;color:#fff!important}
+.side .nav{max-height:40vh!important;gap:5px!important;padding:13px 0 5px!important;border-top:1px solid #27334a!important}
+.side .nav button{min-height:41px!important;border:1px solid transparent!important;border-radius:11px!important;color:#9eabc2!important;font-size:12px!important;font-weight:600!important;transition:background .18s,border-color .18s,color .18s!important}
+.side .nav button:hover{background:#1a2335!important;color:#eef2ff!important}
+.side .nav button.active{background:linear-gradient(100deg,#8170e526,#55d7c01a)!important;border-color:#625e9a66!important;color:#dcd5ff!important}
+.side .nav button .ico{font-size:16px!important;color:#a99aff!important}
+.side-bottom{border-top:1px solid #27334a!important;padding-top:12px!important}
+.connection{background:#141d2c!important;border:1px solid #293850!important;border-radius:12px!important;padding:11px!important;color:#9eabc1!important}
+.profile{padding:10px 8px 2px!important}
+.avatar{background:linear-gradient(145deg,#8271e9,#4bbfae)!important;color:#0b1120!important;font-weight:900!important}
+main{min-width:0!important;padding:0 clamp(18px,3.2vw,48px) 44px!important;background:transparent!important}
+.topbar{height:72px!important;margin:0 0 18px!important;padding:0 2px!important;border-bottom:1px solid #222c40!important;background:transparent!important;backdrop-filter:none!important}
+.crumb{font-size:11px!important;letter-spacing:1.2px!important;font-weight:800!important;color:#aebbd2!important}
+.top-actions{gap:12px!important}
+.status{border:1px solid #34435b!important;border-radius:99px!important;padding:7px 11px!important;background:#131b2a!important;font-size:10px!important;color:#aebbd0!important}
+.top-actions .soft-btn{border-radius:10px!important;background:#171f30!important;border:1px solid #2b3851!important;color:#b9c6dc!important;padding:8px 12px!important}
+.page{max-width:1240px!important;margin:0 auto!important;padding:18px 0 36px!important}
+.page:not(#chat) .hero{padding:22px 0 28px!important;max-width:780px!important}
+.eyebrow{color:#9f91f2!important;font-size:10px!important;letter-spacing:1.7px!important;font-weight:800!important}
+.hero h1,.welcome-row h1{font-size:clamp(34px,4.4vw,54px)!important;line-height:1.08!important;letter-spacing:-1.9px!important;font-weight:760!important;color:#f4f6ff!important}
+.hero p,.welcome-row p{max-width:680px!important;color:#9eabc2!important;font-size:14px!important;line-height:1.8!important}
+.gradient{background:linear-gradient(100deg,#b8a6ff 5%,#86c3ff 52%,#69e5c8 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important}
+.panel{background:linear-gradient(145deg,#151c2b,#111725)!important;border:1px solid #2a354b!important;border-radius:19px!important;padding:22px!important;box-shadow:0 14px 38px #0002!important}
+.panel h2{font-size:12px!important;letter-spacing:1.1px!important;color:#dce4f5!important;font-weight:800!important}
+.grid{gap:17px!important;align-items:stretch!important}
+.field-label{display:block!important;margin:17px 0 8px!important;color:#9aa9c3!important;font-size:9px!important;letter-spacing:1.2px!important;font-weight:800!important}
+input:not([type=file]),textarea,select{background:#0d1422!important;border:1px solid #2c3850!important;border-radius:11px!important;color:#f0f4ff!important;padding:12px 14px!important;min-height:44px!important}
+input::placeholder,textarea::placeholder{color:#73819b!important}
+input:focus,textarea:focus,select:focus{border-color:#8174d1!important;box-shadow:0 0 0 3px #8174d11c!important;outline:0!important}
+textarea{line-height:1.65!important}
+.primary-btn{border:0!important;border-radius:11px!important;background:linear-gradient(105deg,#8d7bfa,#649ef5)!important;color:#101321!important;font-weight:850!important;letter-spacing:.25px!important;padding:11px 16px!important;box-shadow:0 8px 22px #796be533!important;transition:transform .18s,filter .18s!important}
+.primary-btn:hover{transform:translateY(-2px)!important;filter:brightness(1.08)!important}
+.soft-btn{border:1px solid #34415a!important;border-radius:10px!important;background:#1a2334!important;color:#c3cde0!important;padding:10px 13px!important}
+.danger-btn{border:1px solid #794452!important;border-radius:10px!important;background:#351e2a!important;color:#ffb7c2!important;padding:9px 12px!important}
+.actions{gap:9px!important;flex-wrap:wrap!important}
+.output,.callout,.empty{background:#0e1625!important;border:1px solid #29374f!important;border-radius:13px!important;color:#aebbd0!important;padding:15px!important}
+.saved{background:#151e2e!important;border:1px solid #2b3850!important;border-radius:13px!important;padding:15px!important;color:#e8edfa!important}
+.saved small{color:#92a0b8!important}
+.vault-tools{display:flex!important;gap:10px!important;flex-wrap:wrap!important;margin-bottom:18px!important}
+.vault-tools input{flex:1 1 220px!important}
+.vault-grid{gap:12px!important}
+.home-workspaces{gap:13px!important}
+.workspace-card{position:relative!important;min-height:116px!important;padding:18px!important;text-align:left!important;border-radius:17px!important;background:linear-gradient(145deg,#18243a,#121a2a)!important;border:1px solid #2d3b55!important;color:#f2f5ff!important;box-shadow:0 12px 28px #0002!important;transition:transform .2s,border-color .2s,background .2s!important}
+.workspace-card:hover{transform:translateY(-4px)!important;border-color:#8175c9!important;background:linear-gradient(145deg,#202d48,#151e30)!important}
+.workspace-icon{width:40px!important;height:40px!important;display:grid!important;place-items:center!important;border-radius:13px!important;background:#34305a!important;color:#c8bbff!important;font-size:18px!important}
+.workspace-copy b{font-size:13px!important;font-weight:800!important}
+.workspace-copy small{color:#9ba9c1!important;line-height:1.5!important}
+.workspace-arrow{color:#9c91e8!important}
+.home-composer{background:linear-gradient(110deg,#28234c,#18394a)!important;border:1px solid #514d80!important;border-radius:18px!important;padding:18px!important;box-shadow:0 15px 40px #0003!important}
+.home-composer b{color:#f4f5ff!important}
+.home-composer span{color:#b2bdd1!important}
+.composer-symbol{background:#b8a7ff!important;color:#141322!important;border-radius:12px!important}
+.section-head{margin:30px 0 14px!important}
+.section-head h2{font-size:12px!important;letter-spacing:1.3px!important;color:#e0e7f6!important}
+.section-head p{color:#8f9db5!important}
+.home-lower{gap:14px!important;margin-top:18px!important}
+.home-status-panel,.home-stats-panel{min-width:0!important}
+.stat{background:#0e1625!important;border:1px solid #29364d!important;border-radius:12px!important;padding:13px!important}
+.stat strong{color:#e9e4ff!important;font-size:25px!important}
+.stat span{color:#8f9db6!important;font-size:9px!important}
+.home-footer-note{color:#75839b!important;padding:22px 0!important}
+.plan-status-banner{background:linear-gradient(105deg,#1c2940,#25244a)!important;border:1px solid #464c78!important;border-radius:17px!important;padding:18px 20px!important}
+.plan-status-banner strong{color:#f0edff!important}
+.plan-status-chip{background:#1d4b43!important;color:#8cf0d4!important;border:1px solid #367c6d!important;border-radius:99px!important;padding:7px 12px!important}
+.plan-metric{background:#141d2c!important;border:1px solid #2b3850!important;border-radius:15px!important;padding:16px!important}
+.plan-metric strong{color:#e6e2ff!important}
+.plan-card{background:linear-gradient(150deg,#171f30,#111725)!important;border:1px solid #303d55!important;border-radius:18px!important;padding:21px!important}
+.plan-premium{border-color:#655a9b!important;background:linear-gradient(150deg,#211f3c,#151a2b)!important}
+.plan-badge{border-radius:99px!important}
+.plan-price{color:#f4f5ff!important}
+.plan-description,.plan-card li{color:#a8b5ca!important}
+.plan-card-foot{border-top:1px solid #334057!important;color:#9eadd0!important}
+.plan-safety{margin-top:17px!important}
+.plan-safety-row{border-bottom:1px solid #29364c!important;padding:12px 0!important;color:#aab6ca!important}
+.tag{background:#191f32!important;border:1px solid #424568!important;border-radius:99px!important;padding:7px 11px!important}
+.mobile-nav{border-radius:18px 18px 0 0!important}
+.toast{border-radius:12px!important}
+#chatHistoryPanel{background:#131a29!important}
+@media(min-width:900px){
+ body{padding-left:0!important}
+ .side{transform:none!important;visibility:visible!important}
+ .drawer-scrim,.menu-toggle{display:none!important}
+}
+@media(max-width:899px){
+ .shell{display:block!important}
+ .side{position:fixed!important;left:0!important;top:0!important;width:min(300px,88vw)!important;height:100dvh!important;z-index:30!important;transform:translateX(-105%)!important;visibility:hidden!important;transition:transform .24s ease,visibility .24s!important}
+ body.menu-open .side{transform:translateX(0)!important;visibility:visible!important}
+ body.menu-open .drawer-scrim{display:block!important;position:fixed!important;inset:0!important;z-index:29!important;background:#02040bd9!important}
+ .menu-toggle{display:flex!important}
+ main{padding:0 20px 32px!important}
+ .topbar{height:62px!important}
+}
+@media(max-width:650px){
+ main{padding:0 14px 26px!important}
+ .topbar{height:56px!important;margin-bottom:8px!important}
+ .top-actions .soft-btn{display:none!important}
+ .page{padding-top:12px!important}
+ .page:not(#chat) .hero{padding:17px 0 20px!important}
+ .hero h1,.welcome-row h1{font-size:36px!important;letter-spacing:-1.4px!important}
+ .panel{padding:17px!important;border-radius:16px!important}
+ .grid{grid-template-columns:minmax(0,1fr)!important}
+ .row{flex-direction:column!important;gap:8px!important}
+ .home-composer{align-items:flex-start!important;flex-wrap:wrap!important;gap:12px!important}
+ .home-composer .primary-btn{width:100%!important}
+ .home-workspaces{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .workspace-card{min-height:122px!important;padding:13px!important;gap:9px!important}
+ .workspace-icon{width:34px!important;height:34px!important}
+ .workspace-copy b{font-size:11px!important}
+ .workspace-copy small{font-size:10px!important}
+ .workspace-arrow{position:absolute!important;right:11px!important;top:12px!important}
+ .home-lower{grid-template-columns:minmax(0,1fr)!important}
+ .statrow{gap:7px!important}
+ .stat{padding:10px 7px!important}
+ .stat strong{font-size:21px!important}
+ .stat span{font-size:8px!important}
+ .plan-columns,.plan-metrics{grid-template-columns:minmax(0,1fr)!important}
+ .vault-tools{flex-direction:column!important}
+ .vault-tools select{max-width:none!important}
+ .actions>*{max-width:100%!important}
+ .actions button{flex:1 1 auto!important}
+ .plan-status-banner{gap:10px!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
