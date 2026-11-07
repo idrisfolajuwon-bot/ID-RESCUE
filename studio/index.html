@@ -1115,6 +1115,61 @@ body{background:#fff!important}
 .chat-attachment-chip{display:flex;align-items:center;gap:7px;max-width:100%;padding:6px 9px;border:1px solid #e2e5ef;border-radius:10px;background:#f7f8fc;color:#39445b;font-size:11px}
 .chat-attachment-chip img{width:30px;height:30px;object-fit:cover;border-radius:6px}
 .chat-attachment-chip button{border:0;background:transparent;color:#788398;font-size:17px;padding:0 2px}
+
+/* V38 — mobile-first layout hardening for phones and small tablets */
+@media (max-width: 899px) {
+  html, body { width:100%; max-width:100%; overflow-x:hidden!important; }
+  body { padding-left:0!important; }
+  .shell { display:block!important; width:100%!important; max-width:100%!important; min-height:100dvh; }
+  .side {
+    position:fixed!important; inset:0 auto 0 0!important;
+    width:min(300px,88vw)!important; height:100dvh!important;
+    max-height:100dvh!important; overflow-y:auto!important;
+    z-index:80!important; transform:translateX(-105%)!important;
+    visibility:hidden!important; transition:transform .22s ease,visibility .22s ease!important;
+    box-shadow:12px 0 40px #18213b1c!important;
+  }
+  body.menu-open .side { transform:translateX(0)!important; visibility:visible!important; }
+  .drawer-scrim { display:none!important; }
+  body.menu-open .drawer-scrim {
+    display:block!important; position:fixed!important; inset:0!important;
+    z-index:79!important; background:rgba(15,23,42,.38)!important;
+  }
+  .menu-toggle { display:flex!important; flex:0 0 40px!important; width:40px!important; height:40px!important; }
+  main { width:100%!important; max-width:none!important; min-width:0!important; margin:0!important;
+    padding:0 16px 28px!important; }
+  .topbar { position:sticky!important; top:0!important; z-index:20!important;
+    display:flex!important; align-items:center!important; min-height:58px!important;
+    gap:10px!important; margin:0 -16px 8px!important; padding:7px 16px!important;
+    background:rgba(255,255,255,.96)!important; backdrop-filter:blur(14px)!important; }
+  .crumb { min-width:0!important; overflow:hidden!important; text-overflow:ellipsis!important; white-space:nowrap!important; }
+  .top-actions { margin-left:auto!important; }
+  .grid { grid-template-columns:minmax(0,1fr)!important; }
+  .tiles { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+  .vault-grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+  .panel { min-width:0!important; max-width:100%!important; padding:16px!important; }
+  .page, .page.active { min-width:0!important; max-width:100%!important; }
+  input, textarea, select, button { max-width:100%; }
+  img, video, canvas, svg { max-width:100%; }
+  .preview-wrap { min-width:0!important; }
+}
+@media (max-width: 520px) {
+  main { padding-left:12px!important; padding-right:12px!important; }
+  .topbar { margin-left:-12px!important; margin-right:-12px!important; padding-left:12px!important; padding-right:12px!important; }
+  .hero { padding-top:24px!important; }
+  .hero h1 { font-size:clamp(31px,9vw,42px)!important; }
+  .tiles { gap:8px!important; }
+  .tile { min-height:112px!important; padding:12px!important; }
+  .vault-grid { grid-template-columns:minmax(0,1fr)!important; }
+  .statrow { grid-template-columns:repeat(3,minmax(0,1fr))!important; }
+  .stat { min-width:0!important; padding:9px!important; }
+  .stat strong { font-size:16px!important; }
+  .row { flex-wrap:wrap!important; }
+  .row > * { flex:1 1 100%!important; }
+  .actions button { flex:1 1 auto!important; }
+  .chatlog { max-height:48vh!important; }
+  .bubble { max-width:94%!important; }
+}
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
