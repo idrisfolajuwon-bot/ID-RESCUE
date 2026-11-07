@@ -1092,6 +1092,21 @@ body{background:#fff!important}
 .sidebar-recent{flex:0 1 38vh!important;min-height:90px!important;max-height:38vh!important;overflow-y:auto!important}
 @media(max-width:899px){.sidebar-recent{flex:0 1 38vh!important;max-height:38vh!important}}
 /* V35 — options stay at top */
+
+/* V36 — keep recent chats in the lower sidebar and improve readable AI replies */
+.sidebar-chat-tools{flex:1 1 auto!important;min-height:0!important}
+.sidebar-chat-tools > .sidebar-history-heading{margin-top:auto!important;padding-top:18px!important}
+.sidebar-primary-nav{margin-bottom:0!important}
+.sidebar-recent{flex:0 1 34vh!important;min-height:80px!important;max-height:34vh!important;overflow-y:auto!important}
+#chat .bubble.assistant{display:block!important;max-width:100%!important;color:#252a34!important;font-size:14px!important;line-height:1.8!important;padding:8px 2px!important;white-space:normal!important;overflow-wrap:anywhere!important}
+#chat .bubble.assistant p{margin:0 0 11px!important}
+#chat .bubble.assistant p:last-child{margin-bottom:0!important}
+#chat .bubble.assistant h1,#chat .bubble.assistant h2,#chat .bubble.assistant h3{font-size:15px!important;font-weight:750!important;line-height:1.4!important;margin:15px 0 7px!important;color:#202123!important}
+#chat .bubble.assistant ul,#chat .bubble.assistant ol{margin:5px 0 12px!important;padding-left:23px!important}
+#chat .bubble.assistant li{padding:2px 0!important}
+#chat .bubble.assistant strong{font-weight:750!important;color:#17191f!important}
+#chat .bubble.assistant code{padding:2px 5px!important;border-radius:5px!important;background:#eceef3!important;font-size:.9em!important}
+@media(max-width:899px){.sidebar-chat-tools > .sidebar-history-heading{margin-top:auto!important}.sidebar-recent{flex:0 1 34vh!important;max-height:34vh!important}}
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -1501,7 +1516,26 @@ async function checkAI(){
 }
 function addBubble(role,text){
  $('chat')?.classList.add('has-messages');
- const el=document.createElement('div');el.className='bubble '+(role==='user'?'user':'');el.textContent=text;$('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
+ const el=document.createElement('div');
+ el.className='bubble '+(role==='user'?'user':'assistant');
+ if(role==='user'){el.textContent=text;}
+ else{
+  const escapeHtml=value=>String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  const inline=value=>escapeHtml(value).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*]+)\*/g,'$1<em>$2</em>');
+  const lines=String(text).replace(/\r/g,'').split('\n');let htmlOut='',list='';
+  const closeList=()=>{if(list){htmlOut+=list==='ul'?'</ul>':'</ol>';list=''}};
+  for(const raw of lines){
+   const line=raw.trim();
+   if(!line){closeList();continue;}
+   const bullet=line.match(/^[-*•]\s+(.+)$/),number=line.match(/^\d+[.)]\s+(.+)$/),heading=line.match(/^(#{1,3})\s+(.+)$/);
+   if(bullet||number){const kind=bullet?'ul':'ol';if(list!==kind){closeList();htmlOut+=kind==='ul'?'<ul>':'<ol>';list=kind;}htmlOut+='<li>'+inline((bullet||number)[1])+'</li>';continue;}
+   closeList();
+   if(heading){const level=heading[1].length;htmlOut+='<h'+level+'>'+inline(heading[2])+'</h'+level+'>';}
+   else htmlOut+='<p>'+inline(line)+'</p>';
+  }
+  closeList();el.innerHTML=htmlOut;
+ }
+ $('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
 }
 async function understandIntent(message){
  const recent=chatMessages.slice(-8).map(m=>({role:m.role,content:m.content}));
