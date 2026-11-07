@@ -1634,6 +1634,17 @@ $('chatDraft')?.addEventListener('keydown',e=>{
 $('chatDraft')?.addEventListener('input',e=>{
  const el=e.currentTarget;el.style.height='auto';el.style.height=Math.min(el.scrollHeight,180)+'px';
 });
+async function prepareEditImage(dataUrl){
+ const img=new Image();
+ await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('Could not prepare the image for editing.'));img.src=dataUrl;});
+ const scale=Math.min(1,511/Math.max(img.naturalWidth||img.width,img.naturalHeight||img.height));
+ const canvas=document.createElement('canvas');
+ canvas.width=Math.max(1,Math.round((img.naturalWidth||img.width)*scale));
+ canvas.height=Math.max(1,Math.round((img.naturalHeight||img.height)*scale));
+ const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Image preparation is not supported in this browser.');
+ ctx.drawImage(img,0,0,canvas.width,canvas.height);
+ return canvas.toDataURL('image/jpeg',.88);
+}
 $('sendToAI').onclick=async()=>{
  const field=$('chatDraft'),message=field.value.trim(),btn=$('sendToAI'),filesToSend=chatAttachments.slice();
  if(!message&&!filesToSend.length)return toast('Type a message or attach a file first.');
@@ -1650,7 +1661,7 @@ $('sendToAI').onclick=async()=>{
   if(imageFiles.length){
    const editPattern=/\b(edit|change|add|remove|replace|put|insert|place|combine|merge|crop|blur|enhance|improve|redesign|background|turn .{0,35} into|make .{0,30} look)\b/i;
    const wantsEdit=editPattern.test(message);
-   const payload={prompt:promptWithFiles,images:imageFiles.slice(0,3).map(x=>({name:x.name,dataUrl:x.dataUrl}))};
+   const editImages=wantsEdit?await Promise.all(imageFiles.slice(0,3).map(x=>prepareEditImage(x.dataUrl))):imageFiles.slice(0,3).map(x=>x.dataUrl);const payload={prompt:promptWithFiles,images:editImages.map((dataUrl,index)=>({name:imageFiles[index].name,dataUrl}))};
    const endpoint=wantsEdit?'/edit':'/vision';
    wait.textContent=wantsEdit?'IDRIS AI is editing your image…':'IDRIS AI is analysing your image…';
    const response=await fetch(API_URL+endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
