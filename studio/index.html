@@ -1008,6 +1008,46 @@ input,textarea,select{background:#fff!important;color:#202123!important;border-c
 @media(min-width:900px){body{padding-left:260px!important}.side{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:260px!important;height:100dvh!important;transform:none!important;visibility:visible!important}.drawer-scrim,.menu-toggle{display:none!important}}
 @media(max-width:899px){body{padding-left:0!important}.shell{display:block!important}.side{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:min(290px,86vw)!important;height:100dvh!important;transform:translateX(-105%)!important;visibility:hidden!important;z-index:60!important}.side .nav{max-height:35vh!important}body.menu-open .side{transform:translateX(0)!important;visibility:visible!important}.drawer-scrim{background:#0005!important}}
 
+
+/* V33 — simplified ChatGPT-inspired white sidebar layout */
+:root{color-scheme:light!important}
+html,body{background:#fff!important;color:#202123!important}
+body{background:#fff!important}
+.shell{background:#fff!important}
+.side{background:#fff!important;border-right:1px solid #e5e5e5!important;box-shadow:none!important;color:#202123!important;padding:18px 12px 12px!important}
+.brand{padding:1px 5px 18px!important;gap:8px!important}
+.brand-mark{background:#202123!important;color:#fff!important;border-radius:10px!important;box-shadow:none!important}
+.brand-name{color:#202123!important}.brand-sub{color:#777!important}
+.sidebar-search-trigger{border:0!important;background:transparent!important;color:#555!important;border-radius:8px!important;width:34px!important;height:34px!important;font-size:0!important}
+.sidebar-search-trigger span{display:block!important;width:15px!important;height:15px!important;border:1.8px solid currentColor!important;border-radius:50%!important;position:relative!important;font-size:0!important}
+.sidebar-search-trigger span:after{content:"";position:absolute;width:7px;height:1.8px;background:currentColor;right:-5px;bottom:-2px;transform:rotate(48deg);border-radius:2px}
+.sidebar-search-trigger:hover{background:#f0f0f0!important}
+.sidebar-chat-tools{display:flex!important;flex-direction:column!important;gap:4px!important;margin:0!important;padding:0 1px!important;min-height:0!important;flex:1 1 auto!important}
+.sidebar-new-chat{min-height:40px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;padding:9px 11px!important;border:0!important;border-radius:9px!important;background:transparent!important;color:#252525!important;box-shadow:none!important;font-size:13px!important;font-weight:550!important}
+.sidebar-new-chat:hover,.side .nav button:hover,.sidebar-guide-link:hover{background:#f0f0f0!important}
+.sidebar-new-chat span{color:#333!important;font-size:20px!important}
+.sidebar-search{display:none!important;min-height:39px!important;padding:0 10px!important;margin:2px 0 7px!important;border:1px solid #dedede!important;border-radius:9px!important;background:#fff!important}
+.sidebar-search.search-open{display:flex!important}
+.sidebar-search input{background:transparent!important;color:#202123!important;font-size:12px!important}
+.sidebar-primary-nav{display:grid!important;gap:2px!important;margin:5px 0 8px!important;padding:0!important;border:0!important;max-height:none!important;overflow:visible!important}
+.side .sidebar-primary-nav button{display:flex!important;align-items:center!important;gap:11px!important;min-height:38px!important;padding:8px 11px!important;border:0!important;border-radius:9px!important;background:transparent!important;color:#303030!important;font-size:13px!important;font-weight:500!important;text-align:left!important}
+.side .sidebar-primary-nav button .ico{width:18px!important;color:#555!important;font-size:16px!important}
+.side .sidebar-primary-nav button.active{background:#ececec!important;color:#202123!important}
+.sidebar-history-heading{padding:17px 10px 7px!important;color:#888!important;font-size:11px!important;font-weight:600!important;letter-spacing:0!important}
+.sidebar-recent{flex:1 1 auto!important;min-height:55px!important;max-height:none!important;overflow-y:auto!important;gap:1px!important}
+.sidebar-chat-item{min-height:35px!important;padding:8px 10px!important;border-radius:8px!important;color:#333!important;font-size:12px!important}
+.sidebar-chat-item:hover,.sidebar-chat-item.active{background:#ededed!important;color:#202123!important}
+.sidebar-empty{color:#888!important;font-size:11px!important}
+.side-bottom{flex:0 0 auto!important;margin-top:auto!important;padding-top:8px!important;border:0!important}
+.sidebar-guide-link{display:flex!important;align-items:center!important;gap:11px!important;width:100%!important;min-height:37px!important;padding:8px 10px!important;border:0!important;border-radius:9px!important;background:transparent!important;color:#444!important;font-size:12px!important;text-align:left!important}
+.sidebar-guide-link .ico{width:18px!important;color:#666!important}
+.side-bottom .profile{min-height:55px!important;margin-top:5px!important;padding:11px 7px 3px!important;border-top:1px solid #e8e8e8!important;color:#303030!important}
+.side-bottom .avatar{width:32px!important;height:32px!important;border-radius:50%!important;background:#e7e7e7!important;color:#333!important}
+.side-bottom .profile small{color:#777!important}
+.studio-tools-menu{display:none!important}
+@media(min-width:900px){body{padding-left:260px!important}.side{width:260px!important;background:#fff!important}}
+@media(max-width:899px){.side{width:min(290px,86vw)!important;background:#fff!important}.sidebar-recent{max-height:none!important}}
+
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -1018,24 +1058,17 @@ input,textarea,select{background:#fff!important;color:#202123!important;border-c
  <div class="sidebar-chat-tools">
   <button type="button" class="sidebar-new-chat" data-new-chat><span>＋</span> New chat</button>
   <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations"></label>
-  <div class="sidebar-history-heading">RECENTS</div>
+  <nav class="nav sidebar-primary-nav" id="sideNav" aria-label="Main navigation">
+   <button data-studio-action="image"><span class="ico">▧</span>Images</button>
+   <button data-studio-action="projects"><span class="ico">▣</span>Projects</button>
+   <button data-page="vault"><span class="ico">▤</span>Library</button>
+   <button data-studio-action="web"><span class="ico">⌕</span>Explore</button>
+  </nav>
+  <div class="sidebar-history-heading">Recent</div>
   <div class="sidebar-recent" id="sidebarRecent"><div class="sidebar-empty">Your chats will appear here.</div></div>
  </div>
- <details class="studio-tools-menu" open>
-  <summary>Studio tools</summary>
-  <nav class="nav" id="sideNav" aria-label="Studio tools">
-   <button data-page="home"><span class="ico">⌂</span>Overview</button>
-   <button class="active" data-page="chat"><span class="ico">✦</span>AI Assistant</button>
-   <button data-studio-action="image"><span class="ico">▧</span>Image Creator</button>
-   <button data-studio-action="web"><span class="ico">⌕</span>Explore</button>
-   <button data-page="prompts"><span class="ico">✧</span>Prompt Builder</button>
-   <button data-studio-action="projects"><span class="ico">▣</span>My Projects</button>
-   <button data-studio-action="memory"><span class="ico">✎</span>AI Memory</button>
-   <button data-page="plans"><span class="ico">◈</span>Plans & Usage</button>
-   <button data-page="about"><span class="ico">ⓘ</span>Studio Guide</button>
-  </nav>
- </details>
  <div class="side-bottom">
+  <button class="sidebar-guide-link" type="button" data-page="about"><span class="ico">ⓘ</span>Help &amp; guide</button>
   <div class="profile"><div class="avatar">ID</div><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div>
  </div>
 </aside>
