@@ -959,6 +959,9 @@ input:focus,textarea:focus,select:focus{border-color:#72ead2!important;box-shado
  .studio-tools-menu .nav button{min-height:39px}
 }
 
+
+/* IDRIS Recall — search inside past conversations */
+.sidebar-chat-copy{display:flex;min-width:0;flex:1;flex-direction:column;gap:3px;text-align:left}.sidebar-search-snippet{display:block;overflow:hidden;color:var(--muted);font-size:11px;line-height:1.35;white-space:nowrap;text-overflow:ellipsis}.sidebar-search-snippet mark{background:transparent;color:inherit;font-weight:800;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -1249,13 +1252,25 @@ function newConversation(){if(chatMessages.length)storeConversation();chatMessag
 function storeConversation(){if(!chatMessages.length)return;const id=activeConversationId||('chat-'+Date.now());activeConversationId=id;const first=chatMessages.find(m=>m.role==='user');const title=(first?.content||'New conversation').slice(0,65);const item={id,title,messages:chatMessages.slice(-80),updated:new Date().toISOString()};const idx=conversations.findIndex(x=>x.id===id);if(idx>=0)conversations[idx]=item;else conversations.unshift(item);conversations.sort((a,b)=>new Date(b.updated)-new Date(a.updated));conversations=conversations.slice(0,100);persistConversations();renderHistory()}
 function renderHistory(){
  const q=(($('sidebarHistorySearch')?.value||$('historySearch')?.value||'').trim().toLowerCase());
- const items=conversations.filter(c=>(c.title+' '+c.messages.map(m=>m.content).join(' ')).toLowerCase().includes(q));
+ const searchable=c=>c.title+' '+c.messages.map(m=>m.content).join(' ');
+ const items=conversations.filter(c=>searchable(c).toLowerCase().includes(q));
  const bucket=c=>{const d=new Date(c.updated||Date.now()),now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),now.getDate()),day=new Date(d.getFullYear(),d.getMonth(),d.getDate()),diff=Math.round((start-day)/86400000);return diff<=0?'Today':diff===1?'Yesterday':diff<7?'Previous 7 days':diff<30?'Previous 30 days':'Older'};
+ const snippet=c=>{
+  if(!q)return '';
+  const all=c.messages.map(m=>m.content).join(' ');
+  const lower=all.toLowerCase(),at=lower.indexOf(q);
+  if(at<0)return '';
+  const from=Math.max(0,at-58),to=Math.min(all.length,at+q.length+92);
+  const before=safe(all.slice(from,at)),hit=safe(all.slice(at,at+q.length)),after=safe(all.slice(at+q.length,to));
+  return '<span class="sidebar-search-snippet">'+(from?'…':'')+before+'<mark>'+hit+'</mark>'+after+(to<all.length?'…':'')+'</span>';
+ };
+ const card=c=>'<button class="sidebar-chat-item'+(c.id===activeConversationId?' active':'')+'" data-open-chat="'+safe(c.id)+'" title="'+safe(c.title)+'"><span class="sidebar-chat-icon">▤</span><span class="sidebar-chat-copy"><span class="sidebar-chat-title">'+safe(c.title)+'</span>'+snippet(c)+'</span></button>';
  const groups=['Today','Yesterday','Previous 7 days','Previous 30 days','Older'];
- const markup=items.length?groups.map(g=>{const list=items.filter(c=>bucket(c)===g);return list.length?'<div class="sidebar-history-group"><div class="sidebar-history-heading">'+g+'</div>'+list.map(c=>'<button class="sidebar-chat-item'+(c.id===activeConversationId?' active':'')+'" data-open-chat="'+safe(c.id)+'" title="'+safe(c.title)+'"><span class="sidebar-chat-icon">▤</span><span class="sidebar-chat-title">'+safe(c.title)+'</span></button>').join('')+'</div>':''}).join(''):'<div class="sidebar-empty">Your conversations will appear here.</div>';
+ const empty=q?'<div class="sidebar-empty">No conversation contains “'+safe(q)+'”. Try another word.</div>':'<div class="sidebar-empty">Your conversations will appear here.</div>';
+ const markup=items.length?groups.map(g=>{const list=items.filter(c=>bucket(c)===g);return list.length?'<div class="sidebar-history-group"><div class="sidebar-history-heading">'+g+'</div>'+list.map(card).join('')+'</div>':''}).join(''):empty;
  const recent=$('sidebarRecent'),host=$('historyList');
  if(recent){recent.innerHTML=markup;recent.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>{openConversation(b.dataset.openChat);closeMenu()}))}
- if(host){host.innerHTML=items.length?items.map(c=>'<button class="saved" data-open-chat="'+safe(c.id)+'" style="text-align:left;color:var(--text);width:100%;cursor:pointer"><b>'+safe(c.title)+'</b><small>'+safe(new Date(c.updated).toLocaleString())+' · '+c.messages.length+' messages</small></button>').join(''):'<div class="empty">No saved conversations found.</div>';host.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>openConversation(b.dataset.openChat)))}
+ if(host){host.innerHTML=items.length?items.map(c=>'<button class="saved" data-open-chat="'+safe(c.id)+'" style="text-align:left;color:var(--text);width:100%;cursor:pointer"><b>'+safe(c.title)+'</b><small>'+safe(new Date(c.updated).toLocaleString())+' · '+c.messages.length+' messages</small>'+snippet(c)+'</button>').join(''):empty;host.querySelectorAll('[data-open-chat]').forEach(b=>b.addEventListener('click',()=>openConversation(b.dataset.openChat)))}
 }
 function openConversation(id){const c=conversations.find(x=>x.id===id);if(!c)return;activeConversationId=id;chatMessages=c.messages.slice();$('chatLog').innerHTML='';chatMessages.forEach(m=>addBubble(m.role,m.content));$('chat')?.classList.toggle('has-messages',chatMessages.length>0);renderHistory()}
 
