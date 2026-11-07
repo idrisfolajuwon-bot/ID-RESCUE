@@ -1639,7 +1639,7 @@ $('sendToAI').onclick=async()=>{
  if(!message&&!filesToSend.length)return toast('Type a message or attach a file first.');
  if(btn.disabled)return;
  const imageFiles=filesToSend.filter(x=>x.kind==='image'),textFiles=filesToSend.filter(x=>x.kind==='text');
- const fileText=textFiles.map(x=>'\\n\\nFILE '+x.name+':\\n'+x.text).join('');
+ const fileText=textFiles.map(x=>'\n\nFILE '+x.name+':\n'+x.text).join('');
  const promptWithFiles=(message||'Please review the attached file(s).')+fileText;
  const visibleMessage=message||(!filesToSend.length?'':imageFiles.length?'Please look at the attached image(s).':'Please read the attached file(s).');
  chatMessages.push({role:'user',content:visibleMessage+(filesToSend.length?' [Attachments: '+filesToSend.map(x=>x.name).join(', ')+']':'')});
@@ -1648,7 +1648,7 @@ $('sendToAI').onclick=async()=>{
  const wait=document.createElement('div');wait.className='bubble note';wait.textContent=imageFiles.length?'IDRIS AI is looking at your image…':'IDRIS AI is preparing a response…';$('chatLog').appendChild(wait);
  try{
   if(imageFiles.length){
-   const editPattern=/\\b(edit|change|add|remove|replace|put|insert|place|combine|merge|crop|blur|enhance|improve|redesign|background|turn .{0,35} into|make .{0,30} look)\\b/i;
+   const editPattern=/\b(edit|change|add|remove|replace|put|insert|place|combine|merge|crop|blur|enhance|improve|redesign|background|turn .{0,35} into|make .{0,30} look)\b/i;
    const wantsEdit=editPattern.test(message);
    const payload={prompt:promptWithFiles,images:imageFiles.slice(0,3).map(x=>({name:x.name,dataUrl:x.dataUrl}))};
    const endpoint=wantsEdit?'/edit':'/vision';
@@ -1673,7 +1673,7 @@ $('sendToAI').onclick=async()=>{
    const decision=await understandIntent(message);
    if(decision.intent==='image'){
     wait.textContent='IDRIS AI understood you want a creation…';
-    const shape=/\\b(landscape|wide|banner|cover)\\b/i.test(message)?'wide':/\\b(portrait|vertical|phone wallpaper|story)\\b/i.test(message)?'portrait':'square';
+    const shape=/\b(landscape|wide|banner|cover)\b/i.test(message)?'wide':/\b(portrait|vertical|phone wallpaper|story)\b/i.test(message)?'portrait':'square';
     const prompt=decision.prompt||message;
     const response=await fetch(API_URL+'/image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,shape})});
     if(!response.ok){let msg='Image generation failed.';try{const d=await response.json();msg=d.error||msg}catch{}throw Error(msg)}
@@ -1698,7 +1698,7 @@ $('sendToAI').onclick=async()=>{
 };
 
 $('openResearch').onclick=()=>{const q=$('researchQuery').value.trim();if(!q)return toast('Enter a research topic first.');const area=$('researchArea').value;const full=[q,area].filter(Boolean).join(' ');window.open('https://news.google.com/search?q='+encodeURIComponent(full),'_blank','noopener');};
-$('analyseResearch').onclick=()=>{const article=$('researchText').value.trim();if(!article)return toast('Paste some article text first.');const topic=$('researchQuery').value.trim();const prompt='Please analyse the following material. Summarise the main points, identify factual claims and opinions separately, explain any difficult terms, note what cannot be verified from this text alone, and suggest what independent sources should be checked. Do not invent missing facts. '+(topic?'Research topic: '+topic+'\\n':'')+'\\nMATERIAL:\\n'+article;go('chat');$('chatDraft').value=prompt;toast('Research text prepared. Review it, then send to AI.');};
+$('analyseResearch').onclick=()=>{const article=$('researchText').value.trim();if(!article)return toast('Paste some article text first.');const topic=$('researchQuery').value.trim();const prompt='Please analyse the following material. Summarise the main points, identify factual claims and opinions separately, explain any difficult terms, note what cannot be verified from this text alone, and suggest what independent sources should be checked. Do not invent missing facts. '+(topic?'Research topic: '+topic+'\n':'')+'\nMATERIAL:\n'+article;go('chat');$('chatDraft').value=prompt;toast('Research text prepared. Review it, then send to AI.');};
 $('clearResearch').onclick=()=>{$('researchText').value='';$('researchQuery').value='';toast('Research fields cleared.');};
 $('saveChatDraft').onclick=()=>{const s=$('chatDraft').value.trim();if(!s)return toast('Write a message first.');if(save('Chat','Chat draft',s)){$('chatLog').innerHTML='<div class="bubble user">'+safe(s)+'</div><div class="bubble note">Saved locally. No AI reply was generated or sent.</div>';$('chatDraft').value=''}};
 $('clearChat').onclick=()=>{$('chatDraft').value='';chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='';renderHistory();$('chatDraft')?.focus()};
