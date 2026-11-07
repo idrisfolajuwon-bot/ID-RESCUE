@@ -1084,6 +1084,14 @@ body{background:#fff!important}
 .side-bottom .profile small{display:block!important;margin-top:3px!important;color:#858585!important;font-size:10px!important;line-height:1.3!important}
 @media(max-width:899px){.side{padding-top:16px!important}.brand{padding-bottom:15px!important}.sidebar-recent{max-height:none!important}}
 
+
+/* V35 — options stay at top; recent chats sit in the lower sidebar */
+.sidebar-chat-tools{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important}
+.sidebar-primary-nav{margin-bottom:auto!important}
+.sidebar-history-heading{flex:0 0 auto!important}
+.sidebar-recent{flex:0 1 38vh!important;min-height:90px!important;max-height:38vh!important;overflow-y:auto!important}
+@media(max-width:899px){.sidebar-recent{flex:0 1 38vh!important;max-height:38vh!important}}
+/* V35 — options stay at top */
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
