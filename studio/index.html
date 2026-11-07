@@ -1107,6 +1107,14 @@ body{background:#fff!important}
 #chat .bubble.assistant strong{font-weight:750!important;color:#17191f!important}
 #chat .bubble.assistant code{padding:2px 5px!important;border-radius:5px!important;background:#eceef3!important;font-size:.9em!important}
 @media(max-width:899px){.sidebar-chat-tools > .sidebar-history-heading{margin-top:auto!important}.sidebar-recent{flex:0 1 34vh!important;max-height:34vh!important}}
+
+/* Build 37 — working chat attachment picker */
+#chatFileInput{display:none!important}
+.chat-attachment-list{display:flex;flex-wrap:wrap;gap:7px;padding:7px 2px 2px}
+.chat-attachment-list:empty{display:none}
+.chat-attachment-chip{display:flex;align-items:center;gap:7px;max-width:100%;padding:6px 9px;border:1px solid #e2e5ef;border-radius:10px;background:#f7f8fc;color:#39445b;font-size:11px}
+.chat-attachment-chip img{width:30px;height:30px;object-fit:cover;border-radius:6px}
+.chat-attachment-chip button{border:0;background:transparent;color:#788398;font-size:17px;padding:0 2px}
 </style>
 </head>
 <body>\n<div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -1217,11 +1225,12 @@ body{background:#fff!important}
    </div>
    <div class="chat-compose-dock">
     <div class="chat-compose">
-     <button type="button" class="compose-plus" id="composeTools" aria-label="Studio tools" title="Studio tools">＋</button>
+     <button type="button" class="compose-plus" id="composeTools" aria-label="Studio tools" title="Studio tools">＋</button><input id="chatFileInput" type="file" accept="image/*,.txt,.md,.csv,.json" multiple hidden>
      <textarea id="chatDraft" placeholder="Message IDRIS…" rows="1" aria-label="Message IDRIS"></textarea>
      <button class="compose-voice" id="voiceShortcut" type="button" aria-label="Voice input" title="Voice input">⌁</button>
      <button class="send-round" id="sendToAI" aria-label="Send message">↑</button>
     </div>
+    <div class="chat-attachment-list" id="chatAttachmentList" aria-live="polite"></div>
     <div class="chat-compose-note">IDRIS AI can make mistakes. Check important information.</div>
     <div class="chat-under-tools" aria-hidden="true">
      <button class="soft-btn" id="saveChatDraft" tabindex="-1">Save message</button>
@@ -1583,9 +1592,26 @@ function addGeneratedImageBubble(prompt,blob){
  promptBtn.onclick=()=>copy(prompt);
  actions.append(downloadBtn,promptBtn);el.append(img,caption,actions);$('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
 }
-$('composeTools')?.addEventListener('click',()=>{
- const toolsMenu=document.querySelector('.studio-tools-menu');
- if(toolsMenu){toolsMenu.open=!toolsMenu.open;toolsMenu.scrollIntoView({behavior:'smooth',block:'nearest'});}
+let chatAttachments=[];
+function renderChatAttachments(){
+ const list=$('chatAttachmentList');if(!list)return;list.replaceChildren();
+ chatAttachments.forEach((file,index)=>{const chip=document.createElement('div');chip.className='chat-attachment-chip';
+ if(file.preview){const img=document.createElement('img');img.src=file.preview;img.alt='';chip.appendChild(img);}
+ const label=document.createElement('span');label.textContent=file.name;chip.appendChild(label);
+ const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Remove '+file.name);remove.addEventListener('click',()=>{chatAttachments.splice(index,1);renderChatAttachments();});chip.appendChild(remove);list.appendChild(chip);});
+}
+$('composeTools')?.addEventListener('click',()=>{const picker=$('chatFileInput');if(picker){picker.value='';picker.click();}});
+$('chatFileInput')?.addEventListener('change',async e=>{
+ const files=Array.from(e.target.files||[]);if(!files.length)return;
+ for(const file of files){
+  if(file.size>5*1024*1024){toast(file.name+' is too large. Choose a file under 5 MB.');continue;}
+  const isImage=file.type.startsWith('image/');const isText(/\.(txt|md|csv|json)$/i.test(file.name)||file.type.startsWith('text/'));
+  if(!isImage&&!isText){toast('For now, choose an image or a TXT, MD, CSV or JSON file.');continue;}
+  try{if(isImage){const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file);});chatAttachments.push({name:file.name,type:file.type,kind:'image',dataUrl,preview:dataUrl});}
+  else{const text=await file.text();if(text.length>30000){toast(file.name+' is too long. Keep text files under 30,000 characters.');continue;}chatAttachments.push({name:file.name,type:file.type,kind:'text',text});}}
+  catch{toast('Could not read '+file.name+'. Try another file.');}
+ }
+ renderChatAttachments();if(chatAttachments.length)toast(chatAttachments.length+' attachment(s) added.');
 });
 $('voiceShortcut')?.addEventListener('click',()=>{
  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
