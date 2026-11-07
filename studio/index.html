@@ -1605,7 +1605,7 @@ $('chatFileInput')?.addEventListener('change',async e=>{
  const files=Array.from(e.target.files||[]);if(!files.length)return;
  for(const file of files){
   if(file.size>5*1024*1024){toast(file.name+' is too large. Choose a file under 5 MB.');continue;}
-  const isImage=file.type.startsWith('image/');const isText=/\.(txt|md|csv|json)$/i.test(file.name)||file.type.startsWith('text/'));
+  const isImage=file.type.startsWith('image/');const isText=/\.(txt|md|csv|json)$/i.test(file.name)||file.type.startsWith('text/');
   if(!isImage&&!isText){toast('For now, choose an image or a TXT, MD, CSV or JSON file.');continue;}
   try{if(isImage){const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file);});chatAttachments.push({name:file.name,type:file.type,kind:'image',dataUrl,preview:dataUrl});}
   else{const text=await file.text();if(text.length>30000){toast(file.name+' is too long. Keep text files under 30,000 characters.');continue;}chatAttachments.push({name:file.name,type:file.type,kind:'text',text});}}
