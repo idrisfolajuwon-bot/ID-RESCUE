@@ -968,7 +968,7 @@ input:focus,textarea:focus,select:focus{border-color:#72ead2!important;box-shado
 
 <div class="shell">
 <aside class="side">
- <div class="brand"><div class="brand-mark">ID</div><div><div class="brand-name">IDRIS AI STUDIO</div><div class="brand-sub">BY I D LABS</div></div></div>
+ <div class="brand"><div class="brand-mark">ID</div><div><div class="brand-name">IDRIS AI STUDIO</div><div class="brand-sub">BY I D LABS · RECALL BUILD 31</div></div></div>
  <div class="sidebar-chat-tools">
   <button type="button" class="sidebar-new-chat" data-new-chat><span>＋</span> New chat</button>
   <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations"></label>
@@ -1251,7 +1251,7 @@ function persistConversations(){try{localStorage.setItem(CHAT_KEY,JSON.stringify
 function newConversation(){if(chatMessages.length)storeConversation();chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='';renderHistory();$('chatDraft')?.focus()}
 function storeConversation(){if(!chatMessages.length)return;const id=activeConversationId||('chat-'+Date.now());activeConversationId=id;const first=chatMessages.find(m=>m.role==='user');const title=(first?.content||'New conversation').slice(0,65);const item={id,title,messages:chatMessages.slice(-80),updated:new Date().toISOString()};const idx=conversations.findIndex(x=>x.id===id);if(idx>=0)conversations[idx]=item;else conversations.unshift(item);conversations.sort((a,b)=>new Date(b.updated)-new Date(a.updated));conversations=conversations.slice(0,100);persistConversations();renderHistory()}
 function renderHistory(){
- const q=(($('sidebarHistorySearch')?.value||$('historySearch')?.value||'').trim().toLowerCase());
+ const q=(($('sidebarHistorySearch')?.value||'').trim().toLowerCase());
  const searchable=c=>c.title+' '+c.messages.map(m=>m.content).join(' ');
  const items=conversations.filter(c=>searchable(c).toLowerCase().includes(q));
  const bucket=c=>{const d=new Date(c.updated||Date.now()),now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),now.getDate()),day=new Date(d.getFullYear(),d.getMonth(),d.getDate()),diff=Math.round((start-day)/86400000);return diff<=0?'Today':diff===1?'Yesterday':diff<7?'Previous 7 days':diff<30?'Previous 30 days':'Older'};
@@ -1283,8 +1283,13 @@ function save(type,title,content){const a=getItems();a.unshift({id:(crypto.rando
 function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='I D LABS / '+page.replace('-',' ').toUpperCase();if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('[data-new-chat]').forEach(b=>b.addEventListener('click',()=>{newConversation();closeMenu()}));
-$('sidebarHistorySearch')?.addEventListener('input',renderHistory);
-$('historySearch')?.addEventListener('input',renderHistory);
+function syncHistorySearch(source){
+ const other=source.id==='sidebarHistorySearch'?$ ('historySearch'):$('sidebarHistorySearch');
+ if(other&&other.value!==source.value)other.value=source.value;
+ renderHistory();
+}
+$('sidebarHistorySearch')?.addEventListener('input',e=>syncHistorySearch(e.currentTarget));
+$('historySearch')?.addEventListener('input',e=>syncHistorySearch(e.currentTarget));
 const menuToggle=$('menuToggle'),drawerScrim=$('drawerScrim');
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
@@ -1479,7 +1484,6 @@ $('clearResearch').onclick=()=>{$('researchText').value='';$('researchQuery').va
 $('saveChatDraft').onclick=()=>{const s=$('chatDraft').value.trim();if(!s)return toast('Write a message first.');if(save('Chat','Chat draft',s)){$('chatLog').innerHTML='<div class="bubble user">'+safe(s)+'</div><div class="bubble note">Saved locally. No AI reply was generated or sent.</div>';$('chatDraft').value=''}};
 $('clearChat').onclick=()=>{$('chatDraft').value='';chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='';renderHistory();$('chatDraft')?.focus()};
 $('newConversation').onclick=newConversation;
-$('historySearch').addEventListener('input',renderHistory);
 $('saveMemory').onclick=()=>{const value=$('aiMemory').value.trim();try{localStorage.setItem(MEMORY_KEY,value);toast('AI memory saved on this device.')}catch{toast('Could not save memory.')}};
 $('aiMemory').value=localStorage.getItem(MEMORY_KEY)||'';
 loadConversations();renderHistory();
