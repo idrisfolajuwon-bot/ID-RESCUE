@@ -1328,6 +1328,37 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
  .drawer-scrim{z-index:60!important}
 }
 
+
+/* V51 — clear mobile drawer and reliable tap target */
+@media(max-width:899px){
+ .side{
+  z-index:120!important;
+  background:#fff!important;
+  color:#20263a!important;
+  box-shadow:12px 0 38px rgba(25,35,65,.14)!important;
+  pointer-events:auto!important;
+  visibility:hidden!important;
+ }
+ body.menu-open .side{visibility:visible!important;transform:translateX(0)!important}
+ .side *{pointer-events:auto!important}
+ .drawer-scrim{
+  z-index:110!important;
+  background:rgba(24,34,58,.16)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+ }
+ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
+ .side .sidebar-primary-nav button,.side .sidebar-guide-link{
+  min-height:46px!important;
+  color:#39445a!important;
+  background:transparent!important;
+  border:1px solid transparent!important;
+  opacity:1!important;
+ }
+ .side .sidebar-primary-nav button:active,.side .sidebar-guide-link:active{
+  background:#efedff!important;border-color:#ded9ff!important;color:#5144c7!important;
+ }
+}
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -1424,7 +1455,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
   </div>
  </section>
 
- <section class="page" id="maker" style="display:none!important" aria-hidden="true">
+ <section class="page" id="maker">
   <div class="hero"><div class="eyebrow">REAL AI IMAGE GENERATION</div><h1>Visual <span class="gradient">Maker.</span></h1><p>Describe what you want and let IDRIS AI create an original image directly inside your Studio.</p></div>
   <div class="grid">
    <div class="panel"><h2>CREATE YOUR IMAGE</h2>
@@ -1706,34 +1737,31 @@ menuToggle?.addEventListener('click',()=>{const open=!document.body.classList.co
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
- // V50: handle sidebar navigation at document capture so no older
- // button handler can redirect a successful page change back to Chat.
+ // V51: handle navigation before other click handlers, and keep the drawer
+ // above its scrim so taps land on the actual menu buttons.
  document.addEventListener('click',event=>{
-  const b=event.target.closest('button');
+  const target=event.target;
+  const b=target && typeof target.closest==='function' ? target.closest('button') : null;
   if(!b)return;
-  const inSidebar=!!b.closest('#sideNav')||b.matches('.sidebar-guide-link');
+  const inSidebar=!!b.closest('.side');
   if(!inSidebar)return;
   const page=b.dataset.page,action=b.dataset.studioAction;
   if(!page&&!action)return;
   event.preventDefault();
   event.stopImmediatePropagation();
   if(page){
-   if(!document.getElementById(page)){toast('This section is not available yet.');return}
+   const destination=document.getElementById(page);
+   if(!destination){toast('This section is not available yet.');return}
    go(page);
    closeMenu();
    return;
   }
   if(action==='web'){go('research');closeMenu();return}
   if(action==='projects'){go('vault');closeMenu();return}
-  if(action==='image'){
-   go('chat');
-   $('chatDraft').value='Create an image of ';
-   $('chatDraft').focus();
-   toast('Image Creator ready. Describe the image you want.');
-  }
+  if(action==='image'){go('maker');closeMenu();return}
   closeMenu();
  },true);
- document.querySelectorAll('#sideNav button,.sidebar-guide-link').forEach(b=>{b.type='button';b.style.touchAction='manipulation';b.style.pointerEvents='auto'});
+ document.querySelectorAll('.side button').forEach(b=>{b.type='button';b.style.touchAction='manipulation';b.style.pointerEvents='auto'});
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 function download(name,blob){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard.')}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Copied.')}catch{toast('Copy is unavailable in this browser.')}ta.remove()}}
