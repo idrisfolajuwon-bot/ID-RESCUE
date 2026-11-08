@@ -1706,27 +1706,34 @@ menuToggle?.addEventListener('click',()=>{const open=!document.body.classList.co
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
- // V49: delegated sidebar navigation handles touch and mouse consistently.
- const sideNavHost=$('sideNav');
- sideNavHost?.addEventListener('click',event=>{
+ // V50: handle sidebar navigation at document capture so no older
+ // button handler can redirect a successful page change back to Chat.
+ document.addEventListener('click',event=>{
   const b=event.target.closest('button');
-  if(!b||!sideNavHost.contains(b))return;
-  event.preventDefault();
-  event.stopPropagation();
+  if(!b)return;
+  const inSidebar=!!b.closest('#sideNav')||b.matches('.sidebar-guide-link');
+  if(!inSidebar)return;
   const page=b.dataset.page,action=b.dataset.studioAction;
-  if(page){go(page);closeMenu();return}
-  if(!action)return;
-  closeMenu();
-  if(action==='web'){go('research');return}
-  if(action==='projects'){go('vault');return}
-  go('chat');
+  if(!page&&!action)return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  if(page){
+   if(!document.getElementById(page)){toast('This section is not available yet.');return}
+   go(page);
+   closeMenu();
+   return;
+  }
+  if(action==='web'){go('research');closeMenu();return}
+  if(action==='projects'){go('vault');closeMenu();return}
   if(action==='image'){
+   go('chat');
    $('chatDraft').value='Create an image of ';
    $('chatDraft').focus();
    toast('Image Creator ready. Describe the image you want.');
   }
+  closeMenu();
  },true);
- sideNavHost?.querySelectorAll('button').forEach(b=>{b.type='button';b.style.touchAction='manipulation';b.style.pointerEvents='auto'});
+ document.querySelectorAll('#sideNav button,.sidebar-guide-link').forEach(b=>{b.type='button';b.style.touchAction='manipulation';b.style.pointerEvents='auto'});
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 function download(name,blob){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard.')}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Copied.')}catch{toast('Copy is unavailable in this browser.')}ta.remove()}}
