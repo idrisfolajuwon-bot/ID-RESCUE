@@ -1315,6 +1315,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 @media(max-width:899px){body{padding-left:0!important}.shell{display:block!important}.side{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:min(280px,86vw)!important;height:100dvh!important;transform:translateX(-110%)!important;visibility:hidden!important;z-index:60!important;padding:18px 14px calc(14px + env(safe-area-inset-bottom))!important}.menu-toggle{display:flex!important}.drawer-scrim{position:fixed!important;inset:0!important;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:55!important}.drawer-scrim{background:#11182744!important}body.menu-open .side{transform:translateX(0)!important;visibility:visible!important}body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}main{padding:8px 14px 12px!important}.chat-stage{min-height:calc(100dvh - 62px)!important}.chat-log-area{padding:clamp(35px,8vh,75px) 2px 16px!important}.welcome-actions{grid-template-columns:1fr;max-width:420px;gap:8px}.welcome-action{min-height:58px}.welcome-subtitle{margin-bottom:20px!important}.chat-compose-dock{padding:8px 0 calc(8px + env(safe-area-inset-bottom))!important}.chat-compose textarea{font-size:16px!important}}
 @media(max-width:380px){.welcome-action{padding:10px}.welcome-action-icon{width:31px;height:31px;flex-basis:31px}}
 
+
+/* IDRIS V48 — restore visible, reliable mobile navigation control */
+@media(max-width:899px){
+ .topbar{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;min-height:52px!important}
+ .menu-toggle{display:flex!important;flex:0 0 42px!important;width:42px!important;min-width:42px!important;height:42px!important;min-height:42px!important;padding:0!important;box-sizing:border-box!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;position:relative!important;z-index:70!important;border:1px solid #e2e6ef!important;border-radius:11px!important;background:#fff!important;box-shadow:0 1px 4px rgba(20,30,60,.06)!important;overflow:visible!important}
+ .menu-toggle span{display:block!important;visibility:visible!important;opacity:1!important;position:static!important;width:19px!important;min-width:19px!important;height:2px!important;min-height:2px!important;max-height:2px!important;flex:0 0 2px!important;margin:0!important;padding:0!important;border:0!important;border-radius:2px!important;background:#39445a!important;transform:none!important}
+ .menu-toggle:active{background:#f4f5fb!important}
+ .crumb{min-width:0!important;flex:1!important}
+ body.menu-open .menu-toggle{border-color:#c9c5f5!important;background:#f8f7ff!important}
+ .side{z-index:65!important}
+ .drawer-scrim{z-index:60!important}
+}
+
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -1351,7 +1364,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 </aside>
 <div class="drawer-scrim" id="drawerScrim"></div>
 <main>
- <header class="topbar"><button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false" onclick="document.body.classList.toggle('menu-open');this.setAttribute('aria-expanded',String(document.body.classList.contains('menu-open')))"><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
+ <header class="topbar"><button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false" ><span></span><span></span></button><div class="crumb" id="crumb">IDRIS AI / CHAT</div><div class="top-actions"><button class="soft-btn" data-go="about">How it works ↗</button></div></header>
  <section class="page" id="home">
   <div class="dash-hero">
    <div class="dash-hero-copy">
@@ -1689,6 +1702,7 @@ function syncHistorySearch(source){
 $('sidebarHistorySearch')?.addEventListener('input',e=>syncHistorySearch(e.currentTarget));
 $('historySearch')?.addEventListener('input',e=>syncHistorySearch(e.currentTarget));
 const menuToggle=$('menuToggle'),drawerScrim=$('drawerScrim');
+menuToggle?.addEventListener('click',()=>{const open=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',open);menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
