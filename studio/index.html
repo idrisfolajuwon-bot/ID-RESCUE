@@ -1825,7 +1825,7 @@ async function checkAI(){
  try{const r=await fetch(API_URL+'/health',{cache:'no-store'});const d=await r.json();if(!r.ok||!d.ok)throw Error();setAIStatus(true,'Live text and image AI are connected.');}
  catch{setAIStatus(false,'The backend is deployed, but the health check did not complete. Try again shortly.');}
 }
-function addBubble(role,text){
+function addBubble(role,text,sources=[]){
  $('chat')?.classList.add('has-messages');
  const el=document.createElement('div');
  el.className='bubble '+(role==='user'?'user':'assistant');
@@ -1845,6 +1845,7 @@ function addBubble(role,text){
    else htmlOut+='<p>'+inline(line)+'</p>';
   }
   closeList();el.innerHTML=htmlOut;
+  if(Array.isArray(sources)&&sources.length){const box=document.createElement('div');box.style.cssText='margin-top:12px;padding-top:10px;border-top:1px solid #e5e9f1;font-size:11px;display:grid;gap:7px';const label=document.createElement('strong');label.textContent='Sources';label.style.color='#6657d9';box.appendChild(label);sources.slice(0,5).forEach((source,index)=>{try{const u=new URL(source.url);if(!['https:','http:'].includes(u.protocol))return;const a=document.createElement('a');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='['+(index+1)+'] '+String(source.title||u.hostname).slice(0,110);a.style.cssText='color:#4c65b7;text-decoration:underline;overflow-wrap:anywhere';box.appendChild(a)}catch{}});if(box.children.length>1)el.appendChild(box);}
  }
  $('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
 }
@@ -2023,7 +2024,7 @@ $('sendToAI').onclick=async()=>{
    const memory=(localStorage.getItem(MEMORY_KEY)||'').trim(),messagesForAI=[...(memory?[{role:'system',content:'User-provided preferences and context: '+memory}]:[]),...chatMessages.slice(0,-1),{role:'user',content:promptWithFiles}];
    const response=await fetch(API_URL+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:messagesForAI})});
    const data=await response.json();if(!response.ok||!data.reply)throw Error(data.error||'The AI could not read the file.');
-   wait.remove();chatMessages.push({role:'assistant',content:data.reply});addBubble('assistant',data.reply);storeConversation();
+   wait.remove();chatMessages.push({role:'assistant',content:data.reply});addBubble('assistant',data.reply,data.sources||[]);storeConversation();
   }else{
    const decision=await understandIntent(message);
    if(decision.intent==='image'){
