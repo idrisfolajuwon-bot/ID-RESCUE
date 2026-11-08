@@ -1706,30 +1706,27 @@ menuToggle?.addEventListener('click',()=>{const open=!document.body.classList.co
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
-document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{go(b.dataset.page);closeMenu()}));
-document.querySelectorAll('[data-studio-action]').forEach(b=>b.addEventListener('click',()=>{
- const action=b.dataset.studioAction;
- closeMenu();
- if(action==='web'){go('research');return}
- if(action==='projects'){go('vault');return}
- go('chat');
- setTimeout(()=>{
+ // V49: delegated sidebar navigation handles touch and mouse consistently.
+ const sideNavHost=$('sideNav');
+ sideNavHost?.addEventListener('click',event=>{
+  const b=event.target.closest('button');
+  if(!b||!sideNavHost.contains(b))return;
+  event.preventDefault();
+  event.stopPropagation();
+  const page=b.dataset.page,action=b.dataset.studioAction;
+  if(page){go(page);closeMenu();return}
+  if(!action)return;
+  closeMenu();
+  if(action==='web'){go('research');return}
+  if(action==='projects'){go('vault');return}
+  go('chat');
   if(action==='image'){
    $('chatDraft').value='Create an image of ';
    $('chatDraft').focus();
    toast('Image Creator ready. Describe the image you want.');
   }
-  if(action==='history'){
-   document.body.classList.add('menu-open');
-   menuToggle?.setAttribute('aria-expanded','true');
-   setTimeout(()=>$('sidebarHistorySearch')?.focus(),100);
-  }
-  if(action==='memory'){
-   $('aiMemory').scrollIntoView({behavior:'auto',block:'center'});
-   $('aiMemory').focus();
-  }
- },80);
-}));
+ },true);
+ sideNavHost?.querySelectorAll('button').forEach(b=>{b.type='button';b.style.touchAction='manipulation';b.style.pointerEvents='auto'});
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 function download(name,blob){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard.')}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Copied.')}catch{toast('Copy is unavailable in this browser.')}ta.remove()}}
