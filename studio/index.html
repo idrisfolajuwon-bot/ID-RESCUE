@@ -1737,24 +1737,28 @@ menuToggle?.addEventListener('click',()=>{const open=!document.body.classList.co
 function closeMenu(){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}
 drawerScrim?.addEventListener('click',()=>{document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false')}});
- // V51: handle navigation before other click handlers, and keep the drawer
- // above its scrim so taps land on the actual menu buttons.
+ // V52: route every sidebar control through one capture handler.
+ // This keeps New Chat and saved conversation taps reliable on mobile.
  document.addEventListener('click',event=>{
   const target=event.target;
   const b=target && typeof target.closest==='function' ? target.closest('button') : null;
-  if(!b)return;
-  const inSidebar=!!b.closest('.side');
-  if(!inSidebar)return;
+  if(!b || !b.closest('.side'))return;
+  const historyButton=target.closest('[data-open-chat]');
+  if(b.matches('[data-new-chat]')){
+   event.preventDefault();event.stopImmediatePropagation();
+   newConversation();closeMenu();return;
+  }
+  if(historyButton){
+   event.preventDefault();event.stopImmediatePropagation();
+   openConversation(historyButton.dataset.openChat);closeMenu();return;
+  }
   const page=b.dataset.page,action=b.dataset.studioAction;
   if(!page&&!action)return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
+  event.preventDefault();event.stopImmediatePropagation();
   if(page){
    const destination=document.getElementById(page);
    if(!destination){toast('This section is not available yet.');return}
-   go(page);
-   closeMenu();
-   return;
+   go(page);closeMenu();return;
   }
   if(action==='web'){go('research');closeMenu();return}
   if(action==='projects'){go('vault');closeMenu();return}
