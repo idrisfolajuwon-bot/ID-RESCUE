@@ -1254,6 +1254,67 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
  .chat-first-greeting h1{font-size:27px!important}
 }
 
+
+/* IDRIS V47 — minimal white studio, original blue-violet identity */
+:root{color-scheme:light!important;--line:#e7eaf1!important;--text:#171b2b!important;--muted:#727b90!important;--mint:#6256e8!important;--blue:#3478e8!important;--violet:#8067ef!important;--shadow:0 8px 26px rgba(28,40,75,.055)!important}
+html,body{background:#fff!important;color:#171b2b!important}
+body{background:#fff!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important}
+.shell{background:#fff!important}
+.side{width:254px!important;background:#fbfbfd!important;border-right:1px solid #eceef3!important;box-shadow:none!important;padding:22px 15px!important}
+.brand{padding:4px 7px 24px!important}
+.brand-mark{width:38px!important;height:38px!important;border-radius:12px!important;background:linear-gradient(145deg,#315fe8,#8059e9)!important;color:#fff!important;box-shadow:none!important}
+.brand-name{font-size:13px!important;letter-spacing:-.25px!important;color:#171b2b!important}
+.brand-sub{font-size:9px!important;letter-spacing:1.1px!important;color:#8991a3!important}
+.sidebar-new-chat{height:42px!important;background:#fff!important;border:1px solid #e5e8ef!important;border-radius:10px!important;color:#252b3c!important;box-shadow:none!important}
+.sidebar-new-chat:hover{background:#f3f5fa!important}
+.sidebar-search{border:1px solid #e9ebf1!important;background:#fff!important;border-radius:9px!important}
+.sidebar-search input{background:transparent!important;color:#252b3c!important}
+.sidebar-history-heading{font-size:11px!important;letter-spacing:0!important;text-transform:none!important;color:#8a91a2!important}
+.sidebar-chat-item{border-radius:8px!important;color:#535d72!important}
+.sidebar-chat-item:hover,.sidebar-chat-item.active{background:#f0f2f8!important;color:#20263a!important}
+.side .sidebar-primary-nav button,.sidebar-guide-link{border-radius:9px!important;color:#4e586d!important}
+.side .sidebar-primary-nav button:hover,.sidebar-guide-link:hover{background:#f0f2f8!important;color:#26345b!important}
+.side .sidebar-primary-nav button.active{background:#eeedff!important;color:#5949cf!important}
+.side .sidebar-primary-nav button .ico,.sidebar-guide-link .ico{color:#6b62d9!important}
+.side-bottom .profile{border-color:#e9ebf1!important}
+.side-bottom .avatar{background:#eeedff!important;color:#584bd1!important}
+main{background:#fff!important;padding:10px clamp(18px,4vw,54px) 20px!important}
+.topbar{min-height:48px!important;border:0!important;background:#fff!important;padding:4px 0 10px!important}
+.crumb{font-size:12px!important;letter-spacing:0!important;color:#596176!important;font-weight:650!important}
+.top-actions .soft-btn{border:1px solid #e8eaf0!important;background:#fff!important;color:#4f5870!important}
+.page#chat.active{min-height:calc(100dvh - 60px)!important;display:flex!important;flex-direction:column!important}
+.chat-stage{width:100%!important;max-width:900px!important;min-height:calc(100dvh - 80px)!important;margin:0 auto!important}
+.chat-log-area{flex:1!important;justify-content:center!important;padding:clamp(55px,11vh,110px) 12px 25px!important}
+.chat-first-greeting{max-width:720px!important;margin:0 auto 26px!important;text-align:center!important}
+.welcome-mark{width:48px;height:48px;margin:0 auto 20px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#315fe8,#8061e9);color:#fff;font-size:18px;font-weight:850;letter-spacing:-1px}
+.chat-first-greeting h1{font-size:clamp(25px,3.4vw,34px)!important;font-weight:650!important;letter-spacing:-1.2px!important;color:#171b2b!important}
+.welcome-subtitle{margin:10px 0 25px!important;color:#7a8294!important;font-size:14px!important}
+.welcome-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:690px;margin:0 auto}
+.welcome-action{display:flex;align-items:center;gap:11px;text-align:left;min-height:68px;padding:12px;border:1px solid #e8eaf1;border-radius:13px;background:#fff;color:#252b3d;transition:border-color .15s,background .15s}
+.welcome-action:hover{border-color:#c9c6f6;background:#fbfaff}
+.welcome-action-icon{width:34px;height:34px;flex:0 0 34px;border-radius:10px;display:grid;place-items:center;background:#f0efff;color:#6256d9;font-size:17px}
+.welcome-action b{display:block;font-size:12px;font-weight:650}
+.welcome-action small{display:block;margin-top:3px;color:#858da0;font-size:10px}
+.chatlog{max-width:760px!important}
+.chat-compose-dock{max-width:790px!important;padding:12px 8px 14px!important}
+.chat-compose{border:1px solid #dfe3eb!important;border-radius:22px!important;background:#fff!important;box-shadow:0 3px 12px rgba(24,36,70,.045)!important;padding:8px 10px!important}
+.chat-compose:focus-within{border-color:#b9b4f1!important;box-shadow:0 0 0 3px rgba(100,85,220,.07)!important}
+.chat-compose textarea{color:#20263a!important}
+.chat-compose textarea::placeholder{color:#9299a8!important}
+.compose-plus,.compose-voice{color:#626c80!important}
+.compose-plus:hover,.compose-voice:hover{background:#f3f4f8!important}
+.send-round{background:#6256e8!important;color:#fff!important;box-shadow:none!important}
+.chat-compose-note{color:#9298a6!important;font-size:10px!important}
+#chat.has-messages .chat-log-area{justify-content:flex-start!important;padding-top:24px!important}
+#chat.has-messages .chat-first-greeting{display:none!important}
+#chat .bubble.user{background:#f1f2f6!important;color:#20263a!important}
+#chat .bubble.assistant{color:#252b3b!important}
+.chat-extra-panel{display:none!important}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #8b83e9!important;outline-offset:2px!important}
+@media(min-width:900px){body{padding-left:254px!important}.side{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:254px!important;height:100dvh!important;z-index:50!important}.drawer-scrim,.menu-toggle{display:none!important}main{padding-left:clamp(28px,5vw,68px)!important;padding-right:clamp(28px,5vw,68px)!important}}
+@media(max-width:899px){body{padding-left:0!important}.shell{display:block!important}.side{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:min(280px,86vw)!important;height:100dvh!important;transform:translateX(-110%)!important;visibility:hidden!important;z-index:60!important;padding:18px 14px calc(14px + env(safe-area-inset-bottom))!important}.menu-toggle{display:flex!important}.drawer-scrim{position:fixed!important;inset:0!important;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:55!important}.drawer-scrim{background:#11182744!important}body.menu-open .side{transform:translateX(0)!important;visibility:visible!important}body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}main{padding:8px 14px 12px!important}.chat-stage{min-height:calc(100dvh - 62px)!important}.chat-log-area{padding:clamp(35px,8vh,75px) 2px 16px!important}.welcome-actions{grid-template-columns:1fr;max-width:420px;gap:8px}.welcome-action{min-height:58px}.welcome-subtitle{margin-bottom:20px!important}.chat-compose-dock{padding:8px 0 calc(8px + env(safe-area-inset-bottom))!important}.chat-compose textarea{font-size:16px!important}}
+@media(max-width:380px){.welcome-action{padding:10px}.welcome-action-icon{width:31px;height:31px;flex-basis:31px}}
+
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -1368,7 +1429,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
   <div class="chat-stage">
    <div class="chat-log-area" id="chatLogArea">
     <div class="chat-first-greeting" id="chatFirstGreeting">
-     <h1>What can I help with?</h1>
+     <div class="welcome-mark" aria-hidden="true">ID</div>
+     <h1>What would you like to create?</h1>
+     <p class="welcome-subtitle">Ask a question, explore an idea, or make something new.</p>
+     <div class="welcome-actions">
+      <button type="button" class="welcome-action" data-starter="Help me think through an idea step by step."><span class="welcome-action-icon">✦</span><span><b>Ask IDRIS</b><small>Get help with an idea</small></span></button>
+      <button type="button" class="welcome-action" data-studio-action="image"><span class="welcome-action-icon">▧</span><span><b>Create an image</b><small>Turn words into visuals</small></span></button>
+      <button type="button" class="welcome-action" data-page="videolab"><span class="welcome-action-icon">▶</span><span><b>Video Lab</b><small>Plan a video project</small></span></button>
+     </div>
     </div>
     <div class="chatlog" id="chatLog"></div>
    </div>
