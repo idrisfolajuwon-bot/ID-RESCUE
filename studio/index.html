@@ -1170,6 +1170,9 @@ body{background:#fff!important}
   .chatlog { max-height:48vh!important; }
   .bubble { max-width:94%!important; }
 }
+
+/* Video Lab — lightweight local storyboard planner */
+.video-image-preview{margin-top:9px;min-height:110px;border:1px dashed #cbd4e4;border-radius:13px;background:#f7f9fd;display:grid;place-items:center;padding:10px;color:var(--muted);font-size:11px;text-align:center;overflow:hidden}.video-image-preview img{max-width:100%;max-height:220px;object-fit:contain;border-radius:9px}.video-plan-status{font-size:10px;color:#6557e8;font-weight:800;letter-spacing:1px;margin:0 0 10px}.video-summary{display:grid;gap:10px}.video-scene{border:1px solid var(--line);border-radius:13px;padding:12px;background:#f9faff}.video-scene-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:7px}.video-scene-head b{font-size:11px}.video-scene-head span{font-size:9px;color:var(--muted)}.video-scene textarea{min-height:76px;font-size:11px;background:#fff}.video-cap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.video-cap-grid .saved{background:#fafbff}@media(max-width:650px){.video-cap-grid{grid-template-columns:1fr}}
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -1192,7 +1195,8 @@ body{background:#fff!important}
   <nav class="nav sidebar-primary-nav" id="sideNav" aria-label="Main navigation">
    <button data-studio-action="image"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m20.5 15-5-5L5 20"/></svg></span>Images</button>
    <button data-studio-action="projects"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5h7l2 2h8v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M3.5 7.5v-2a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v2"/></svg></span>Projects</button>
-   <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v15H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Library</button>
+<button data-page="videolab"><span class="ico" aria-hidden="true">▶</span>Video Lab</button>
+      <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v15H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Library</button>
    <button data-studio-action="web"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5M4.5 10.8h12.6M10.8 4c2 2 2.8 4.2 2.8 6.8s-.8 4.8-2.8 6.8"/></svg></span>Explore</button>
   </nav>
   <div class="sidebar-history-heading">Recent</div>
@@ -1345,6 +1349,40 @@ body{background:#fff!important}
    <article class="plan-card plan-premium"><div class="plan-card-top"><div><span class="plan-eyebrow">IN DEVELOPMENT</span><h2>Premium</h2></div><span class="plan-badge plan-badge-future">COMING LATER</span></div><div class="plan-price">Not priced <small>/ not for sale</small></div><p class="plan-description">A future upgrade for people who need more capability and higher limits.</p><ul><li>Higher AI usage limits</li><li>Expanded image-generation allowance</li><li>Advanced creation workflows</li><li>More project organisation tools</li><li>Priority features when technically supported</li></ul><div class="plan-card-foot">No checkout or payment is active</div></article>
   </div>
   <div class="panel plan-safety"><h2>TRANSPARENCY &amp; COST CONTROL</h2><p>These activity numbers are read from this browser only. They are not server-side usage meters, billing records or enforced limits. The current app does not yet have secure Free/Premium entitlement checks, so Premium features are not being sold or unlocked.</p><div class="plan-safety-row"><span>Payments</span><b>Not connected</b></div><div class="plan-safety-row"><span>Premium access control</span><b>Not activated</b></div><div class="plan-safety-row"><span>Usage enforcement</span><b>Not activated</b></div><div class="actions"><button class="soft-btn" id="refreshPlanStats">↻ REFRESH ACTIVITY</button><button class="soft-btn" id="copyPlanRoadmap">COPY DEVELOPMENT ROADMAP</button></div><p class="muted small" id="planUpdatedAt">Activity is calculated locally on this device.</p></div>
+ </section>
+
+ <section class="page" id="videolab">
+  <div class="hero"><div class="eyebrow">PLAN · STORYBOARD · PREPARE</div><h1>Video <span class="gradient">Lab.</span></h1><p>Shape a video idea from text or a starting image. Build a clear scene-by-scene storyboard before rendering.</p></div>
+  <div class="callout info" style="margin-bottom:15px"><b>FREE PLANNING WORKSPACE</b><br>This version creates prompts and editable storyboards on your device. It does not render or export an AI video. No paid video service is connected, so this planner will not create video-generation charges.</div>
+  <div class="grid">
+   <div class="panel">
+    <h2>1 · START YOUR VIDEO IDEA</h2>
+    <div class="tabs-inline"><button type="button" class="active" id="videoTextMode">TEXT TO VIDEO</button><button type="button" id="videoImageMode">IMAGE TO VIDEO</button></div>
+    <label class="field-label" for="videoPrompt">DESCRIBE THE VIDEO YOU WANT</label>
+    <textarea id="videoPrompt" maxlength="1200" placeholder="Example: A futuristic Lagos skyline at sunset, with electric cars moving through a glowing city…"></textarea>
+    <div id="videoImageInputWrap" hidden>
+     <label class="field-label" for="videoImageFile">CHOOSE A STARTING IMAGE</label>
+     <input id="videoImageFile" type="file" accept="image/png,image/jpeg,image/webp">
+     <div id="videoImagePreview" class="video-image-preview">Your selected image will appear here.</div>
+    </div>
+    <div class="row">
+     <div><label class="field-label" for="videoStyle">VISUAL STYLE</label><select id="videoStyle"><option>Cinematic</option><option>Realistic</option><option>Animation</option><option>Documentary</option><option>Futuristic</option><option>Commercial</option></select></div>
+     <div><label class="field-label" for="videoRatio">VIDEO FORMAT</label><select id="videoRatio"><option value="9:16">Vertical · 9:16</option><option value="16:9">Landscape · 16:9</option><option value="1:1">Square · 1:1</option></select></div>
+    </div>
+    <div class="row">
+     <div><label class="field-label" for="videoShots">NUMBER OF SCENES</label><select id="videoShots"><option value="3">3 scenes</option><option value="4" selected>4 scenes</option><option value="5">5 scenes</option><option value="6">6 scenes</option></select></div>
+     <div><label class="field-label" for="videoMood">MOOD</label><select id="videoMood"><option>Inspiring</option><option>Energetic</option><option>Mysterious</option><option>Calm</option><option>Dramatic</option><option>Playful</option></select></div>
+    </div>
+    <div class="actions"><button class="primary-btn" id="buildStoryboard">✦ BUILD STORYBOARD</button><button class="soft-btn" id="clearVideoLab">CLEAR</button></div>
+   </div>
+   <div class="panel">
+    <h2>YOUR VIDEO PLAN</h2>
+    <div class="video-plan-status" id="videoPlanStatus">Waiting for your idea</div>
+    <div class="video-summary" id="videoSummary"><div class="empty">Your scene plan will appear here. You can edit every scene after it is created.</div></div>
+    <div class="actions"><button class="soft-btn" id="copyVideoPlan">COPY PLAN</button><button class="soft-btn" id="downloadVideoPlan">EXPORT TXT</button><button class="primary-btn" id="saveVideoPlan">SAVE TO VAULT</button></div>
+   </div>
+  </div>
+  <div class="panel"><h2>WHAT THIS VERSION CAN DO</h2><div class="video-cap-grid"><div class="saved"><b>Text-to-video planning</b><small>Turn a written idea into an ordered sequence of scenes.</small></div><div class="saved"><b>Image-to-video planning</b><small>Use a chosen image as a visual reference and describe its intended motion.</small></div><div class="saved"><b>Editable storyboard</b><small>Adjust scene descriptions before copying, exporting or saving them.</small></div></div><p class="muted small" style="margin-top:13px">AI video rendering is not connected yet. The storyboard is a planning aid, not a generated video.</p></div>
  </section>
 
  <section class="page" id="about">
@@ -1913,4 +1951,26 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
 })();
 </script>
 <script>(()=>{const b=document.querySelector('.sidebar-search-trigger'),s=document.querySelector('.sidebar-search');if(b&&s)b.addEventListener('click',()=>{s.classList.toggle('search-open');if(s.classList.contains('search-open'))s.querySelector('input')?.focus()});})();</script>
+
+<!-- IDRIS VIDEO LAB LOCAL STORYBOARD -->
+<script>
+(()=>{'use strict';
+ const $=id=>document.getElementById(id);const page=$('videolab');if(!page)return;
+ let mode='text',imageUrl='',plan='';
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const toast=m=>{const t=$('toast');if(t){t.textContent=m;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2300)}};
+ const setMode=m=>{mode=m;$('videoTextMode').classList.toggle('active',m==='text');$('videoImageMode').classList.toggle('active',m==='image');$('videoImageInputWrap').hidden=m!=='image';$('videoPrompt').placeholder=m==='image'?'Describe how the selected image should move or change…':'Describe the video you want to create…'};
+ $('videoTextMode').addEventListener('click',()=>setMode('text'));$('videoImageMode').addEventListener('click',()=>setMode('image'));
+ $('videoImageFile').addEventListener('change',e=>{const file=e.target.files&&e.target.files[0];if(!file)return;if(!/^image\/(png|jpeg|webp)$/.test(file.type)){toast('Please choose a PNG, JPG or WebP image.');e.target.value='';return}if(file.size>8*1024*1024){toast('Please choose an image smaller than 8 MB.');e.target.value='';return}if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=URL.createObjectURL(file);$('videoImagePreview').innerHTML='<img src="'+imageUrl+'" alt="Selected storyboard reference"><div>'+esc(file.name)+' · '+(file.size/1024/1024).toFixed(1)+' MB</div>'});
+ const sceneIdeas=['Open with a clear establishing shot that introduces the setting and main subject.','Move closer to reveal the key action or important visual detail.','Show the main moment from a fresh angle, with movement that supports the story.','Finish with a memorable closing shot and a clean final frame.','Add a brief transition that connects the previous moment to the main reveal.','End on a strong visual detail that leaves the viewer with a clear impression.'];
+ const build=()=>{const prompt=$('videoPrompt').value.trim();if(!prompt){toast('Describe your video idea first.');$('videoPrompt').focus();return}if(mode==='image'&&!$('videoImageFile').files.length){toast('Choose a starting image first.');return}const n=Number($('videoShots').value),style=$('videoStyle').value,mood=$('videoMood').value,ratio=$('videoRatio').value;const title=prompt.length>58?prompt.slice(0,55)+'…':prompt;const scenes=Array.from({length:n},(_,i)=>({name:'Scene '+(i+1),time:(i*3+1)+'–'+(i*3+3)+' sec',text:sceneIdeas[i]+' Visual direction: '+prompt+' Style: '+style.toLowerCase()+'. Mood: '+mood.toLowerCase()+'.'}));plan={title,prompt,mode,style,mood,ratio,scenes,created:new Date().toISOString(),imageName:mode==='image'?$('videoImageFile').files[0].name:''};render();$('videoPlanStatus').textContent='STORYBOARD READY · '+n+' SCENES';toast('Storyboard created. Edit any scene below.');};
+ const render=()=>{if(!plan)return;$('videoSummary').innerHTML=plan.scenes.map((sc,i)=>'<article class="video-scene"><div class="video-scene-head"><b>'+esc(sc.name)+'</b><span>'+esc(sc.time)+'</span></div><textarea data-scene="'+i+'" aria-label="Edit '+esc(sc.name)+'">'+esc(sc.text)+'</textarea></article>').join('')+'<div class="callout info">Format: '+esc(plan.ratio)+' · Style: '+esc(plan.style)+' · Mood: '+esc(plan.mood)+(plan.mode==='image'?' · Image: '+esc(plan.imageName):' · Text prompt')+'</div>';};
+ const sync=()=>{if(!plan)return;document.querySelectorAll('[data-scene]').forEach(el=>{const i=Number(el.dataset.scene);if(plan.scenes[i])plan.scenes[i].text=el.value})};
+ const textPlan=()=>{sync();if(!plan)return'';return ['IDRIS AI STUDIO — VIDEO STORYBOARD','Title: '+plan.title,'Input: '+(plan.mode==='image'?'Image-to-video plan ('+plan.imageName+')':'Text-to-video plan'),'Style: '+plan.style,'Mood: '+plan.mood,'Format: '+plan.ratio,'Original idea: '+plan.prompt,'','SCENES',...plan.scenes.flatMap(sc=>[sc.name+' ('+sc.time+')',sc.text,''])].join('\n')};
+ $('buildStoryboard').addEventListener('click',build);$('clearVideoLab').addEventListener('click',()=>{plan='';$('videoPrompt').value='';$('videoImageFile').value='';if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl='';$('videoImagePreview').textContent='Your selected image will appear here.';$('videoSummary').innerHTML='<div class="empty">Your scene plan will appear here. You can edit every scene after it is created.</div>';$('videoPlanStatus').textContent='Waiting for your idea';toast('Video Lab cleared.')});
+ $('copyVideoPlan').addEventListener('click',async()=>{const t=textPlan();if(!t){toast('Build a storyboard first.');return}try{await navigator.clipboard.writeText(t);toast('Storyboard copied.')}catch{toast('Copy is unavailable in this browser.')}});
+ $('downloadVideoPlan').addEventListener('click',()=>{const t=textPlan();if(!t){toast('Build a storyboard first.');return}const a=document.createElement('a'),u=URL.createObjectURL(new Blob([t],{type:'text/plain;charset=utf-8'}));a.href=u;a.download='idris-video-storyboard.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);toast('Storyboard exported.')});
+ $('saveVideoPlan').addEventListener('click',()=>{const t=textPlan();if(!t){toast('Build a storyboard first.');return}try{const key='idris-ai-studio-v2',items=JSON.parse(localStorage.getItem(key)||'[]');items.unshift({id:'video-'+Date.now(),type:'Video Storyboard',title:plan.title,content:t,created:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(items.slice(0,250)));toast('Storyboard saved to your Library.')}catch{toast('Could not save. Check available device storage.')}});
+})();
+</script>
 </body></html>
