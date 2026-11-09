@@ -2061,7 +2061,7 @@ function renderChatAttachments(){
 }
 $('composeTools')?.addEventListener('click',()=>{const picker=$('chatFileInput');if(picker){picker.value='';picker.click();}});
 let pdfjsPromise=null,mammothPromise=null;
-const MAX_DOCUMENT_TEXT=14000;
+const MAX_DOCUMENT_TEXT=12000;
 async function loadPdfJs(){
  if(!pdfjsPromise)pdfjsPromise=import('https://cdn.jsdelivr.net/npm/pdfjs-dist@6.5.438/build/pdf.mjs').then(lib=>{
   lib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@6.5.438/build/pdf.worker.mjs';
