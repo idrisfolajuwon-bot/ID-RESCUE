@@ -1475,6 +1475,39 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
   gtag('js', new Date());
   gtag('config', 'G-DXDLJLH747');
 </script>
+<style>
+/* V58 — single-dot thinking state and ChatGPT-style voice conversation */
+#chat .bubble.note.processing-dot{align-self:center;display:grid;place-items:center;width:28px;height:28px;min-height:28px;padding:0;margin:5px auto;background:transparent!important;border:0!important}
+.processing-dot-core{display:block;width:9px;height:9px;border-radius:50%;background:#3478f6;box-shadow:0 0 0 4px #3478f61a;animation:idrisDotPulse 1.25s ease-in-out infinite}
+@keyframes idrisDotPulse{0%,100%{transform:scale(.86);box-shadow:0 0 0 3px #3478f61a}50%{transform:scale(1.08);box-shadow:0 0 0 7px #3478f610}}
+.idris-voice-layer{position:fixed;inset:0;z-index:1000;background:#f7f8fc;display:grid;place-items:center;padding:0;color:#202538}
+.idris-voice-panel{width:100%;height:100%;min-height:100dvh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 43%,#eaf0ff 0,transparent 42%),#f8f9fc;padding:calc(18px + env(safe-area-inset-top)) 22px calc(18px + env(safe-area-inset-bottom))}
+.idris-voice-header{height:54px;display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:760px;width:100%;margin:0 auto}
+.idris-voice-back{width:42px;height:42px;border:1px solid #e4e8f1;border-radius:50%;background:#fff;color:#4b5670;font-size:27px;line-height:1}
+.idris-voice-header>div{display:flex;align-items:baseline;gap:7px;margin-right:auto;margin-left:4px}
+.idris-voice-header strong{font-size:14px;letter-spacing:1.5px}.idris-voice-header>div span{font-size:9px;letter-spacing:2px;color:#7b86a0;font-weight:800}
+.idris-voice-live{font-size:9px;letter-spacing:1.5px;color:#3478f6;font-weight:900}
+.idris-voice-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:0}
+.idris-voice-orb{width:min(54vw,230px);height:min(54vw,230px);max-width:230px;max-height:230px;border-radius:50%;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 35% 28%,#a9c8ff 0,#648ff2 32%,#416be0 62%,#304db5 100%);box-shadow:0 22px 65px #4778e044,inset 0 2px 12px #ffffff88;transition:transform .25s}
+.idris-voice-orb:before,.idris-voice-orb:after{content:"";position:absolute;inset:-13px;border:1px solid #7fa3f455;border-radius:50%;animation:idrisVoiceWave 2.8s ease-out infinite}
+.idris-voice-orb:after{inset:-27px;animation-delay:1.4s}
+.idris-voice-orb span{width:35%;height:35%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cfe0ff 65%,#8fb0fa);box-shadow:0 0 40px #fff8}
+.idris-voice-orb i{position:absolute;width:9px;height:9px;border-radius:50%;background:#fff;top:24%;right:27%;box-shadow:0 0 16px #fff}
+.idris-voice-orb[data-state="speaking"]{transform:scale(1.06);animation:idrisVoiceSpeak .85s ease-in-out infinite alternate}
+.idris-voice-orb[data-state="thinking"]{animation:idrisVoiceThink 1.1s ease-in-out infinite alternate}
+.idris-voice-orb[data-state="paused"]{filter:saturate(.45);animation:none}
+@keyframes idrisVoiceWave{0%{transform:scale(.92);opacity:.7}100%{transform:scale(1.2);opacity:0}}
+@keyframes idrisVoiceSpeak{from{filter:brightness(1);transform:scale(1.01)}to{filter:brightness(1.18);transform:scale(1.075)}}
+@keyframes idrisVoiceThink{from{filter:saturate(.8)}to{filter:saturate(1.2)}}
+.idris-voice-center h2{font-size:19px;font-weight:650;letter-spacing:-.3px;margin:48px 0 8px;color:#29334b}
+.idris-voice-center p{max-width:440px;min-height:42px;margin:0;color:#7b879d;font-size:14px;line-height:1.55;overflow:auto}
+.idris-voice-controls{width:100%;max-width:420px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0 10px}
+.idris-voice-control{border:0;background:transparent;color:#56627b;display:flex;flex-direction:column;align-items:center;gap:7px;min-width:70px;font-size:20px}
+.idris-voice-control small{font-size:10px;font-weight:650;color:#748098}
+.idris-voice-end{width:64px;height:64px;border:0;border-radius:50%;background:#e5485d;color:white;font-size:20px;box-shadow:0 8px 25px #e5485d33;transform:rotate(135deg)}
+@media(min-width:700px){.idris-voice-panel{max-width:900px;min-height:min(780px,100dvh);height:min(780px,100dvh);border-radius:28px;box-shadow:0 24px 90px #26365b26}.idris-voice-layer{padding:22px;background:#26334a66;backdrop-filter:blur(8px)}}
+@media(prefers-reduced-motion:reduce){.processing-dot-core,.idris-voice-orb,.idris-voice-orb:before,.idris-voice-orb:after{animation:none!important}}
+</style>
 </head>
 <body>
 <div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -2134,15 +2167,7 @@ $('chatFileInput')?.addEventListener('change',async e=>{
  }
  renderChatAttachments();if(chatAttachments.length)toast(chatAttachments.length+' attachment(s) ready for IDRIS.');
 });
-$('voiceShortcut')?.addEventListener('click',()=>{
- const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!SpeechRecognition){toast('Voice typing is not supported in this browser. You can use your keyboard microphone instead.');return;}
- const recognition=new SpeechRecognition();recognition.lang=navigator.language||'en-US';recognition.interimResults=false;recognition.maxAlternatives=1;
- recognition.onstart=()=>toast('Listening… speak your message.');
- recognition.onresult=e=>{const spoken=e.results?.[0]?.[0]?.transcript||'';if(spoken){const field=$('chatDraft');field.value=(field.value?field.value+' ':'')+spoken;field.focus();}};
- recognition.onerror=()=>toast('Voice input could not start. Check microphone permission.');
- try{recognition.start()}catch{toast('Voice input is already active or unavailable.');}
-});
+$('voiceShortcut')?.addEventListener('click',()=>startIdrisVoiceMode());
 $('chatDraft')?.addEventListener('keydown',e=>{
  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('sendToAI')?.click();}
 });
@@ -2164,42 +2189,60 @@ async function prepareEditImage(dataUrl){
 let idrisVoiceSession=null;
 function startIdrisVoiceMode(){
  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!Recognition){toast('Voice mode is not supported in this browser. Open IDRIS AI STUDIO in Chrome and try again.');return;}
- if(!('speechSynthesis' in window)&&!('SpeechSynthesisUtterance' in window)){toast('Voice replies are not supported by this browser.');return;}
+ if(!Recognition){toast('Voice conversations are not supported in this browser. Try opening IDRIS AI STUDIO in Chrome.');return;}
+ if(!('speechSynthesis' in window)||typeof window.SpeechSynthesisUtterance!=='function'){toast('Spoken replies are not supported by this browser.');return;}
  if(idrisVoiceSession){idrisVoiceSession.stop();return;}
- const layer=document.createElement('div');layer.id='idrisVoiceLayer';
- layer.style.cssText='position:fixed;inset:0;z-index:1000;background:rgba(24,29,48,.48);backdrop-filter:blur(8px);display:grid;place-items:center;padding:18px';
- const panel=document.createElement('section');panel.style.cssText='width:min(100%,440px);background:#fff;border:1px solid #e4e7f0;border-radius:25px;padding:25px;color:#202a40;box-shadow:0 25px 80px #18203b33;text-align:center';
- panel.innerHTML='<div style="font-size:11px;font-weight:900;letter-spacing:2px;color:#7164dc">IDRIS AI STUDIO</div><div style="font-size:44px;margin:18px 0 8px">🎙️</div><h2 style="font-size:24px;margin:0 0 7px">IDRIS VOICE MODE</h2><p id="idrisVoiceStatus" style="font-size:13px;color:#78849a;margin:0 0 16px">Starting microphone…</p><div id="idrisVoiceTranscript" style="min-height:64px;max-height:150px;overflow:auto;padding:13px;background:#f6f7fb;border:1px solid #e8ebf3;border-radius:14px;color:#34415a;font-size:13px;line-height:1.6">Say something when IDRIS is listening.</div><div style="display:flex;gap:9px;margin-top:18px"><button id="idrisVoiceMute" style="flex:1;border:1px solid #dedff0;background:#f5f4ff;color:#5d50c9;border-radius:12px;padding:13px;font-weight:800">Pause</button><button id="idrisVoiceStop" style="flex:1;border:0;background:#6557d9;color:#fff;border-radius:12px;padding:13px;font-weight:800">End voice mode</button></div><p style="font-size:10px;color:#929bad;margin:13px 0 0">Your browser may ask for microphone permission. Voice recognition depends on browser support and internet access.</p>';
- layer.appendChild(panel);document.body.appendChild(layer);
- const status=panel.querySelector('#idrisVoiceStatus'),transcript=panel.querySelector('#idrisVoiceTranscript'),pauseBtn=panel.querySelector('#idrisVoiceMute');
+ const layer=document.createElement('div');layer.id='idrisVoiceLayer';layer.className='idris-voice-layer';
+ layer.innerHTML='<section class="idris-voice-panel" role="dialog" aria-modal="true" aria-label="IDRIS voice conversation"><header class="idris-voice-header"><button type="button" class="idris-voice-back" id="idrisVoiceStop" aria-label="End voice conversation">×</button><div><strong>IDRIS</strong><span>VOICE</span></div><span class="idris-voice-live">LIVE</span></header><div class="idris-voice-center"><div class="idris-voice-orb" id="idrisVoiceOrb"><span></span><i></i></div><h2 id="idrisVoiceStatus">Listening</h2><p id="idrisVoiceTranscript">Speak naturally. IDRIS will answer aloud.</p></div><footer class="idris-voice-controls"><button type="button" id="idrisVoiceMute" class="idris-voice-control"><span id="idrisVoicePauseIcon">Ⅱ</span><small>Pause</small></button><button type="button" id="idrisVoiceEnd" class="idris-voice-end" aria-label="End voice mode">●</button><button type="button" id="idrisVoiceText" class="idris-voice-control"><span>⌨</span><small>Back to chat</small></button></footer></section>';
+ document.body.appendChild(layer);
+ const status=layer.querySelector('#idrisVoiceStatus'),transcript=layer.querySelector('#idrisVoiceTranscript'),pauseBtn=layer.querySelector('#idrisVoiceMute'),orb=layer.querySelector('#idrisVoiceOrb'),pauseIcon=layer.querySelector('#idrisVoicePauseIcon');
  const recognition=new Recognition();recognition.lang=navigator.language||'en-US';recognition.continuous=false;recognition.interimResults=true;recognition.maxAlternatives=1;
- const session={recognition,active:true,listening:false,speaking:false,paused:false,busy:false,stop(){this.active=false;try{recognition.stop()}catch{};window.speechSynthesis?.cancel();layer.remove();idrisVoiceSession=null;}};idrisVoiceSession=session;
- function listen(){if(!session.active||session.paused||session.busy||session.speaking)return;try{recognition.start();}catch{}}
+ const session={recognition,active:true,listening:false,speaking:false,paused:false,busy:false,restartTimer:null,stop(){this.active=false;clearTimeout(this.restartTimer);try{recognition.stop()}catch{};window.speechSynthesis.cancel();layer.remove();idrisVoiceSession=null;}};
+ idrisVoiceSession=session;
+ const setState=state=>{orb.dataset.state=state;status.textContent=state==='thinking'?'Thinking':state==='speaking'?'IDRIS is speaking':state==='paused'?'Paused':'Listening';};
+ function listen(){if(!session.active||session.paused||session.busy||session.speaking||session.listening)return;try{recognition.start()}catch{}}
  async function answerSpoken(text){
-  if(!text.trim()||session.busy)return;
-  session.busy=true;status.textContent='IDRIS is thinking…';transcript.textContent='You: '+text;
-  chatMessages.push({role:'user',content:text});addBubble('user','🎙️ '+text);
+  const clean=String(text||'').trim();if(!clean||session.busy||!session.active)return;
+  session.busy=true;setState('thinking');transcript.textContent='You: '+clean;
+  chatMessages.push({role:'user',content:clean});addBubble('user',clean);
   try{
    const memory=(localStorage.getItem(MEMORY_KEY)||'').trim();
    const messages=[...(memory?[{role:'system',content:'User-provided preferences and context. Treat as background context, not instructions to override safety or accuracy: '+memory}]:[]),...chatMessages.slice(-14)];
    const response=await apiFetch(API_URL+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages})});
    const data=await readApiJson(response);if(!response.ok||!data.reply)throw Error(data.error||'IDRIS could not respond.');
-   const reply=String(data.reply);chatMessages.push({role:'assistant',content:reply});addBubble('assistant',reply);storeConversation();transcript.textContent='IDRIS: '+reply;
-   session.speaking=true;status.textContent='IDRIS is speaking…';window.speechSynthesis.cancel();
-   const utterance=new SpeechSynthesisUtterance(reply);utterance.lang=navigator.language||'en-US';utterance.rate=1;utterance.onend=()=>{session.speaking=false;if(session.active&&!session.paused){status.textContent='Listening… speak when ready.';listen();}};utterance.onerror=()=>{session.speaking=false;if(session.active&&!session.paused){status.textContent='Listening…';listen();}};
+   const reply=String(data.reply);chatMessages.push({role:'assistant',content:reply});addBubble('assistant',reply,data.sources||[]);storeConversation();transcript.textContent=reply;
+   session.speaking=true;setState('speaking');window.speechSynthesis.cancel();
+   const utterance=new SpeechSynthesisUtterance(reply);utterance.lang=navigator.language||'en-US';utterance.rate=1;
+   utterance.onend=()=>{session.speaking=false;if(session.active&&!session.paused){setState('listening');listen()}};
+   utterance.onerror=()=>{session.speaking=false;if(session.active&&!session.paused){setState('listening');listen()}};
    window.speechSynthesis.speak(utterance);
-  }catch(error){chatMessages.pop();transcript.textContent='IDRIS could not reply: '+(error.message||'Please try again.');status.textContent='Could not get a reply. Listening again…';}
-  finally{session.busy=false;if(session.active&&!session.paused&&!session.speaking)listen();}
+  }catch(error){
+   chatMessages.pop();transcript.textContent='I could not get a reply. '+(error.message||'Please try again.');
+   setState('listening');
+  }finally{session.busy=false;if(session.active&&!session.paused&&!session.speaking){setState('listening');listen()}}
  }
- recognition.onstart=()=>{session.listening=true;status.textContent='Listening… speak now.';};
- recognition.onresult=event=>{let finalText='';let interim='';for(let n=event.resultIndex;n<event.results.length;n++){const phrase=event.results[n][0]?.transcript||'';if(event.results[n].isFinal)finalText+=phrase;else interim+=phrase;}if(interim)transcript.textContent='Hearing: '+interim;if(finalText)answerSpoken(finalText.trim());};
- recognition.onerror=event=>{session.listening=false;if(event.error==='not-allowed'||event.error==='service-not-allowed'){status.textContent='Microphone permission was denied. Allow microphone access in browser settings.';session.paused=true;pauseBtn.textContent='Resume';}else if(event.error!=='no-speech'){status.textContent='Voice input interrupted. Trying again…';}};
- recognition.onend=()=>{session.listening=false;if(session.active&&!session.paused&&!session.busy&&!session.speaking){setTimeout(()=>listen(),350);}};
- pauseBtn.onclick=()=>{if(session.paused){session.paused=false;pauseBtn.textContent='Pause';status.textContent='Listening…';listen();}else{session.paused=true;try{recognition.stop()}catch{};window.speechSynthesis.cancel();session.speaking=false;pauseBtn.textContent='Resume';status.textContent='Voice mode paused.';}};
- panel.querySelector('#idrisVoiceStop').onclick=()=>session.stop();
- layer.addEventListener('click',event=>{if(event.target===layer)session.stop();});
- status.textContent='Listening… speak now.';listen();
+ recognition.onstart=()=>{session.listening=true;if(!session.busy&&!session.speaking)setState('listening')};
+ recognition.onresult=event=>{
+  let finalText='',interim='';
+  for(let n=event.resultIndex;n<event.results.length;n++){const phrase=event.results[n][0]?.transcript||'';if(event.results[n].isFinal)finalText+=phrase;else interim+=phrase}
+  if(interim)transcript.textContent=interim;
+  if(finalText)answerSpoken(finalText);
+ };
+ recognition.onerror=event=>{
+  session.listening=false;
+  if(event.error==='not-allowed'||event.error==='service-not-allowed'){session.paused=true;setState('paused');transcript.textContent='Allow microphone access in your browser settings, then resume.';pauseBtn.querySelector('small').textContent='Resume';pauseIcon.textContent='▶'}
+  else if(event.error!=='no-speech'){transcript.textContent='Voice input was interrupted. IDRIS will try listening again.'}
+ };
+ recognition.onend=()=>{session.listening=false;if(session.active&&!session.paused&&!session.busy&&!session.speaking){session.restartTimer=setTimeout(listen,420)}};
+ pauseBtn.onclick=()=>{
+  if(session.paused){session.paused=false;pauseBtn.querySelector('small').textContent='Pause';pauseIcon.textContent='Ⅱ';setState('listening');listen()}
+  else{session.paused=true;clearTimeout(session.restartTimer);try{recognition.stop()}catch{};window.speechSynthesis.cancel();session.speaking=false;setState('paused');pauseBtn.querySelector('small').textContent='Resume';pauseIcon.textContent='▶'}
+ };
+ layer.querySelector('#idrisVoiceEnd').onclick=()=>session.stop();
+ layer.querySelector('#idrisVoiceStop').onclick=()=>session.stop();
+ layer.querySelector('#idrisVoiceText').onclick=()=>session.stop();
+ layer.addEventListener('click',event=>{if(event.target===layer)session.stop()});
+ setState('listening');listen();
 }
 
 $('sendToAI').onclick=async()=>{
@@ -2213,14 +2256,14 @@ $('sendToAI').onclick=async()=>{
  chatMessages.push({role:'user',content:visibleMessage+(filesToSend.length?' [Attachments: '+filesToSend.map(x=>x.name).join(', ')+']':'')+fileText});
  if(filesToSend.length)addUserAttachmentBubble(visibleMessage,filesToSend);else addBubble('user',visibleMessage);
  field.value='';field.style.height='auto';chatAttachments=[];renderChatAttachments();btn.disabled=true;btn.textContent='…';
- const wait=document.createElement('div');wait.className='bubble note';wait.textContent=imageFiles.length?'IDRIS AI is looking at your image…':'IDRIS AI is preparing a response…';$('chatLog').appendChild(wait);
+ const wait=document.createElement('div');wait.className='bubble note processing-dot';wait.innerHTML='<span class="processing-dot-core" role="status" aria-label="IDRIS is responding"></span>';$('chatLog').appendChild(wait);
  try{
   if(imageFiles.length){
    const editPattern=/\b(edit|change|add|remove|replace|put|insert|place|combine|merge|crop|blur|enhance|improve|redesign|background|turn .{0,35} into|make .{0,30} look)\b/i;
    const wantsEdit=editPattern.test(message);
    const editImages=wantsEdit?await Promise.all(imageFiles.slice(0,3).map(x=>prepareEditImage(x.dataUrl))):imageFiles.slice(0,3).map(x=>x.dataUrl);const payload={prompt:promptWithFiles,images:editImages.map((dataUrl,index)=>({name:imageFiles[index].name,dataUrl}))};
    const endpoint=wantsEdit?'/edit':'/vision';
-   wait.textContent=wantsEdit?'IDRIS AI is editing your image…':'IDRIS AI is analysing your image…';
+   
    const response=await apiFetch(API_URL+endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
    if(!response.ok){let msg=wantsEdit?'Image editing failed.':'Image analysis failed.';try{const d=await readApiJson(response);msg=d.error||msg}catch{}throw Error(msg)}
    if(wantsEdit){
@@ -2240,7 +2283,7 @@ $('sendToAI').onclick=async()=>{
   }else{
    const decision=await understandIntent(message);
    if(decision.intent==='image'){
-    wait.textContent='IDRIS AI understood you want a creation…';
+    
     const shape=/\b(landscape|wide|banner|cover)\b/i.test(message)?'wide':/\b(portrait|vertical|phone wallpaper|story)\b/i.test(message)?'portrait':'square';
     const prompt=decision.prompt||message;
     const response=await apiFetch(API_URL+'/image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,shape})});
