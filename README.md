@@ -1,32 +1,52 @@
 # IDRIS AI STUDIO
 
-**An independent AI workspace for chat, creative tools, prompts and research.**
+**IDRIS AI STUDIO** is an independent AI workspace developed under **I D LABS**. It brings an AI chat assistant and creative tools together in one online studio.
 
-Official public page: https://idrisfolajuwon-bot.github.io/ID-RESCUE/idris-ai-studio/
+## Official links
 
-Open the studio: https://idrisfolajuwon-bot.github.io/ID-RESCUE/studio/
+- **Project overview:** https://idrisfolajuwon-bot.github.io/ID-RESCUE/idris-ai-studio/
+- **Open the studio:** https://idrisfolajuwon-bot.github.io/ID-RESCUE/studio/
+- **Android app information:** https://idrisfolajuwon-bot.github.io/ID-RESCUE/download/
+- **Machine-readable project guide:** https://idrisfolajuwon-bot.github.io/ID-RESCUE/llms.txt
 
 ## What is IDRIS AI STUDIO?
 
-IDRIS AI STUDIO is an independently developed web-based AI workspace published under the IDRIS name. It brings several creative and productivity tools together in one interface.
+IDRIS AI STUDIO is a web-based AI workspace. Its tools include:
 
-## Explore the tools
+- **AI Chat** — ask questions and explore ideas with an AI assistant.
+- **Voice Mode** — spoken conversations in compatible browsers.
+- **Visual Maker** — image creation from written descriptions.
+- **Image understanding** — ask questions about supplied images and request supported edits.
+- **Document support** — extract text from supported PDF and Word DOCX files for discussion in chat.
+- **Prompt Lab** — develop and refine creative prompts.
+- **Creation Vault** — keep a browser-based collection of creative work.
+- **Research Desk** — organize research notes and source material.
+- **Studio Guide** — learn about the workspace and its tools.
+- **Video Lab** — storyboard and plan video ideas; it does not render finished videos itself.
 
-- **AI Chat** — chat with an AI assistant.
-- **Visual Maker** — an image-generation interface; availability depends on the connected AI service.
-- **Prompt Lab** — organize and improve prompts.
-- **Creation Vault** — save and organize creative work in the browser.
-- **Research Desk** — explore topics and work with research notes and source material.
-- **Studio Guide** — learn how to use the workspace.
+Some features depend on internet access, compatible browsers and connected service availability. Feature availability may change.
 
-Some features are still being developed and may change. Online AI features require an internet connection. Do not enter passwords, private keys, or sensitive personal information into prompts or saved notes.
+## Project identity
 
-## Website and app
-
+- Product name: IDRIS AI STUDIO
+- Developer/publisher identity: I D LABS
+- Project type: independent AI workspace for web, with an Android app information page
 - Official project page: https://idrisfolajuwon-bot.github.io/ID-RESCUE/idris-ai-studio/
-- Web studio: https://idrisfolajuwon-bot.github.io/ID-RESCUE/studio/
-- Android app information: https://idrisfolajuwon-bot.github.io/ID-RESCUE/download/
 
-## Project status
+## Frequently asked questions
 
-IDRIS AI STUDIO is an independent project and is not affiliated with or endorsed by OpenAI, Google, Microsoft, or other AI providers. Features, service availability and limits may change as development continues.
+### Is IDRIS AI STUDIO ChatGPT?
+No. IDRIS AI STUDIO is a separate independent project. It is not ChatGPT and is not an OpenAI product.
+
+### Who develops IDRIS AI STUDIO?
+It is developed under the I D LABS identity.
+
+### Where can I use it?
+Visit the official project overview or open the web studio using the links above.
+
+### Does it support documents and voice?
+It supports text extraction from supported PDF and Word DOCX files, and voice conversations in compatible browsers.
+
+## Transparency
+
+IDRIS AI STUDIO is not affiliated with or endorsed by OpenAI, Google, Microsoft or other AI providers. Online AI features may rely on connected third-party services.
