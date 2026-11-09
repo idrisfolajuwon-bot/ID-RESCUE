@@ -1500,7 +1500,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
      <span id="chatAIStatus" class="chat-mini-status">Checking secure AI connection…</span>
     </div>
    </div>
-   <aside class="panel chat-extra-panel" id="chatHistoryPanel"><h2>YOUR CHAT HISTORY</h2><div class="actions" style="margin-top:0"><button class="primary-btn" id="newConversation">+ NEW CHAT</button></div><label class="field-label" for="historySearch">SEARCH OLD CHATS</label><input id="historySearch" placeholder="Find a past conversation…"><div id="historyList" class="vault-grid" style="grid-template-columns:1fr;margin-top:10px"><div class="empty">Your conversations will appear here.</div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>MY AI MEMORY</h2><p class="muted small">Add useful details you want IDRIS AI to consider in future chats. Stored only in this browser.</p><textarea id="aiMemory" style="min-height:90px" maxlength="1800" placeholder="For example: I am learning Physics and Chemistry. I prefer simple explanations…"></textarea><div class="actions"><button class="soft-btn" id="saveMemory">SAVE MEMORY</button></div><div class="callout info" id="memoryAIStatus" style="margin-top:14px">Checking secure backend…</div><p class="muted small">Chats and memory are stored on this device. Messages are sent to Cloudflare for AI replies. Never save passwords or payment details here.</p></aside>
+   <aside class="panel chat-extra-panel" id="chatHistoryPanel"><h2>YOUR CHAT HISTORY</h2><div class="actions" style="margin-top:0"><button class="primary-btn" id="newConversation">+ NEW CHAT</button></div><label class="field-label" for="historySearch">SEARCH OLD CHATS</label><input id="historySearch" placeholder="Find a past conversation…"><div id="historyList" class="vault-grid" style="grid-template-columns:1fr;margin-top:10px"><div class="empty">Your conversations will appear here.</div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>MY AI MEMORY</h2><p class="muted small">Add useful details you want IDRIS AI to consider in future chats. Save them to your IDRIS account to sync across devices.</p><textarea id="aiMemory" style="min-height:90px" maxlength="1800" placeholder="For example: I am learning Physics and Chemistry. I prefer simple explanations…"></textarea><div class="actions"><button class="soft-btn" id="saveMemory">SAVE &amp; SYNC MEMORY</button><button class="danger-btn" id="clearMemory">DELETE MEMORY</button></div><div class="callout info" id="memoryAIStatus" style="margin-top:14px">Memory sync will start after you sign in.</div><p class="muted small">Your memory is private to your signed-in account. IDRIS uses it as background context for replies. Never save passwords or payment details here.</p></aside>
   </div>
  </section>
 
@@ -1687,16 +1687,30 @@ async function initAuth(){
  };
  try{
   const client=await loadClient();
-  const {data:{session}}=await client.auth.getSession();if(session){currentUserId=session.user.id;showApp();setTimeout(()=>syncConversations(),0)}
+  const {data:{session}}=await client.auth.getSession();if(session){currentUserId=session.user.id;showApp();setTimeout(()=>{syncConversations();syncMemoryForAccount(currentUserId)},0)}
   client.auth.onAuthStateChange((event,session)=>{
-   if(session){currentUserId=session.user.id;showApp();setTimeout(()=>syncConversations(),0)}
+   if(session){currentUserId=session.user.id;showApp();setTimeout(()=>{syncConversations();syncMemoryForAccount(currentUserId)},0)}
    else{currentUserId=null;showAuth()}
   });
  }catch(ex){err(ex.message||'Could not load secure sign-in.');}
 }
 
 let chatMessages=[];
-const CHAT_KEY='idris-ai-conversations-v1', MEMORY_KEY='idris-ai-memory-v1';
+const CHAT_KEY='idris-ai-conversations-v1', MEMORY_KEY='idris-ai-memory-v1', MEMORY_OWNER_KEY='idris-ai-memory-owner-v1';
+async function syncMemoryForAccount(userId){
+ if(!supabaseClient||!userId)return;
+ const status=$('memoryAIStatus');
+ const owner=localStorage.getItem(MEMORY_OWNER_KEY);
+ if(owner&&owner!==userId){localStorage.removeItem(MEMORY_KEY);$('aiMemory').value='';}
+ try{
+  const {data,error}=await supabaseClient.from('ai_memory').select('content,updated_at').eq('user_id',userId).maybeSingle();
+  if(error)throw error;
+  if(currentUserId!==userId)return;
+  if(data){localStorage.setItem(MEMORY_KEY,data.content||'');$('aiMemory').value=data.content||'';if(status)status.textContent='Memory synced to your IDRIS account. It will be available when you sign in on another device.';}
+  else if(status)status.textContent=(localStorage.getItem(MEMORY_KEY)||'').trim()?'Your existing device memory is ready. Tap SAVE MEMORY to sync it to your account.':'No saved memory yet. Add useful details above and tap SAVE MEMORY.';
+  localStorage.setItem(MEMORY_OWNER_KEY,userId);
+ }catch(error){if(status)status.textContent='Cloud memory sync is unavailable right now. Your device memory is still available.';}
+}
 let conversations=[];
 let activeConversationId=null;
 let currentUserId=null, chatSyncBusy=false;
@@ -2090,7 +2104,8 @@ $('clearResearch').onclick=()=>{$('researchText').value='';$('researchQuery').va
 $('saveChatDraft').onclick=()=>{const s=$('chatDraft').value.trim();if(!s)return toast('Write a message first.');if(save('Chat','Chat draft',s)){$('chatLog').innerHTML='<div class="bubble user">'+safe(s)+'</div><div class="bubble note">Saved locally. No AI reply was generated or sent.</div>';$('chatDraft').value=''}};
 $('clearChat').onclick=()=>{$('chatDraft').value='';chatMessages=[];activeConversationId=null;$('chat')?.classList.remove('has-messages');$('chatLog').innerHTML='';renderHistory();$('chatDraft')?.focus()};
 $('newConversation').onclick=newConversation;
-$('saveMemory').onclick=()=>{const value=$('aiMemory').value.trim();try{localStorage.setItem(MEMORY_KEY,value);toast('AI memory saved on this device.')}catch{toast('Could not save memory.')}};
+$('saveMemory').onclick=async()=>{const value=$('aiMemory').value.trim();try{localStorage.setItem(MEMORY_KEY,value);}catch{toast('Could not save memory on this device.');return}if(!currentUserId||!supabaseClient){toast('Saved on this device. Sign in to sync it.');return}try{const {error}=value?await supabaseClient.from('ai_memory').upsert({user_id:currentUserId,content:value,updated_at:new Date().toISOString()},{onConflict:'user_id'}):await supabaseClient.from('ai_memory').delete().eq('user_id',currentUserId);if(error)throw error;localStorage.setItem(MEMORY_OWNER_KEY,currentUserId);$('memoryAIStatus').textContent=value?'Memory saved and synced to your IDRIS account.':'Your saved memory was deleted from your IDRIS account.';toast(value?'Memory saved and synced.':'Memory cleared.')}catch(error){$('memoryAIStatus').textContent='Saved on this device, but cloud sync failed. Try again when connected.';toast('Device memory saved; cloud sync failed.')}};
+$('clearMemory').onclick=async()=>{if(!confirm('Delete your saved IDRIS memory from this device and account?'))return;try{localStorage.removeItem(MEMORY_KEY);$('aiMemory').value='';if(currentUserId&&supabaseClient){const {error}=await supabaseClient.from('ai_memory').delete().eq('user_id',currentUserId);if(error)throw error;}$('memoryAIStatus').textContent='Saved memory cleared.';toast('Memory cleared.')}catch(error){$('memoryAIStatus').textContent='Device memory cleared, but cloud deletion failed. Try again.';toast('Cloud deletion failed.')}};
 $('aiMemory').value=localStorage.getItem(MEMORY_KEY)||'';
 loadConversations();renderHistory();
 
