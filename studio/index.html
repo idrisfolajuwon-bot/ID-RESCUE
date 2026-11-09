@@ -1379,6 +1379,92 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 .side-account-row .sidebar-new-chat span{font-size:20px!important}.side-account-row .profile{flex:0 0 43px!important;width:43px!important;height:43px!important;min-height:43px!important;margin:0!important;padding:0!important;border:0!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:#f1f0ff!important;overflow:hidden!important}
 .side-account-row .profile>div{display:none!important}.side-account-row .avatar{width:43px!important;height:43px!important;border:0!important;border-radius:50%!important;background:#6657e8!important;color:#fff!important;font-size:12px!important;font-weight:800!important}
 @media(max-width:650px){.side{width:80vw!important;max-width:340px!important;padding:24px 15px 14px!important}.brand{padding-bottom:23px!important}.sidebar-primary-nav button{min-height:45px!important;font-size:14px!important}.sidebar-chat-item{font-size:13px!important}}
+
+/* IDRIS V52 — full chat-first interface refinement */
+:root{--idris-accent:#6d5ce7;--idris-ink:#202536;--idris-muted:#747d8e;--idris-border:#e8eaf0}
+html,body{min-height:100%;background:#fff!important;color:var(--idris-ink)!important}
+body{background:#fff!important;font-size:14px!important}
+.shell{display:block!important;max-width:none!important;min-height:100dvh!important}
+main{width:auto!important;max-width:none!important;margin:0!important;padding:0 28px 18px!important;background:#fff!important}
+.topbar{height:58px!important;min-height:58px!important;padding:0 0 0!important;border:0!important;display:flex!important;align-items:center!important;gap:14px!important}
+.crumb{font-size:14px!important;font-weight:650!important;letter-spacing:-.15px!important;color:#343b4b!important}
+.top-actions{margin-left:auto!important}
+.top-actions .soft-btn{display:none!important}
+.chat-page{min-height:calc(100dvh - 76px)!important}
+.chat-stage{width:100%!important;max-width:850px!important;min-height:calc(100dvh - 76px)!important;margin:0 auto!important;display:flex!important;flex-direction:column!important}
+.chat-log-area{width:100%!important;max-width:790px!important;margin:0 auto!important;flex:1 1 auto!important;display:flex!important;flex-direction:column!important;justify-content:center!important;padding:30px 14px 28px!important;overflow-y:auto!important}
+.chat-first-greeting{width:100%!important;max-width:690px!important;margin:0 auto!important;text-align:center!important;padding:0 0 22px!important}
+.chat-first-greeting .welcome-mark{width:48px!important;height:48px!important;margin:0 auto 24px!important;border-radius:17px!important;background:#f0edff!important;border:1px solid #e5e0ff!important;color:#6657d9!important;font-size:18px!important;font-weight:800!important;box-shadow:none!important}
+.chat-first-greeting h1{font-size:clamp(28px,4vw,36px)!important;line-height:1.18!important;letter-spacing:-1.25px!important;font-weight:650!important;color:#252b3a!important;margin:0 0 10px!important}
+.chat-first-greeting .welcome-subtitle{font-size:14px!important;line-height:1.6!important;color:#7a8291!important;margin:0 auto 25px!important}
+.welcome-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;max-width:660px!important;margin:0 auto!important}
+.welcome-action{display:flex!important;align-items:center!important;gap:10px!important;min-height:68px!important;padding:12px!important;border:1px solid #e8eaf1!important;border-radius:14px!important;background:#fff!important;color:#343b4b!important;text-align:left!important;box-shadow:0 2px 7px rgba(25,35,60,.025)!important}
+.welcome-action:hover{background:#fafaff!important;border-color:#d8d3ff!important}
+.welcome-action-icon{width:34px!important;height:34px!important;flex:0 0 34px!important;display:grid!important;place-items:center!important;border-radius:11px!important;background:#f0edff!important;color:#6657d9!important;font-size:17px!important}
+.welcome-action b{display:block!important;font-size:12px!important;font-weight:650!important;color:#303748!important}
+.welcome-action small{display:block!important;margin-top:3px!important;font-size:10px!important;color:#8991a0!important;line-height:1.35!important}
+.chatlog{width:100%!important;max-width:790px!important;min-height:0!important;max-height:none!important;flex:1 1 auto!important;margin:0 auto!important;padding:20px 12px 26px!important;gap:22px!important;background:transparent!important;border:0!important;border-radius:0!important;overflow-y:auto!important}
+.bubble{max-width:min(78%,640px)!important;padding:12px 16px!important;border-radius:19px!important;font-size:14px!important;line-height:1.65!important;box-shadow:none!important}
+.bubble.user{align-self:flex-end!important;background:#f1f1f5!important;color:#252b39!important;border-radius:19px!important}
+.bubble.assistant{align-self:flex-start!important;background:transparent!important;color:#252b39!important;padding:5px 0!important;max-width:100%!important}
+.chat-compose-dock{position:sticky!important;bottom:0!important;z-index:8!important;width:100%!important;max-width:820px!important;margin:0 auto!important;padding:12px 12px calc(8px + env(safe-area-inset-bottom))!important;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 17%)!important}
+.chat-compose{min-height:58px!important;display:flex!important;align-items:flex-end!important;gap:9px!important;padding:9px 10px!important;border:1px solid #dfe2e9!important;border-radius:25px!important;background:#fff!important;box-shadow:0 5px 22px rgba(25,35,60,.07)!important}
+.chat-compose textarea{min-height:38px!important;max-height:160px!important;padding:9px 2px!important;border:0!important;outline:0!important;resize:none!important;background:transparent!important;color:#252b39!important;font-size:15px!important;line-height:1.45!important;box-shadow:none!important}
+.chat-compose textarea:focus{border:0!important;outline:0!important}
+.compose-plus,.compose-voice,.send-round{width:38px!important;height:38px!important;min-width:38px!important;flex:0 0 38px!important;border:0!important;border-radius:50%!important;display:grid!important;place-items:center!important}
+.compose-plus{background:#f2f3f7!important;color:#454d5c!important;font-size:23px!important}
+.compose-voice{background:transparent!important;color:#656e7e!important;font-size:21px!important}
+.send-round{background:#6657df!important;color:#fff!important;font-size:23px!important;font-weight:700!important}
+.chat-compose-note{font-size:10px!important;color:#969dab!important;margin-top:8px!important;text-align:center!important}
+.chat-under-tools{display:none!important}
+.chat-attachment-list{padding:0 8px!important}
+.chat-extra-panel{display:none!important}
+.side{width:260px!important;background:#f8f9fb!important;border-right:1px solid #eceef2!important;padding:17px 13px 13px!important}
+.brand{min-height:55px!important;padding:4px 8px 18px!important}
+.brand-name{font-size:15px!important;letter-spacing:-.25px!important;color:#252b3a!important}
+.brand-sub{font-size:9px!important;letter-spacing:1.2px!important;color:#9299a7!important}
+.sidebar-search{height:38px!important;min-height:38px!important;border:1px solid #e5e7ed!important;border-radius:10px!important;background:#fff!important;padding:0 10px!important}
+.sidebar-search input{border:0!important;background:transparent!important;font-size:12px!important;box-shadow:none!important}
+.sidebar-primary-nav{gap:2px!important}
+.sidebar-primary-nav button{min-height:40px!important;padding:8px 10px!important;font-size:13px!important;border-radius:9px!important}
+.sidebar-history-heading{font-size:12px!important;color:#858d9b!important;margin:15px 0 5px!important}
+.sidebar-chat-item{font-size:12px!important;min-height:35px!important;padding:8px 10px!important}
+.side-account-row{gap:8px!important}
+.side-account-row .sidebar-new-chat{background:#6657df!important;border-radius:10px!important}
+@media(min-width:900px){
+ body{padding-left:260px!important}
+ .side{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:260px!important;height:100dvh!important;z-index:50!important}
+ .drawer-scrim,.menu-toggle{display:none!important}
+ main{padding:0 34px 18px!important}
+ .topbar{max-width:850px!important;margin:0 auto!important}
+}
+@media(max-width:899px){
+ body{padding-left:0!important}
+ .side{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:min(290px,84vw)!important;height:100dvh!important;transform:translateX(-110%)!important;visibility:hidden!important;z-index:120!important;box-shadow:12px 0 38px rgba(25,35,65,.14)!important}
+ body.menu-open .side{transform:translateX(0)!important;visibility:visible!important}
+ .drawer-scrim{position:fixed!important;inset:0!important;z-index:110!important;background:rgba(24,34,58,.18)!important;opacity:0;pointer-events:none}
+ body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
+ main{padding:0 13px 8px!important}
+ .topbar{height:54px!important;min-height:54px!important}
+ .menu-toggle{display:flex!important;width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;border:1px solid #e5e7ed!important;border-radius:10px!important;background:#fff!important;align-items:center!important;justify-content:center!important;gap:4px!important}
+ .menu-toggle span{width:17px!important;height:2px!important;background:#3b4352!important}
+ .chat-stage{min-height:calc(100dvh - 58px)!important}
+ .chat-log-area{padding:20px 2px 15px!important}
+ .chat-first-greeting{padding-bottom:16px!important}
+ .welcome-actions{grid-template-columns:1fr!important;max-width:420px!important;gap:8px!important}
+ .welcome-action{min-height:55px!important;padding:9px 11px!important}
+ .chat-compose-dock{padding:9px 0 calc(7px + env(safe-area-inset-bottom))!important}
+ .chat-compose{min-height:54px!important;padding:7px 8px!important}
+ .chat-compose textarea{font-size:16px!important}
+ .chatlog{padding:12px 3px 20px!important}
+ .bubble{max-width:88%!important}
+}
+@media(max-width:380px){
+ .chat-first-greeting h1{font-size:27px!important}
+ .chat-first-greeting .welcome-subtitle{font-size:13px!important}
+ .welcome-action{min-height:51px!important}
+}
+
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -1494,8 +1580,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
    <div class="chat-log-area" id="chatLogArea">
     <div class="chat-first-greeting" id="chatFirstGreeting">
      <div class="welcome-mark" aria-hidden="true">ID</div>
-     <h1>What would you like to create?</h1>
-     <p class="welcome-subtitle">Ask a question, explore an idea, or make something new.</p>
+     <h1>What can I help with?</h1>
+     <p class="welcome-subtitle">Ask anything, explore an idea, or create something with IDRIS.</p>
      <div class="welcome-actions">
       <button type="button" class="welcome-action" data-starter="Help me think through an idea step by step."><span class="welcome-action-icon">✦</span><span><b>Ask IDRIS</b><small>Get help with an idea</small></span></button>
       <button type="button" class="welcome-action" data-studio-action="image"><span class="welcome-action-icon">▧</span><span><b>Create an image</b><small>Turn words into visuals</small></span></button>
@@ -1507,7 +1593,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
    <div class="chat-compose-dock">
     <div class="chat-compose">
      <button type="button" class="compose-plus" id="composeTools" aria-label="Studio tools" title="Studio tools">＋</button><input id="chatFileInput" type="file" accept="image/png,image/jpeg,image/webp,.txt,.md,.csv,.json" multiple hidden>
-     <textarea id="chatDraft" placeholder="Message IDRIS…" rows="1" aria-label="Message IDRIS"></textarea>
+     <textarea id="chatDraft" placeholder="Message IDRIS AI…" rows="1" aria-label="Message IDRIS"></textarea>
      <button class="compose-voice" id="voiceShortcut" type="button" aria-label="Voice input" title="Voice input">⌁</button>
      <button class="send-round" id="sendToAI" aria-label="Send message">↑</button>
     </div>
