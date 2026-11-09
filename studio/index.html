@@ -1359,6 +1359,26 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
   background:#efedff!important;border-color:#ded9ff!important;color:#5144c7!important;
  }
 }
+
+/* ChatGPT-inspired navigation refresh for IDRIS */
+.side{width:min(340px,80vw)!important;padding:24px 17px 15px!important;background:#fff!important;border-right:1px solid #eceef3!important;display:flex!important;flex-direction:column!important;gap:0!important}
+.brand{flex:0 0 auto!important;padding:4px 8px 27px!important;min-height:74px!important}
+.brand-name{font-size:17px!important;font-weight:800!important;letter-spacing:-.45px!important}.brand-sub{font-size:10px!important;letter-spacing:1.7px!important;margin-top:5px!important}
+.sidebar-chat-tools{display:flex!important;flex:1 1 auto!important;min-height:0!important;flex-direction:column!important;gap:14px!important;overflow:hidden!important}
+.sidebar-search{flex:0 0 auto!important;min-height:40px!important;display:flex!important}
+.sidebar-primary-nav{display:flex!important;flex:0 0 auto!important;flex-direction:column!important;gap:3px!important;margin:0!important}
+.sidebar-primary-nav button{min-height:47px!important;padding:10px 12px!important;border-radius:11px!important;font-size:15px!important;font-weight:550!important;gap:13px!important}
+.sidebar-primary-nav button .ico{width:22px!important;height:22px!important;display:grid!important;place-items:center!important}.sidebar-primary-nav button .ico svg{width:21px!important;height:21px!important}
+.sidebar-history-heading{font-size:14px!important;font-weight:650!important;color:#555d6e!important;margin:14px 0 5px!important;padding:0 9px!important}
+.sidebar-recent{flex:1 1 auto!important;min-height:50px!important;max-height:none!important;overflow-y:auto!important;padding:0 1px!important}
+.sidebar-chat-item{min-height:43px!important;padding:10px 11px!important;font-size:14px!important;line-height:1.35!important;border-radius:9px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.side-bottom{flex:0 0 auto!important;padding-top:12px!important;display:flex!important;flex-direction:column!important;gap:10px!important}
+.sidebar-guide-link{font-size:13px!important;min-height:40px!important}
+.side-account-row{display:flex!important;align-items:center!important;gap:9px!important;border-top:1px solid #eceef3!important;padding-top:12px!important}
+.side-account-row .sidebar-new-chat{flex:1 1 auto!important;min-width:0!important;height:43px!important;min-height:43px!important;margin:0!important;border:0!important;border-radius:25px!important;background:#6657e8!important;color:#fff!important;justify-content:center!important;font-size:13px!important;font-weight:700!important;box-shadow:none!important}
+.side-account-row .sidebar-new-chat span{font-size:20px!important}.side-account-row .profile{flex:0 0 43px!important;width:43px!important;height:43px!important;min-height:43px!important;margin:0!important;padding:0!important;border:0!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:#f1f0ff!important;overflow:hidden!important}
+.side-account-row .profile>div{display:none!important}.side-account-row .avatar{width:43px!important;height:43px!important;border:0!important;border-radius:50%!important;background:#6657e8!important;color:#fff!important;font-size:12px!important;font-weight:800!important}
+@media(max-width:650px){.side{width:80vw!important;max-width:340px!important;padding:24px 15px 14px!important}.brand{padding-bottom:23px!important}.sidebar-primary-nav button{min-height:45px!important;font-size:14px!important}.sidebar-chat-item{font-size:13px!important}}
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -1377,21 +1397,20 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 <aside class="side">
  <div class="brand"><div class="brand-identity"><div><div class="brand-name">IDRIS AI STUDIO</div><div class="brand-sub">BY I D LABS</div></div></div><button class="sidebar-search-trigger" type="button" aria-label="Search chats" title="Search chats"><span aria-hidden="true">⌕</span></button></div>
  <div class="sidebar-chat-tools">
-  <button type="button" class="sidebar-new-chat" data-new-chat><span>＋</span> New chat</button>
   <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations"></label>
   <nav class="nav sidebar-primary-nav" id="sideNav" aria-label="Main navigation">
-   <button data-studio-action="image"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m20.5 15-5-5L5 20"/></svg></span>Images</button>
-   <button data-studio-action="projects"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5h7l2 2h8v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M3.5 7.5v-2a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v2"/></svg></span>Projects</button>
+<button data-studio-action="image"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m20.5 15-5-5L5 20"/></svg></span>Images</button>
+<button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v15H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Library</button>
+<button data-studio-action="projects"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5h7l2 2h8v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M3.5 7.5v-2a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v2"/></svg></span>Projects</button>
 <button data-page="videolab"><span class="ico" aria-hidden="true">▶</span>Video Lab</button>
-      <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v15H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Library</button>
-   <button data-studio-action="web"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5M4.5 10.8h12.6M10.8 4c2 2 2.8 4.2 2.8 6.8s-.8 4.8-2.8 6.8"/></svg></span>Explore</button>
+<button data-studio-action="web"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5M4.5 10.8h12.6M10.8 4c2 2 2.8 4.2 2.8 6.8s-.8 4.8-2.8 6.8"/></svg></span>Explore</button>
   </nav>
-  <div class="sidebar-history-heading">Recent</div>
+  <div class="sidebar-history-heading">Chats</div>
   <div class="sidebar-recent" id="sidebarRecent"><div class="sidebar-empty">Your chats will appear here.</div></div>
  </div>
  <div class="side-bottom">
   <button class="sidebar-guide-link" type="button" data-page="about"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 4.4 1.3c-1.1 1.2-2.1 1.5-2.1 3.2M12 17.2h.01"/></svg></span>Help &amp; guide</button>
-  <div class="profile"><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div>
+  <div class="side-account-row"><button type="button" class="sidebar-new-chat" data-new-chat><span>＋</span> New chat</button><div class="profile"><span class="avatar">ID</span><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div></div></div>
  </div>
 </aside>
 <div class="drawer-scrim" id="drawerScrim"></div>
