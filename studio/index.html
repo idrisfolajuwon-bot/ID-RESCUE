@@ -2081,7 +2081,7 @@ async function loadMammoth(){
 }
 function clipDocumentText(value,limit){
  const text=String(value||'').trim();
- return text.length>limit?text.slice(0,limit)+'\\n\\n[Document text shortened to fit this chat.]':text;
+ return text.length>limit?text.slice(0,limit)+'\n\n[Document text shortened to fit this chat.]':text;
 }
 async function extractPdfText(file,limit){
  const pdfjs=await loadPdfJs();
@@ -2090,12 +2090,12 @@ async function extractPdfText(file,limit){
   const pageLimit=Math.min(pdf.numPages,40),parts=[];let length=0;
   for(let pageNo=1;pageNo<=pageLimit&&length<limit;pageNo++){
    const page=await pdf.getPage(pageNo),content=await page.getTextContent();
-   const line=content.items.map(item=>item.str||'').filter(Boolean).join(' ').replace(/[ \\t]+/g,' ').trim();
+   const line=content.items.map(item=>item.str||'').filter(Boolean).join(' ').replace(/[ \t]+/g,' ').trim();
    if(line){parts.push('Page '+pageNo+': '+line);length+=line.length+10;}
   }
-  let text=clipDocumentText(parts.join('\\n\\n'),limit);
+  let text=clipDocumentText(parts.join('\n\n'),limit);
   if(!text.trim())throw new Error('This PDF has no selectable text. It may be scanned; attach screenshots of its pages instead.');
-  if(pdf.numPages>pageLimit&&text.length<limit)text+='\\n\\n[Only the first '+pageLimit+' pages were read.]';
+  if(pdf.numPages>pageLimit&&text.length<limit)text+='\n\n[Only the first '+pageLimit+' pages were read.]';
   return text;
  }finally{await pdf.destroy();}
 }
@@ -2109,10 +2109,10 @@ $('chatFileInput')?.addEventListener('change',async e=>{
  const files=Array.from(e.target.files||[]);if(!files.length)return;
  for(const file of files){
   if(file.size>5*1024*1024){toast(file.name+' is too large. Choose a file under 5 MB.');continue;}
-  const isImage=/^image\\/(png|jpeg|webp)$/i.test(file.type)||/\\.(png|jpe?g|webp)$/i.test(file.name);
-  const isPdf=file.type==='application/pdf'||/\\.pdf$/i.test(file.name);
-  const isDocx=/\\.docx$/i.test(file.name)||file.type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-  const isText=/\\.(txt|md|csv|json)$/i.test(file.name)||file.type.startsWith('text/');
+  const isImage=/^image\/(png|jpeg|webp)$/i.test(file.type)||/\.(png|jpe?g|webp)$/i.test(file.name);
+  const isPdf=file.type==='application/pdf'||/\.pdf$/i.test(file.name);
+  const isDocx=/\.docx$/i.test(file.name)||file.type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  const isText=/\.(txt|md|csv|json)$/i.test(file.name)||file.type.startsWith('text/');
   if(!isImage&&!isPdf&&!isDocx&&!isText){toast('Choose an image, PDF, Word (.docx), TXT, MD, CSV or JSON file.');continue;}
   if(isImage&&chatAttachments.filter(x=>x.kind==='image').length>=3){toast('Attach up to 3 images in one message.');continue;}
   try{
