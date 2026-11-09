@@ -1592,13 +1592,13 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
    </div>
    <div class="chat-compose-dock">
     <div class="chat-compose">
-     <button type="button" class="compose-plus" id="composeTools" aria-label="Studio tools" title="Studio tools">＋</button><input id="chatFileInput" type="file" accept="image/png,image/jpeg,image/webp,.txt,.md,.csv,.json" multiple hidden>
+     <button type="button" class="compose-plus" id="composeTools" aria-label="Attach images and documents" title="Attach images, PDFs, Word or text files">＋</button><input id="chatFileInput" type="file" accept="image/png,image/jpeg,image/webp,.pdf,application/pdf,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.txt,.md,.csv,.json" multiple hidden>
      <textarea id="chatDraft" placeholder="Message IDRIS AI…" rows="1" aria-label="Message IDRIS"></textarea>
      <button class="compose-voice" id="voiceShortcut" type="button" aria-label="Voice input" title="Voice input">⌁</button>
      <button class="send-round" id="sendToAI" aria-label="Send message">↑</button>
     </div>
     <div class="chat-attachment-list" id="chatAttachmentList" aria-live="polite"></div>
-    <div class="chat-compose-note">IDRIS AI can make mistakes. Check important information.</div>
+    <div class="chat-compose-note">Attach images, PDFs, Word documents or text files. IDRIS AI can make mistakes; check important information.</div>
     <div class="chat-under-tools" aria-hidden="true">
      <button class="soft-btn" id="saveChatDraft" tabindex="-1">Save message</button>
      <button class="soft-btn" id="clearChat" tabindex="-1">New chat</button>
@@ -2060,17 +2060,79 @@ function renderChatAttachments(){
  const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Remove '+file.name);remove.addEventListener('click',()=>{chatAttachments.splice(index,1);renderChatAttachments();});chip.appendChild(remove);list.appendChild(chip);});
 }
 $('composeTools')?.addEventListener('click',()=>{const picker=$('chatFileInput');if(picker){picker.value='';picker.click();}});
+let pdfjsPromise=null,mammothPromise=null;
+const MAX_DOCUMENT_TEXT=14000;
+async function loadPdfJs(){
+ if(!pdfjsPromise)pdfjsPromise=import('https://cdn.jsdelivr.net/npm/pdfjs-dist@6.5.438/build/pdf.mjs').then(lib=>{
+  lib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@6.5.438/build/pdf.worker.mjs';
+  return lib;
+ }).catch(error=>{pdfjsPromise=null;throw new Error('PDF reader could not load. Check your internet connection and try again.');});
+ return pdfjsPromise;
+}
+async function loadMammoth(){
+ if(window.mammoth)return window.mammoth;
+ if(!mammothPromise)mammothPromise=new Promise((resolve,reject)=>{
+  const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/mammoth@1.13.0/mammoth.browser.min.js';script.async=true;
+  script.onload=()=>window.mammoth?resolve(window.mammoth):reject(new Error('Word document reader did not start.'));
+  script.onerror=()=>reject(new Error('Word document reader could not load. Check your internet connection.'));
+  document.head.appendChild(script);
+ }).catch(error=>{mammothPromise=null;throw error;});
+ return mammothPromise;
+}
+function clipDocumentText(value,limit){
+ const text=String(value||'').trim();
+ return text.length>limit?text.slice(0,limit)+'\\n\\n[Document text shortened to fit this chat.]':text;
+}
+async function extractPdfText(file,limit){
+ const pdfjs=await loadPdfJs();
+ const pdf=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer()),isEvalSupported:false}).promise;
+ try{
+  const pageLimit=Math.min(pdf.numPages,40),parts=[];let length=0;
+  for(let pageNo=1;pageNo<=pageLimit&&length<limit;pageNo++){
+   const page=await pdf.getPage(pageNo),content=await page.getTextContent();
+   const line=content.items.map(item=>item.str||'').filter(Boolean).join(' ').replace(/[ \\t]+/g,' ').trim();
+   if(line){parts.push('Page '+pageNo+': '+line);length+=line.length+10;}
+  }
+  let text=clipDocumentText(parts.join('\\n\\n'),limit);
+  if(!text.trim())throw new Error('This PDF has no selectable text. It may be scanned; attach screenshots of its pages instead.');
+  if(pdf.numPages>pageLimit&&text.length<limit)text+='\\n\\n[Only the first '+pageLimit+' pages were read.]';
+  return text;
+ }finally{await pdf.destroy();}
+}
+async function extractDocxText(file,limit){
+ const mammoth=await loadMammoth(),result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
+ const text=clipDocumentText(result.value,limit);
+ if(!text.trim())throw new Error('No readable text was found in this Word document.');
+ return text;
+}
 $('chatFileInput')?.addEventListener('change',async e=>{
  const files=Array.from(e.target.files||[]);if(!files.length)return;
  for(const file of files){
   if(file.size>5*1024*1024){toast(file.name+' is too large. Choose a file under 5 MB.');continue;}
-  const isImage=/^image\/(png|jpeg|webp)$/i.test(file.type)||/\.(png|jpe?g|webp)$/i.test(file.name);const isText=/\.(txt|md|csv|json)$/i.test(file.name)||file.type.startsWith('text/');
-  if(!isImage&&!isText){toast('For now, choose an image or a TXT, MD, CSV or JSON file.');continue;}
-  try{if(isImage){const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file);});chatAttachments.push({name:file.name,type:file.type,kind:'image',dataUrl,preview:dataUrl});}
-  else{const text=await file.text();if(text.length>30000){toast(file.name+' is too long. Keep text files under 30,000 characters.');continue;}chatAttachments.push({name:file.name,type:file.type,kind:'text',text});}}
-  catch{toast('Could not read '+file.name+'. Try another file.');}
+  const isImage=/^image\\/(png|jpeg|webp)$/i.test(file.type)||/\\.(png|jpe?g|webp)$/i.test(file.name);
+  const isPdf=file.type==='application/pdf'||/\\.pdf$/i.test(file.name);
+  const isDocx=/\\.docx$/i.test(file.name)||file.type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  const isText=/\\.(txt|md|csv|json)$/i.test(file.name)||file.type.startsWith('text/');
+  if(!isImage&&!isPdf&&!isDocx&&!isText){toast('Choose an image, PDF, Word (.docx), TXT, MD, CSV or JSON file.');continue;}
+  if(isImage&&chatAttachments.filter(x=>x.kind==='image').length>=3){toast('Attach up to 3 images in one message.');continue;}
+  try{
+   if(isImage){
+    const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file);});
+    chatAttachments.push({name:file.name,type:file.type,kind:'image',dataUrl,preview:dataUrl});
+   }else{
+    const used=chatAttachments.filter(x=>x.kind==='text').reduce((sum,x)=>sum+(x.text||'').length,0);
+    const room=MAX_DOCUMENT_TEXT-used;
+    if(room<=0){toast('The document text limit for one message has been reached.');continue;}
+    let text='';
+    if(isPdf)text=await extractPdfText(file,room);
+    else if(isDocx)text=await extractDocxText(file,room);
+    else text=clipDocumentText(await file.text(),room);
+    if(!text.trim()){toast(file.name+' does not contain readable text.');continue;}
+    chatAttachments.push({name:file.name,type:file.type,kind:'text',text});
+   }
+  }catch(error){toast('Could not read '+file.name+'. '+(error.message||'Try another file.'));}
  }
- renderChatAttachments();if(chatAttachments.length)toast(chatAttachments.length+' attachment(s) added.');
+ renderChatAttachments();if(chatAttachments.length)toast(chatAttachments.length+' attachment(s) ready for IDRIS.');
 });
 $('voiceShortcut')?.addEventListener('click',()=>{
  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -2145,10 +2207,10 @@ $('sendToAI').onclick=async()=>{
  if(!message&&!filesToSend.length){startIdrisVoiceMode();return;}
  if(btn.disabled)return;
  const imageFiles=filesToSend.filter(x=>x.kind==='image'),textFiles=filesToSend.filter(x=>x.kind==='text');
- const fileText=textFiles.map(x=>'\n\nFILE '+x.name+':\n'+x.text).join('');
+ const fileText=textFiles.map(x=>'\n\n[ATTACHED DOCUMENT: '+x.name+']\n'+x.text+'\n[END ATTACHED DOCUMENT]').join('');
  const promptWithFiles=(message||'Please review the attached file(s).')+fileText;
  const visibleMessage=message||(!filesToSend.length?'':imageFiles.length?'Please look at the attached image(s).':'Please read the attached file(s).');
- chatMessages.push({role:'user',content:visibleMessage+(filesToSend.length?' [Attachments: '+filesToSend.map(x=>x.name).join(', ')+']':'')});
+ chatMessages.push({role:'user',content:visibleMessage+(filesToSend.length?' [Attachments: '+filesToSend.map(x=>x.name).join(', ')+']':'')+fileText});
  if(filesToSend.length)addUserAttachmentBubble(visibleMessage,filesToSend);else addBubble('user',visibleMessage);
  field.value='';field.style.height='auto';chatAttachments=[];renderChatAttachments();btn.disabled=true;btn.textContent='…';
  const wait=document.createElement('div');wait.className='bubble note';wait.textContent=imageFiles.length?'IDRIS AI is looking at your image…':'IDRIS AI is preparing a response…';$('chatLog').appendChild(wait);
