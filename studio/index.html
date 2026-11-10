@@ -2251,7 +2251,8 @@ $('sendToAI').onclick=async()=>{
  if(btn.disabled)return;
  const imageFiles=filesToSend.filter(x=>x.kind==='image'),textFiles=filesToSend.filter(x=>x.kind==='text');
  const fileText=textFiles.map(x=>'\n\n[ATTACHED DOCUMENT: '+x.name+']\n'+x.text+'\n[END ATTACHED DOCUMENT]').join('');
- const researchIntent=/\b(research|look up|search (?:the )?(?:web|internet|online)|find sources|fact.?check|verify (?:this|these|the)|investigate|compare (?:the )?(?:latest|current))\b/i.test(message);\n const promptWithFiles=(message||'Please review the attached file(s).')+(researchIntent?' latest':'')+fileText;
+ const researchIntent=/\b(research|look up|search (?:the )?(?:web|internet|online)|find sources|fact.?check|verify (?:this|these|the)|investigate|compare (?:the )?(?:latest|current))\b/i.test(message);
+ const promptWithFiles=(message||'Please review the attached file(s).')+(researchIntent?' latest':'')+fileText;
  const visibleMessage=message||(!filesToSend.length?'':imageFiles.length?'Please look at the attached image(s).':'Please read the attached file(s).');
  chatMessages.push({role:'user',content:visibleMessage+(filesToSend.length?' [Attachments: '+filesToSend.map(x=>x.name).join(', ')+']':'')+fileText});
  if(filesToSend.length)addUserAttachmentBubble(visibleMessage,filesToSend);else addBubble('user',visibleMessage);
