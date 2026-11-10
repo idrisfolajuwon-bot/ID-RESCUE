@@ -2430,4 +2430,12 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
  $('saveVideoPlan').addEventListener('click',()=>{const t=textPlan();if(!t){toast('Build a storyboard first.');return}try{const key='idris-ai-studio-v2',items=JSON.parse(localStorage.getItem(key)||'[]');items.unshift({id:'video-'+Date.now(),type:'Video Storyboard',title:plan.title,content:t,created:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(items.slice(0,250)));toast('Storyboard saved to your Library.')}catch{toast('Could not save. Check available device storage.')}});
 })();
 </script>
-</body></html>
+
+<section id="idris-support-links" aria-label="Support and privacy" style="max-width:1040px;margin:28px auto 18px;padding:18px 20px;border:1px solid #e5e9f1;border-radius:16px;background:#fff;color:#26324a;text-align:center">
+ <strong style="display:block;font-size:13px;margin-bottom:6px">Need help with IDRIS AI STUDIO?</strong>
+ <p style="margin:0 0 12px;color:#738097;font-size:12px">Contact support or read how your information is handled.</p>
+ <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+  <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="display:inline-block;padding:10px 14px;border-radius:10px;background:#6657d9;color:#fff;text-decoration:none;font-size:12px;font-weight:800">Contact support</a>
+  <a href="./privacy.html" style="display:inline-block;padding:10px 14px;border:1px solid #dfe5ef;border-radius:10px;color:#5144c7;text-decoration:none;font-size:12px;font-weight:800">Privacy policy</a>
+ </div>
+</section></body></html>
