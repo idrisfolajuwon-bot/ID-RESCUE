@@ -105,7 +105,7 @@ async function applyRateLimit(request, env, weight) {
   }
 }
 
-async function readBackendJson(path, body) {
+async function postBackend(path, body) {
   const response = await fetch(API_BASE + path, {
     method: "POST",
     headers: {
@@ -126,7 +126,7 @@ async function readBackendJson(path, body) {
 
 async function askIdris(question) {
   const safetyGuidance = "Keep every answer suitable for a general audience. Do not provide explicit sexual content, instructions for self-harm, dangerous acts, weapon use, or graphic violence. For risky requests, respond briefly and safely. Be accurate, clear, and honest about uncertainty.";
-  const response = await readBackendJson("/chat", {
+  const response = await postBackend("/chat", {
     messages: [
       { role: "system", content: safetyGuidance },
       { role: "user", content: question }
@@ -163,25 +163,7 @@ function arrayBufferToBase64(buffer) {
 
 async function createImage(prompt) {
   const safetyPrompt = prompt + ". Create an age-appropriate image for a general audience. Do not include sexual content, graphic violence, self-harm, or dangerous activity.";
-  const response = await readBackendJson("/image", { prompt: safetyPrompt }).catch(async error => {
-    // The image route returns image bytes rather than JSON, so retry it as a binary response.
-    const imageResponse = await fetch(API_BASE + "/image", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Origin": API_ORIGIN
-      },
-      body: JSON.stringify({ prompt: safetyPrompt }),
-      signal: AbortSignal.timeout(60000),
-      cache: "no-store"
-    });
-    if (!imageResponse.ok) {
-      const detail = (await imageResponse.text()).slice(0, 300);
-      throw new Error("Image generation failed with HTTP " + imageResponse.status + (detail ? ": " + detail : "."));
-    }
-    return imageResponse;
-  });
-
+  const response = await postBackend("/image", { prompt: safetyPrompt });
   const mimeType = response.headers.get("Content-Type") || "image/png";
   if (!mimeType.toLowerCase().startsWith("image/")) {
     throw new Error("The image service returned an unsupported response.");
