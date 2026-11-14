@@ -2,7 +2,10 @@ const API_BASE = "https://idris-ai-studio-api.idrisfolajuwon.workers.dev";
 const API_ORIGIN = "https://idrisfolajuwon-bot.github.io";
 const SERVER_NAME = "idris-ai-studio";
 const SERVER_VERSION = "0.1.0";
-const PROTOCOL_VERSION = "2025-03-26";
+const PROTOCOL_VERSION = "2025-11-25";
+const MODERN_PROTOCOL_VERSION = "2026-07-28";
+const LEGACY_PROTOCOL_VERSIONS = ["2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05"];
+const SERVER_INFO_META = { "io.modelcontextprotocol/serverInfo": { name: SERVER_NAME, version: SERVER_VERSION } };
 const MAX_REQUEST_BYTES = 16000;
 
 const TOOLS = [
@@ -264,34 +267,68 @@ export default {
     const hasId = Object.prototype.hasOwnProperty.call(message, "id");
     const id = hasId ? message.id : null;
     const params = message.params && typeof message.params === "object" ? message.params : {};
+    const protocolHeader = request.headers.get("MCP-Protocol-Version");
+    const modern = protocolHeader === MODERN_PROTOCOL_VERSION;
+    const requestMeta = params._meta && typeof params._meta === "object" ? params._meta : {};
 
     if (message.method.startsWith("notifications/")) {
       return new Response(null, { status: 202, headers: { "Cache-Control": "no-store" } });
     }
 
-    if (message.method === "initialize") {
-      const requestedVersion = typeof params.protocolVersion === "string" ? params.protocolVersion : PROTOCOL_VERSION;
-      const supported = ["2025-03-26", "2024-11-05"];
+    if (modern) {
+      if (requestMeta["io.modelcontextprotocol/protocolVersion"] !== MODERN_PROTOCOL_VERSION ||
+          !requestMeta["io.modelcontextprotocol/clientCapabilities"] ||
+          typeof requestMeta["io.modelcontextprotocol/clientCapabilities"] !== "object") {
+        return json({ jsonrpc: "2.0", id, error: { code: -32020, message: "Modern MCP protocol metadata is missing or invalid." } }, 400);
+      }
+      if (request.headers.get("Mcp-Method") !== message.method) {
+        return json({ jsonrpc: "2.0", id, error: { code: -32020, message: "Mcp-Method header must match the JSON-RPC method." } }, 400);
+      }
+    }
+
+    if (message.method === "server/discover" && modern) {
       return rpcResult(id, {
-        protocolVersion: supported.includes(requestedVersion) ? requestedVersion : PROTOCOL_VERSION,
-        capabilities: { tools: { listChanged: false } },
-        serverInfo: { name: SERVER_NAME, version: SERVER_VERSION },
-        instructions: "IDRIS AI STUDIO is an independent AI workspace developed under I D LABS. Use ask_idris_ai for text questions and create_image for original image generation. Be clear that IDRIS AI STUDIO is not ChatGPT and is not an OpenAI product."
+        resultType: "complete",
+        supportedVersions: [MODERN_PROTOCOL_VERSION],
+        capabilities: { tools: {} },
+        instructions: "IDRIS AI STUDIO is an independent AI workspace developed under I D LABS. Use ask_idris_ai for text questions and create_image for original image generation. It is not ChatGPT and is not an OpenAI product.",
+        ttlMs: 3600000,
+        cacheScope: "public",
+        _meta: SERVER_INFO_META
       });
     }
 
-    if (message.method === "ping") return rpcResult(id, {});
-    if (message.method === "tools/list") return rpcResult(id, { tools: TOOLS });
+    if (message.method === "initialize" && !modern) {
+      const requestedVersion = typeof params.protocolVersion === "string" ? params.protocolVersion : PROTOCOL_VERSION;
+      const negotiated = LEGACY_PROTOCOL_VERSIONS.includes(requestedVersion) ? requestedVersion : PROTOCOL_VERSION;
+      return rpcResult(id, {
+        protocolVersion: negotiated,
+        capabilities: { tools: { listChanged: false } },
+        serverInfo: { name: SERVER_NAME, version: SERVER_VERSION },
+        instructions: "IDRIS AI STUDIO is an independent AI workspace developed under I D LABS. Use ask_idris_ai for text questions and create_image for original image generation. It is not ChatGPT and is not an OpenAI product."
+      });
+    }
 
-    if (message.method === "tools/call") {
-      const name = typeof params.name === "string" ? params.name : "";
-      const args = params.arguments && typeof params.arguments === "object" ? params.arguments : {};
-      const result = await callTool(request, env, name, args);
+    if (message.method === "ping" && !modern) return rpcResult(id, {});
+    if (message.method === "tools/list") {
+      const result = { tools: TOOLS };
+      if (modern) Object.assign(result, { resultType: "complete", ttlMs: 3600000, cacheScope: "public", _meta: SERVER_INFO_META });
       return rpcResult(id, result);
     }
 
-    if (message.method === "resources/list") return rpcResult(id, { resources: [] });
-    if (message.method === "prompts/list") return rpcResult(id, { prompts: [] });
+    if (message.method === "tools/call") {
+      const name = typeof params.name === "string" ? params.name : "";
+      if (modern && request.headers.get("Mcp-Name") !== name) {
+        return json({ jsonrpc: "2.0", id, error: { code: -32020, message: "Mcp-Name header must match the requested tool name." } }, 400);
+      }
+      const args = params.arguments && typeof params.arguments === "object" ? params.arguments : {};
+      const toolResult = await callTool(request, env, name, args);
+      const result = modern ? { resultType: "complete", ...toolResult, _meta: SERVER_INFO_META } : toolResult;
+      return rpcResult(id, result);
+    }
+
+    if (message.method === "resources/list" && !modern) return rpcResult(id, { resources: [] });
+    if (message.method === "prompts/list" && !modern) return rpcResult(id, { prompts: [] });
 
     return rpcError(id, -32601, "Method not found.");
   }
