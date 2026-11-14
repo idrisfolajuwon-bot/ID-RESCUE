@@ -1,4 +1,3 @@
-const API_BASE = "https://idris-ai-studio-api.idrisfolajuwon.workers.dev";
 const API_ORIGIN = "https://idrisfolajuwon-bot.github.io";
 const SERVER_NAME = "idris-ai-studio";
 const SERVER_VERSION = "0.1.0";
@@ -108,17 +107,20 @@ async function applyRateLimit(request, env, weight) {
   }
 }
 
-async function postBackend(path, body) {
-  const response = await fetch(API_BASE + path, {
+async function postBackend(env, path, body) {
+  if (!env.IDRIS_API || typeof env.IDRIS_API.fetch !== "function") {
+    throw new Error("The private IDRIS AI STUDIO backend service is not connected.");
+  }
+  const backendRequest = new Request("https://idris-ai-studio-api.internal" + path, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Origin": API_ORIGIN
     },
     body: JSON.stringify(body),
-    signal: AbortSignal.timeout(60000),
-    cache: "no-store"
+    signal: AbortSignal.timeout(60000)
   });
+  const response = await env.IDRIS_API.fetch(backendRequest);
 
   if (!response.ok) {
     const detail = (await response.text()).slice(0, 300);
@@ -127,9 +129,9 @@ async function postBackend(path, body) {
   return response;
 }
 
-async function askIdris(question) {
+async function askIdris(env, question) {
   const safetyGuidance = "Keep every answer suitable for a general audience. Do not provide explicit sexual content, instructions for self-harm, dangerous acts, weapon use, or graphic violence. For risky requests, respond briefly and safely. Be accurate, clear, and honest about uncertainty.";
-  const response = await postBackend("/chat", {
+  const response = await postBackend(env, "/chat", {
     messages: [
       { role: "system", content: safetyGuidance },
       { role: "user", content: question }
@@ -164,9 +166,9 @@ function arrayBufferToBase64(buffer) {
   return btoa(binary);
 }
 
-async function createImage(prompt) {
+async function createImage(env, prompt) {
   const safetyPrompt = prompt + ". Create an age-appropriate image for a general audience. Do not include sexual content, graphic violence, self-harm, or dangerous activity.";
-  const response = await postBackend("/image", { prompt: safetyPrompt });
+  const response = await postBackend(env, "/image", { prompt: safetyPrompt });
   const mimeType = response.headers.get("Content-Type") || "image/png";
   if (!mimeType.toLowerCase().startsWith("image/")) {
     throw new Error("The image service returned an unsupported response.");
@@ -191,7 +193,7 @@ async function callTool(request, env, name, args) {
     if (!question || question.length > 6000) return toolError("Enter a question of up to 6,000 characters.");
     if (!(await applyRateLimit(request, env, 1))) return toolError("The IDRIS AI STUDIO request limit has been reached. Please wait a minute and try again.");
     try {
-      return await askIdris(question);
+      return await askIdris(env, question);
     } catch (error) {
       return toolError("IDRIS AI STUDIO could not complete the request. " + String(error.message || error).slice(0, 260));
     }
@@ -202,7 +204,7 @@ async function callTool(request, env, name, args) {
     if (prompt.length < 5 || prompt.length > 1600) return toolError("Describe the image in 5 to 1,600 characters.");
     if (!(await applyRateLimit(request, env, 4))) return toolError("The image request limit has been reached. Please wait a minute and try again.");
     try {
-      return await createImage(prompt);
+      return await createImage(env, prompt);
     } catch (error) {
       return toolError("IDRIS AI STUDIO could not create the image. " + String(error.message || error).slice(0, 260));
     }
