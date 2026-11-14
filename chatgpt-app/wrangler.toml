@@ -12,3 +12,7 @@ simple = { limit = 12, period = 60 }
 name = "IDRIS_MCP_GLOBAL_LIMIT"
 namespace_id = "2026111402"
 simple = { limit = 80, period = 60 }
+
+[[services]]
+binding = "IDRIS_API"
+service = "idris-ai-studio-api"
