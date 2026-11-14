@@ -1,0 +1,24 @@
+name: Validate IDRIS AI STUDIO MCP
+
+on:
+  push:
+    paths:
+      - "chatgpt-app/**"
+      - ".github/workflows/validate-idris-mcp.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check Worker JavaScript syntax
+        run: node --check chatgpt-app/worker.js
