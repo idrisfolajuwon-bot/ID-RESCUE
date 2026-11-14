@@ -1,0 +1,14 @@
+name = "idris-ai-studio-chatgpt"
+main = "worker.js"
+compatibility_date = "2026-11-14"
+workers_dev = true
+
+[[ratelimits]]
+name = "IDRIS_MCP_CLIENT_LIMIT"
+namespace_id = "2026111401"
+simple = { limit = 12, period = 60 }
+
+[[ratelimits]]
+name = "IDRIS_MCP_GLOBAL_LIMIT"
+namespace_id = "2026111402"
+simple = { limit = 80, period = 60 }
