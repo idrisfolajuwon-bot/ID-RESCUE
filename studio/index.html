@@ -1465,6 +1465,8 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
  .welcome-action{min-height:51px!important}
 }
 
+
+.ai-eyes-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:16px;margin:22px 0 40px}.ai-eyes-camera-panel,.ai-eyes-result-panel{padding:18px;min-width:0}.ai-eyes-camera-head,.ai-eyes-result-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.ai-eyes-camera-head b{display:block;font-size:12px;letter-spacing:.12em}.ai-eyes-camera-head small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.ai-eyes-live-dot{width:9px;height:9px;border-radius:50%;background:#64748b;box-shadow:0 0 0 4px #64748b22}.ai-eyes-live-dot.on{background:var(--mint);box-shadow:0 0 0 4px #68f0d122}.ai-eyes-view{position:relative;min-height:260px;aspect-ratio:4/3;background:#050a13;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:grid;place-items:center}.ai-eyes-view video,.ai-eyes-view img{width:100%;height:100%;max-height:520px;object-fit:contain}.ai-eyes-placeholder,.ai-eyes-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted);gap:8px}.ai-eyes-placeholder>span,.ai-eyes-empty>span{font-size:42px;color:var(--mint)}.ai-eyes-placeholder b,.ai-eyes-empty b{color:var(--text)}.ai-eyes-placeholder small{font-size:11px}.ai-eyes-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.ai-eyes-controls button{flex:1;min-width:110px}.ai-eyes-upload{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 2px;color:var(--muted);font-size:12px}.ai-eyes-upload span{color:var(--mint);font-weight:800;cursor:pointer}.ai-eyes-state{font-size:10px;letter-spacing:.12em;color:var(--mint);border:1px solid #68f0d144;border-radius:30px;padding:5px 9px}.ai-eyes-result{min-height:300px;max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#080f1c;padding:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}.ai-eyes-empty{min-height:265px}.ai-eyes-ask{display:flex;gap:8px;margin-top:12px}.ai-eyes-ask input{min-width:0;flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:11px;color:var(--text)}.ai-eyes-ask button{font-size:11px;padding:0 13px}.ai-eyes-result-panel>.soft-btn:disabled{opacity:.4;cursor:not-allowed}@media(max-width:760px){.ai-eyes-grid{grid-template-columns:1fr}.ai-eyes-view{min-height:220px}.ai-eyes-result{min-height:220px}}
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -1522,6 +1524,7 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
 <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v15H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Library</button>
 <button data-studio-action="projects"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5h7l2 2h8v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M3.5 7.5v-2a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v2"/></svg></span>Projects</button>
 <button data-page="videolab"><span class="ico" aria-hidden="true">▶</span>Video Lab</button>
+<button data-page="aieyes"><span class="ico" aria-hidden="true">◎</span>AI Eyes</button>
 <button data-studio-action="web"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5M4.5 10.8h12.6M10.8 4c2 2 2.8 4.2 2.8 6.8s-.8 4.8-2.8 6.8"/></svg></span>Explore</button>
   </nav>
   <div class="sidebar-history-heading">Chats</div>
@@ -1605,6 +1608,20 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
     <p class="muted small">AI generation runs through the secure IDRIS AI backend. Generation availability depends on your connected Workers AI account limits.</p>
    </div>
    <div class="panel"><h2>YOUR AI CREATION</h2><div class="preview-wrap" id="artPreview"><div class="preview-empty">Your generated image will appear here.</div></div><div class="actions"><button class="soft-btn" id="saveArt">SAVE TO VAULT</button><button class="primary-btn" id="downloadPng">DOWNLOAD PNG</button></div><p class="muted small" id="imageStatus">Ready when you are.</p></div>
+  </div>
+ </section>
+
+ <section class="page" id="aieyes">
+  <div class="page-heading"><span class="eyebrow">I D LABS · COMPUTER VISION</span><h1 style="font-size:clamp(30px,5vw,48px);margin:8px 0">IDRIS <span class="gradient">AI EYES</span></h1><p class="muted">Point your camera at something. IDRIS will look, understand and explain.</p></div>
+  <div class="ai-eyes-grid">
+   <div class="panel ai-eyes-camera-panel">
+    <div class="ai-eyes-camera-head"><div><b>LIVE CAMERA</b><small id="eyesCameraStatus">Camera is off</small></div><span class="ai-eyes-live-dot"></span></div>
+    <div class="ai-eyes-view" id="eyesView"><div class="ai-eyes-placeholder"><span>◎</span><b>Your camera view will appear here</b><small>Start the camera or upload a picture.</small></div><video id="eyesVideo" playsinline autoplay muted hidden></video><canvas id="eyesCanvas" hidden></canvas></div>
+    <div class="ai-eyes-controls"><button class="primary-btn" id="eyesStart">START CAMERA</button><button class="soft-btn" id="eyesCapture" disabled>◎ CAPTURE & ANALYSE</button><button class="soft-btn" id="eyesFlip" disabled>FLIP</button></div>
+    <label class="ai-eyes-upload">Or choose a photo <input id="eyesUpload" type="file" accept="image/*" hidden><span>UPLOAD IMAGE ↗</span></label>
+    <p class="muted small">Camera access is requested only when you press Start Camera. Images are sent to IDRIS AI for analysis when you choose Analyse.</p>
+   </div>
+   <div class="panel ai-eyes-result-panel"><div class="ai-eyes-result-head"><span class="eyebrow">INTELLIGENCE REPORT</span><span id="eyesResultState" class="ai-eyes-state">WAITING</span></div><div id="eyesResult" class="ai-eyes-result"><div class="ai-eyes-empty"><span>✧</span><b>Ready to see the world?</b><p>Capture or upload an image, then ask IDRIS to explain what it sees.</p></div></div><div class="ai-eyes-ask"><input id="eyesQuestion" maxlength="500" placeholder="Ask about what I'm looking at…"><button class="primary-btn" id="eyesAnalyse">ANALYSE</button></div><button class="soft-btn" id="eyesSave" disabled style="width:100%;margin-top:10px">SAVE REPORT TO LIBRARY</button></div>
   </div>
  </section>
 
@@ -2437,6 +2454,27 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
  $('copyVideoPlan').addEventListener('click',async()=>{const t=textPlan();if(!t){toast('Build a storyboard first.');return}try{await navigator.clipboard.writeText(t);toast('Storyboard copied.')}catch{toast('Copy is unavailable in this browser.')}});
  $('downloadVideoPlan').addEventListener('click',()=>{const t=textPlan();if(!t){toast('Build a storyboard first.');return}const a=document.createElement('a'),u=URL.createObjectURL(new Blob([t],{type:'text/plain;charset=utf-8'}));a.href=u;a.download='idris-video-storyboard.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);toast('Storyboard exported.')});
  $('saveVideoPlan').addEventListener('click',()=>{const t=textPlan();if(!t){toast('Build a storyboard first.');return}try{const key='idris-ai-studio-v2',items=JSON.parse(localStorage.getItem(key)||'[]');items.unshift({id:'video-'+Date.now(),type:'Video Storyboard',title:plan.title,content:t,created:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(items.slice(0,250)));toast('Storyboard saved to your Library.')}catch{toast('Could not save. Check available device storage.')}});
+})();
+</script>
+
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);if(!$('eyesStart'))return;
+const API='https://idris-ai-studio-api.idrisfolajuwon.workers.dev';
+let stream=null,photoData='',facing='environment',lastReport='';
+const status=(state,msg)=>{$('eyesResultState').textContent=state;$('eyesCameraStatus').textContent=msg||state};
+function stopCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}$('eyesVideo').srcObject=null;$('eyesVideo').hidden=true;$('eyesStart').textContent='START CAMERA';$('eyesCapture').disabled=true;$('eyesFlip').disabled=true;$('eyesView').querySelector('.ai-eyes-live-dot')?.classList.remove('on')}
+async function startCamera(){if(!navigator.mediaDevices?.getUserMedia){status('UNAVAILABLE','Camera is not supported here. Upload a photo instead.');return}try{stopCamera();stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:facing},width:{ideal:1280},height:{ideal:720}},audio:false});const v=$('eyesVideo');v.srcObject=stream;v.hidden=false;await v.play();$('eyesView').querySelector('.ai-eyes-placeholder')?.remove();$('eyesStart').textContent='STOP CAMERA';$('eyesCapture').disabled=false;$('eyesFlip').disabled=false;$('eyesView').querySelector('.ai-eyes-live-dot')?.classList.add('on');status('LIVE','Camera is on')}catch(e){status('CAMERA BLOCKED',e.name==='NotAllowedError'?'Camera permission was denied. Allow camera access in browser settings or upload a photo.':'Could not start camera. You can upload a photo instead.');stopCamera()}}
+$('eyesStart').onclick=()=>stream?stopCamera():startCamera();
+$('eyesFlip').onclick=async()=>{facing=facing==='environment'?'user':'environment';await startCamera()};
+function showPhoto(data){photoData=data;const old=$('eyesView').querySelector('img');if(old)old.remove();const img=document.createElement('img');img.alt='Image ready for IDRIS AI analysis';img.src=data;$('eyesView').appendChild(img);$('eyesCapture').disabled=true;status('IMAGE READY','Photo ready for analysis');$('eyesSave').disabled=true}
+$('eyesCapture').onclick=()=>{const v=$('eyesVideo');if(!stream||!v.videoWidth)return;const c=$('eyesCanvas'),scale=Math.min(1,1280/v.videoWidth);c.width=Math.round(v.videoWidth*scale);c.height=Math.round(v.videoHeight*scale);c.getContext('2d').drawImage(v,0,0,c.width,c.height);showPhoto(c.toDataURL('image/jpeg',.82))};
+$('eyesUpload').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/'))return; if(file.size>12*1024*1024){status('FILE TOO LARGE','Choose an image under 12 MB.');return}const reader=new FileReader();reader.onload=()=>showPhoto(reader.result);reader.readAsDataURL(file);e.target.value=''};
+async function analyse(){if(!photoData){status('NEED IMAGE','Start the camera or upload a photo first.');return}const question=$('eyesQuestion').value.trim()||'Describe what you can see. Identify the main objects, explain what they are used for, and share useful observations. Do not guess details you cannot see.';$('eyesAnalyse').disabled=true;$('eyesAnalyse').textContent='ANALYSING…';status('ANALYSING','IDRIS is examining your image…');$('eyesResult').textContent='Looking closely…';try{const res=await fetch(API+'/vision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:question,images:[{name:'idris-ai-eyes.jpg',dataUrl:photoData}]})});let data={};try{data=await res.json()}catch{}if(!res.ok||!data.reply)throw Error(data.error||'IDRIS could not analyse this image. Please try again.');lastReport=String(data.reply);$('eyesResult').textContent=lastReport;$('eyesSave').disabled=false;status('COMPLETE','Analysis complete')}catch(e){$('eyesResult').textContent=e.message||'Something went wrong. Try again.';status('ERROR','Analysis failed')}finally{$('eyesAnalyse').disabled=false;$('eyesAnalyse').textContent='ANALYSE'}}
+$('eyesAnalyse').onclick=analyse;
+$('eyesQuestion').addEventListener('keydown',e=>{if(e.key==='Enter')analyse()});
+$('eyesSave').onclick=()=>{if(!lastReport)return;const key='idris-ai-studio-v2';try{const items=JSON.parse(localStorage.getItem(key)||'[]');items.unshift({id:'eyes-'+Date.now(),type:'AI Eyes Report',title:'AI Eyes · '+new Date().toLocaleString(),content:lastReport,created:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(items.slice(0,250)));if(typeof toast==='function')toast('AI Eyes report saved to your Library.');}catch(e){if(typeof toast==='function')toast('Could not save the report on this device.')}};
+window.addEventListener('pagehide',stopCamera);
 })();
 </script>
 
