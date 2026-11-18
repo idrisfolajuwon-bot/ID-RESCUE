@@ -1665,6 +1665,54 @@ input:focus,textarea:focus,select:focus{border-color:#9186eb;box-shadow:0 0 0 4p
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 </style>
+<style>
+/* FRONTIER 2.2 — MOBILE CHAT CONTRAST + SPACING REPAIR */
+@media(max-width:899px){
+ html,body{background:#070b15!important;color:#f4f7ff!important}
+ body{background:radial-gradient(ellipse at 75% 0%,#34275d55,transparent 36%),#070b15!important}
+ .shell,main{background:transparent!important;color:#f4f7ff!important}
+ main{min-height:100dvh!important}
+ .topbar{background:#080e1add!important;border-bottom:1px solid #ffffff12!important}
+ .crumb{color:#9aaac4!important}
+ .chat-page.active{height:calc(100dvh - 76px)!important;min-height:460px!important;background:transparent!important}
+ #chat .chat-stage{height:100%!important;min-height:0!important;max-width:780px!important;margin:0 auto!important;background:linear-gradient(155deg,#111a2b 0%,#0a111e 65%,#0b1020 100%)!important;border:1px solid #ffffff18!important;border-radius:23px!important;box-shadow:0 22px 65px #0006,inset 0 1px #ffffff0b!important;overflow:hidden!important}
+ #chat .chat-log-area{padding:clamp(30px,5vh,52px) 16px 16px!important;gap:0!important}
+ #chat .chat-first-greeting{width:100%!important;max-width:620px!important;margin:0 auto 18px!important}
+ #chat .welcome-mark{width:64px!important;height:64px!important;margin:0 auto 20px!important;border-radius:20px!important;background:linear-gradient(145deg,#d9d2ff,#f0eaff)!important;color:#6555d7!important;box-shadow:0 12px 32px #8d7af52b!important}
+ #chat .chat-first-greeting h1{color:#f5f7ff!important;font-size:clamp(27px,7vw,36px)!important;letter-spacing:-.055em!important}
+ #chat .chat-first-greeting .welcome-subtitle{color:#aab6ca!important;font-size:14px!important;line-height:1.65!important;max-width:490px!important;margin:12px auto 22px!important}
+ #chat .welcome-actions{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;max-width:560px!important;margin:0 auto!important}
+ #chat .welcome-action{display:flex!important;min-height:68px!important;padding:12px 13px!important;gap:13px!important;text-align:left!important;background:linear-gradient(120deg,#18243a,#121c2d)!important;border:1px solid #ffffff18!important;border-radius:16px!important;color:#f4f7ff!important;box-shadow:0 7px 20px #0002!important}
+ #chat .welcome-action b{display:block!important;color:#f2f5ff!important;font-size:13px!important;font-weight:750!important}
+ #chat .welcome-action small{display:block!important;color:#aab7cd!important;font-size:11px!important;margin-top:4px!important}
+ #chat .welcome-action-icon{width:40px!important;height:40px!important;flex:0 0 40px!important;border-radius:13px!important;background:#dcd7ff!important;color:#6655d8!important;font-size:18px!important}
+ #chat .welcome-action:hover{border-color:#7cf5dc66!important;background:#1b2a41!important}
+ #chat .chatlog{color:#f4f7ff!important}
+ #chat .chat-compose-dock{max-width:100%!important;padding:9px 10px calc(10px + env(safe-area-inset-bottom))!important;background:linear-gradient(180deg,transparent,#0a111ef5 18%)!important}
+ #chat .chat-compose{min-height:58px!important;background:#141f32!important;border:1px solid #455675!important;border-radius:20px!important;box-shadow:0 12px 34px #0006!important;padding:7px 8px!important}
+ #chat .chat-compose textarea{color:#f4f7ff!important;background:transparent!important;font-size:15px!important}
+ #chat .chat-compose textarea::placeholder{color:#9baac2!important}
+ #chat .compose-plus{background:#e8e5ff!important;color:#6354d6!important;width:42px!important;height:42px!important;flex-basis:42px!important}
+ #chat .compose-voice{color:#aebbd0!important}
+ #chat .send-round{background:linear-gradient(145deg,#8c7cff,#6453dc)!important;color:white!important;box-shadow:0 6px 18px #6453dc55!important}
+ #chat .chat-compose-note{color:#8494ad!important;font-size:10px!important}
+ #chat .chat-under-tools{color:#9aa9c2!important}
+}
+@media(max-width:380px){
+ #chat .chat-log-area{padding:24px 11px 12px!important}
+ #chat .welcome-mark{width:56px!important;height:56px!important;margin-bottom:15px!important}
+ #chat .chat-first-greeting .welcome-subtitle{font-size:13px!important;margin-bottom:17px!important}
+ #chat .welcome-action{min-height:62px!important}
+}
+@media(min-width:900px){
+ html,body{background:#070b15!important;color:#f4f7ff!important}
+ .shell,main{background:transparent!important}
+ .topbar{background:#080e1add!important}
+ #chat .chat-stage{background:linear-gradient(155deg,#111a2b,#0a111e)!important;border:1px solid #ffffff18!important;border-radius:24px!important}
+ #chat .welcome-action b{color:#f2f5ff!important}
+ #chat .welcome-action small{color:#aab7cd!important}
+}
+</style>
 </head>
 <body>
 <div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
