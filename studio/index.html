@@ -1509,6 +1509,55 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
 .idris-voice-end{width:64px;height:64px;border:0;border-radius:50%;background:#e5485d;color:white;font-size:20px;box-shadow:0 8px 25px #e5485d33;transform:rotate(135deg)}
 @media(min-width:700px){.idris-voice-panel{max-width:900px;min-height:min(780px,100dvh);height:min(780px,100dvh);border-radius:28px;box-shadow:0 24px 90px #26365b26}.idris-voice-layer{padding:22px;background:#26334a66;backdrop-filter:blur(8px)}}
 @media(prefers-reduced-motion:reduce){.processing-dot-core,.idris-voice-orb,.idris-voice-orb:before,.idris-voice-orb:after{animation:none!important}}
+
+/* FRONTIER 2.0 — complete visual system refresh */
+:root{--mint:#6658df;--blue:#3985e8;--violet:#8b63e8;--bg:#f4f6fc;--text:#19243a;--muted:#718099;--line:#e5e9f2;--shadow:0 18px 48px rgba(31,44,80,.075)}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 82% 0%,#e9e5ff 0,transparent 33%),radial-gradient(ellipse at 0 38%,#e6f2ff 0,transparent 30%),#f4f6fc;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:-.01em}
+.shell{max-width:none}
+.side{background:rgba(255,255,255,.91);border-right:1px solid #e8ebf3;box-shadow:8px 0 32px #24375b08}
+.brand-name{font-size:14px;letter-spacing:1.2px}.brand-sub{font-size:9px}
+.brand-mark,.welcome-mark{background:linear-gradient(145deg,#5c53d8,#9675f0);color:#fff;box-shadow:0 10px 28px #6859d926}
+.nav button{min-height:43px;border-radius:13px;font-weight:700;transition:background .18s,border-color .18s,transform .18s}
+.nav button.active{background:linear-gradient(100deg,#eeedff,#f6f3ff);border-color:#e5e0ff;color:#574ac9}
+.nav button:hover{transform:translateX(2px)}
+main{max-width:1180px;padding-top:22px}
+.topbar{position:sticky;top:0;z-index:20;background:#f7f8fcdd;backdrop-filter:blur(16px);padding:12px 0;border-bottom:1px solid #e9edf5}
+.crumb{font-weight:850;color:#66718a}
+.panel{border-radius:21px;border-color:#e7eaf2;box-shadow:0 10px 32px rgba(31,44,80,.045);transition:box-shadow .2s,border-color .2s}
+.panel:hover{border-color:#dcdff0;box-shadow:0 14px 38px rgba(31,44,80,.07)}
+.hero h1,.dash-hero h1{letter-spacing:-.045em}
+.primary-btn{border-radius:13px;background:linear-gradient(105deg,#5e55d9,#8a6be9);box-shadow:0 8px 22px #6859d926;transition:transform .18s,box-shadow .18s}
+.primary-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px #6859d933}
+.soft-btn,.icon-btn{border-radius:13px;background:#fff;border-color:#e5e8f1}
+input,textarea,select{border-radius:13px;background:#fbfcff;border-color:#e1e6f0;transition:border-color .15s,box-shadow .15s}
+input:focus,textarea:focus,select:focus{border-color:#9186eb;box-shadow:0 0 0 4px #7668df16}
+.tile,.workspace-card,.saved{border-radius:18px}
+.chatlog{border-radius:20px;background:#f8f9fd;border:1px solid #e9edf5}
+.bubble{border-radius:17px;line-height:1.72;box-shadow:0 2px 8px #26365b08}
+.bubble.user{background:#eeecff;color:#443b9e}
+.chat-compose{border-radius:21px;border:1px solid #dfe4ef;background:#fff;box-shadow:0 12px 35px #27385c12}
+.chat-compose textarea{background:transparent}
+.send-round{background:linear-gradient(145deg,#6157d9,#8d70ed);box-shadow:0 5px 14px #6859d933}
+.dash-hero{border-radius:28px;box-shadow:0 22px 65px #29375d18}
+.dash-quick-card{border-radius:20px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.dash-quick-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px #28375c12;border-color:#c9c3f3}
+.footer{letter-spacing:1px}
+.frontier-strip{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:18px 0 28px;padding:15px 18px;border:1px solid #e3e4f4;border-radius:18px;background:linear-gradient(105deg,#fff,#f5f3ff);box-shadow:0 9px 26px #2a35600a}
+.frontier-strip-left{display:flex;align-items:center;gap:12px;min-width:0}
+.frontier-spark{width:40px;height:40px;display:grid;place-items:center;flex:0 0 40px;border-radius:14px;background:#eceaff;color:#6657d9;font-size:20px}
+.frontier-strip b{display:block;font-size:12px;color:#29334a}.frontier-strip small{display:block;font-size:10px;color:#7a859a;margin-top:3px}
+.frontier-pill{white-space:nowrap;border:1px solid #d8d3ff;border-radius:30px;padding:7px 10px;background:#f1efff;color:#5a4ec8;font-size:9px;font-weight:900;letter-spacing:1px}
+.identity-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin:18px 0}
+.identity-card{border:1px solid #e7e9f3;border-radius:18px;padding:17px;background:linear-gradient(145deg,#fff,#f8f8ff)}
+.identity-card h3{font-size:12px;margin:0 0 12px;color:#34405a;letter-spacing:.7px}
+.identity-card p{font-size:11px;line-height:1.7;color:#6f7b91;margin:7px 0}
+.identity-kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #edf0f5;font-size:11px}
+.identity-kv:last-child{border:0}.identity-kv span{color:#78849a}.identity-kv b{color:#303b53;text-align:right}
+.identity-note{margin-top:12px;padding:11px 12px;border-radius:12px;background:#f0efff;color:#5b52a9;font-size:10px;line-height:1.6}
+@media(max-width:760px){main{padding:10px 13px 94px}.topbar{top:0;margin:0 -13px;padding:10px 13px}.frontier-strip{padding:12px;border-radius:15px}.frontier-pill{font-size:8px}.identity-grid{grid-template-columns:1fr}.panel{border-radius:17px}.dash-hero{border-radius:22px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -1550,6 +1599,8 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
    <div class="dash-orbit" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core" aria-hidden="true"></div><i class="orbit-node node-one"></i><i class="orbit-node node-two"></i><i class="orbit-node node-three"></i></div>
    <div class="dash-hero-foot"><span><i class="live-pulse"></i> IDRIS AI STUDIO</span><span>BUILT BY I D LABS</span></div>
   </div>
+
+  <div class="frontier-strip"><div class="frontier-strip-left"><span class="frontier-spark">✦</span><div><b>IDRIS AI STUDIO · FRONTIER 2.0</b><small>A refreshed workspace with a clearer identity, smarter assistant guidance and a redesigned interface.</small></div></div><span class="frontier-pill">FRONTIER UPGRADE</span></div>
 
   <div class="dash-section-title"><div><span class="eyebrow">QUICK START</span><h2>What are we creating today?</h2></div><span class="dash-subtle">CHOOSE A WORKSPACE</span></div>
   <div class="dash-quick-grid">
@@ -1736,10 +1787,11 @@ main{width:auto!important;max-width:none!important;margin:0!important;padding:0 
 
  <section class="page" id="about">
   <div class="hero"><div class="eyebrow">TRANSPARENT BY DESIGN</div><h1>Studio <span class="gradient">Guide.</span></h1><p>What works now, what is still being built, and how your information is handled.</p></div>
+  <div class="identity-grid"><div class="identity-card"><h3>✦ IDRIS AI · SYSTEM IDENTITY</h3><div class="identity-kv"><span>Product</span><b>IDRIS AI STUDIO</b></div><div class="identity-kv"><span>Release</span><b>Frontier 2.0</b></div><div class="identity-kv"><span>Primary AI model</span><b>Gemma 4 26B</b></div><div class="identity-kv"><span>Fallback model</span><b>Llama 3.3 70B</b></div><div class="identity-kv"><span>Creator</span><b>Tajudeen Idris</b></div><div class="identity-kv"><span>Developer brand</span><b>I D LABS</b></div><div class="identity-note">The primary model is the default engine. If it is unavailable or returns an error, the service may use the fallback model. IDRIS should identify the model actually used when that information is available.</div></div><div class="identity-card"><h3>WHAT CHANGED IN FRONTIER 2.0</h3><p>• Complete visual-system refresh: cleaner surfaces, spacing, typography, cards and responsive behaviour.</p><p>• A clearer product identity and a dedicated, honest upgrade record.</p><p>• Assistant instructions now explain the product, creator, primary model and fallback model accurately.</p><p>• Existing chat, account sign-in, image generation, AI Eyes, history and Library workflows are preserved.</p><p>• The interface is tuned for both phone screens and larger displays.</p></div></div>
   <div class="grid"><div class="panel"><h2>AVAILABLE NOW</h2><div class="saved"><b>Prompt Lab</b><small>Turns your own idea into a structured prompt in your browser.</small></div><div class="saved"><b>Image Creator</b><small>Creates images from natural-language requests in AI Chat, subject to image-service availability.</small></div><div class="saved"><b>Web Explorer</b><small>Opens live Google News searches and lets IDRIS AI analyse article text you provide.</small></div><div class="saved"><b>Chat History &amp; AI Memory</b><small>Search past conversations and save helpful context in this browser.</small></div><div class="saved"><b>Creation Vault</b><small>Saves work in local browser storage and supports JSON backup/restore.</small></div><div class="saved"><b>Video Lab</b><small>Builds editable storyboards locally and provides a clearly labelled link to an external text-to-video and image-to-video generator. External generation is not processed or stored by IDRIS.</small></div><div class="saved"><b>AI Assistant</b><small>Connects to the IDRIS AI backend for live text conversations and supported image-generation requests.</small></div></div>
-  <div class="panel"><h2>HOW THE TOOLS WORK</h2><div class="callout info">AI chat and supported image-generation requests use the secure IDRIS AI backend. Web Explorer opens an external Google News search; you can paste article text into the studio for AI analysis.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">CONTACT &amp; SUPPORT</h2><p class="muted small">Need help, found a bug, or have a suggestion? Email the I D LABS support team at <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">support.idrisailabs@gmail.com</a>. Your email app will open with a support message ready to write.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Version 1.0 · Mobile-first creative workspace.</p></div></div>
+  <div class="panel"><h2>HOW THE TOOLS WORK</h2><div class="callout info">AI chat and supported image-generation requests use the secure IDRIS AI backend. Web Explorer opens an external Google News search; you can paste article text into the studio for AI analysis.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">CONTACT &amp; SUPPORT</h2><p class="muted small">Need help, found a bug, or have a suggestion? Email the I D LABS support team at <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">support.idrisailabs@gmail.com</a>. Your email app will open with a support message ready to write.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Frontier 2.0 · AI workspace by I D LABS.</p></div></div>
  </section>
- <footer class="footer">IDRIS AI STUDIO · BY I D LABS · BUILD 1.0 · MADE TO CREATE · <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">CONTACT SUPPORT</a></footer>
+ <footer class="footer">IDRIS AI STUDIO · BY I D LABS · FRONTIER 2.0 · MADE TO CREATE · <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">CONTACT SUPPORT</a></footer>
 </main>
 </div>
 
