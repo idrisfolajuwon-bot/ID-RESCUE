@@ -1770,7 +1770,17 @@ async function apiFetch(url,options={}){
   const controller=new AbortController();
   const timer=setTimeout(()=>controller.abort(),timeout);
   try{
-   const response=await fetch(url,{...options,signal:controller.signal,cache:options.cache||'no-store'});
+   const requestOptions={...options};
+   if(path&&path!=='/health'){
+    if(!supabaseClient)throw new Error('Please sign in to use IDRIS AI.');
+    const {data,error}=await supabaseClient.auth.getSession();
+    const token=data?.session?.access_token;
+    if(error||!token)throw new Error('Your IDRIS session has expired. Please sign in again.');
+    const headers=new Headers(requestOptions.headers||{});
+    headers.set('Authorization','Bearer '+token);
+    requestOptions.headers=headers;
+   }
+   const response=await fetch(url,{...requestOptions,signal:controller.signal,cache:requestOptions.cache||'no-store'});
    clearTimeout(timer);
    if(attempt===0&&path==='/chat'&&[429,502,503,504].includes(response.status)){
     attempt++;
@@ -1785,6 +1795,7 @@ async function apiFetch(url,options={}){
   }
  }
 }
+window.idrisApiFetch=apiFetch;
 async function readApiJson(response){
  const raw=await response.text();
  try{return JSON.parse(raw)}catch{
@@ -2030,7 +2041,7 @@ function setAIStatus(online,message){
  if(chat)chat.textContent=message;
 }
 async function checkAI(){
- try{const r=await apiFetch(API_URL+'/health',{cache:'no-store'});const d=await readApiJson(r);if(!r.ok||!d.ok)throw Error();setAIStatus(true,'Live text and image AI are connected.');}
+ try{const r=await apiFetch(API_URL+'/health',{cache:'no-store'});const d=await readApiJson(r);if(!r.ok||!d.ok)throw Error();const model=String(d.chat_model||'').toLowerCase().includes('gemma-4')?'Gemma 4 26B':'Live AI';setAIStatus(true,model+' engine connected.');}
  catch{setAIStatus(false,'The backend is deployed, but the health check did not complete. Try again shortly.');}
 }
 function addBubble(role,text,sources=[]){
@@ -2470,7 +2481,7 @@ $('eyesFlip').onclick=async()=>{facing=facing==='environment'?'user':'environmen
 function showPhoto(data){photoData=data;const old=$('eyesView').querySelector('img');if(old)old.remove();const img=document.createElement('img');img.alt='Image ready for IDRIS AI analysis';img.src=data;$('eyesView').appendChild(img);$('eyesCapture').disabled=true;status('IMAGE READY','Photo ready for analysis');$('eyesSave').disabled=true}
 $('eyesCapture').onclick=()=>{const v=$('eyesVideo');if(!stream||!v.videoWidth)return;const c=$('eyesCanvas'),scale=Math.min(1,1280/v.videoWidth);c.width=Math.round(v.videoWidth*scale);c.height=Math.round(v.videoHeight*scale);c.getContext('2d').drawImage(v,0,0,c.width,c.height);showPhoto(c.toDataURL('image/jpeg',.82))};
 $('eyesUpload').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/'))return; if(file.size>12*1024*1024){status('FILE TOO LARGE','Choose an image under 12 MB.');return}const reader=new FileReader();reader.onload=()=>showPhoto(reader.result);reader.readAsDataURL(file);e.target.value=''};
-async function analyse(){if(!photoData){status('NEED IMAGE','Start the camera or upload a photo first.');return}const question=$('eyesQuestion').value.trim()||'Describe what you can see. Identify the main objects, explain what they are used for, and share useful observations. Do not guess details you cannot see.';$('eyesAnalyse').disabled=true;$('eyesAnalyse').textContent='ANALYSING…';status('ANALYSING','IDRIS is examining your image…');$('eyesResult').textContent='Looking closely…';try{const res=await fetch(API+'/vision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:question,images:[{name:'idris-ai-eyes.jpg',dataUrl:photoData}]})});let data={};try{data=await res.json()}catch{}if(!res.ok||!data.reply)throw Error(data.error||'IDRIS could not analyse this image. Please try again.');lastReport=String(data.reply);$('eyesResult').textContent=lastReport;$('eyesSave').disabled=false;status('COMPLETE','Analysis complete')}catch(e){$('eyesResult').textContent=e.message||'Something went wrong. Try again.';status('ERROR','Analysis failed')}finally{$('eyesAnalyse').disabled=false;$('eyesAnalyse').textContent='ANALYSE'}}
+async function analyse(){if(!photoData){status('NEED IMAGE','Start the camera or upload a photo first.');return}const question=$('eyesQuestion').value.trim()||'Describe what you can see. Identify the main objects, explain what they are used for, and share useful observations. Do not guess details you cannot see.';$('eyesAnalyse').disabled=true;$('eyesAnalyse').textContent='ANALYSING…';status('ANALYSING','IDRIS is examining your image…');$('eyesResult').textContent='Looking closely…';try{const res=await window.idrisApiFetch(API+'/vision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:question,images:[{name:'idris-ai-eyes.jpg',dataUrl:photoData}]})});let data={};try{data=await res.json()}catch{}if(!res.ok||!data.reply)throw Error(data.error||'IDRIS could not analyse this image. Please try again.');lastReport=String(data.reply);$('eyesResult').textContent=lastReport;$('eyesSave').disabled=false;status('COMPLETE','Analysis complete')}catch(e){$('eyesResult').textContent=e.message||'Something went wrong. Try again.';status('ERROR','Analysis failed')}finally{$('eyesAnalyse').disabled=false;$('eyesAnalyse').textContent='ANALYSE'}}
 $('eyesAnalyse').onclick=analyse;
 $('eyesQuestion').addEventListener('keydown',e=>{if(e.key==='Enter')analyse()});
 $('eyesSave').onclick=()=>{if(!lastReport)return;const key='idris-ai-studio-v2';try{const items=JSON.parse(localStorage.getItem(key)||'[]');items.unshift({id:'eyes-'+Date.now(),type:'AI Eyes Report',title:'AI Eyes · '+new Date().toLocaleString(),content:lastReport,created:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(items.slice(0,250)));if(typeof toast==='function')toast('AI Eyes report saved to your Library.');}catch(e){if(typeof toast==='function')toast('Could not save the report on this device.')}};
