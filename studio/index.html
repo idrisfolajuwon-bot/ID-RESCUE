@@ -1713,6 +1713,323 @@ input:focus,textarea:focus,select:focus{border-color:#9186eb;box-shadow:0 0 0 4p
  #chat .welcome-action small{color:#aab7cd!important}
 }
 </style>
+<style>
+/* FRONTIER 3.0 — EXECUTIVE INTELLIGENCE */
+:root{
+ color-scheme:dark!important;
+ --bg:#0b1016!important;
+ --surface:#111923!important;
+ --surface2:#151f2b!important;
+ --surface3:#1b2937!important;
+ --line:#293746!important;
+ --text:#e9edf2!important;
+ --muted:#93a1b1!important;
+ --mint:#9ebbd0!important;
+ --blue:#91b0ca!important;
+ --violet:#b2c2cf!important;
+ --gold:#c7ad7c!important;
+ --danger:#db9292!important;
+ --shadow:0 14px 36px #0003!important;
+ --accent:#8eafc7!important;
+}
+html{background:#0b1016!important;scroll-behavior:smooth}
+body{
+ background:#0b1016!important;
+ color:#e9edf2!important;
+ font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important;
+ letter-spacing:-.012em!important;
+}
+body:before{display:none!important}
+.shell{max-width:none!important;grid-template-columns:248px minmax(0,1fr)!important}
+.side{
+ width:248px!important;background:#0e151e!important;
+ border-right:1px solid #ffffff12!important;box-shadow:none!important;
+ padding:24px 14px 15px!important;backdrop-filter:none!important;
+}
+.brand{padding:4px 9px 20px!important;border-bottom:1px solid #ffffff12!important}
+.brand-name{font-size:13px!important;font-weight:850!important;letter-spacing:.12em!important;color:#f2f5f8!important}
+.brand-sub{font-size:9px!important;letter-spacing:.18em!important;color:#7f91a4!important}
+.sidebar-search{margin-top:15px!important;height:40px!important;background:#111c28!important;border:1px solid #273746!important;border-radius:9px!important}
+.sidebar-search span{color:#8194a6!important}
+.sidebar-search input{color:#e7edf3!important;background:transparent!important}
+.sidebar-search input::placeholder{color:#708196!important}
+.sidebar-primary-nav{gap:4px!important;margin-top:12px!important}
+.sidebar-primary-nav:before{content:"WORKSPACE";display:block;padding:11px 10px 6px;color:#6f8193;font-size:9px;font-weight:800;letter-spacing:.17em}
+.sidebar-primary-nav button{
+ min-height:41px!important;padding:9px 11px!important;border:1px solid transparent!important;
+ border-radius:8px!important;background:transparent!important;color:#9baaba!important;
+ font-size:12px!important;font-weight:650!important;letter-spacing:0!important;
+ transition:background .16s,border-color .16s,color .16s!important;
+}
+.sidebar-primary-nav button .ico{width:20px!important;color:#8499ad!important;font-size:16px!important}
+.sidebar-primary-nav button:hover{transform:none!important;background:#ffffff08!important;color:#eef3f7!important}
+.sidebar-primary-nav button.active{
+ background:#1a2733!important;border-color:#2a3b4b!important;color:#f2f6f9!important;
+ box-shadow:inset 2px 0 #9ebbd0!important;
+}
+.sidebar-primary-nav button.active .ico{color:#b2c9dc!important}
+.sidebar-history-heading{margin:22px 10px 8px!important;color:#6f8193!important;font-size:9px!important;font-weight:800!important;letter-spacing:.17em!important;text-transform:uppercase!important}
+.sidebar-chat-item{color:#96a5b5!important;border-radius:7px!important;font-size:11px!important}
+.sidebar-chat-item:hover{background:#ffffff08!important;color:#eef3f7!important}
+.sidebar-empty{color:#68798c!important}
+.side-bottom{margin-top:auto!important}
+.sidebar-guide-link{width:100%!important;color:#9aa9b8!important;border-radius:8px!important}
+.sidebar-guide-link:hover{background:#ffffff08!important;color:#f0f4f7!important}
+.side-account-row{border-top:1px solid #ffffff12!important;padding-top:12px!important}
+.side-account-row .sidebar-new-chat{background:#dce6ed!important;color:#14202a!important;border-radius:8px!important;box-shadow:none!important}
+.profile{border:0!important;padding:7px 2px 0!important}
+.profile .avatar{background:#253542!important;color:#c5d4df!important;border-radius:8px!important}
+.profile small{color:#8292a3!important}
+body{padding-left:248px!important}
+main{
+ max-width:none!important;min-width:0!important;
+ padding:0 36px 38px!important;
+}
+.topbar{
+ position:sticky!important;top:0!important;z-index:30!important;
+ height:64px!important;min-height:64px!important;
+ background:#0b1016ed!important;backdrop-filter:blur(16px)!important;
+ border-bottom:1px solid #ffffff12!important;
+ padding:0!important;margin:0 auto 22px!important;max-width:1180px!important;
+}
+.crumb{color:#91a1b1!important;font-size:10px!important;font-weight:800!important;letter-spacing:.16em!important}
+.top-actions .soft-btn,.topbar .soft-btn,.soft-btn,.icon-btn{
+ background:#121c27!important;color:#b9c7d3!important;
+ border:1px solid #2a3a49!important;border-radius:8px!important;
+ box-shadow:none!important;font-size:11px!important;font-weight:650!important;
+}
+.top-actions .soft-btn:hover,.soft-btn:hover,.icon-btn:hover{background:#1a2835!important;border-color:#52677a!important;transform:none!important}
+.primary-btn{
+ background:#d6e2e9!important;color:#14202a!important;border:1px solid #d6e2e9!important;
+ border-radius:8px!important;box-shadow:none!important;font-weight:750!important;
+}
+.primary-btn:hover{background:#edf3f6!important;transform:translateY(-1px)!important;box-shadow:none!important}
+.danger-btn{background:#2a1c21!important;border:1px solid #59343e!important;color:#e5b5bb!important;border-radius:8px!important}
+.page{animation:none!important}
+.hero{max-width:1120px!important;margin:0 auto!important;padding:30px 0 22px!important}
+.eyebrow{color:#9db7ca!important;font-size:9px!important;font-weight:800!important;letter-spacing:.18em!important}
+.hero h1{color:#edf2f6!important;font-size:clamp(32px,4vw,48px)!important;line-height:1.06!important;letter-spacing:-.055em!important;font-weight:650!important}
+.gradient{background:none!important;color:#b7c9d6!important;-webkit-text-fill-color:initial!important}
+.hero p{color:#98a7b7!important;font-size:13px!important;line-height:1.75!important}
+.panel,.card,.tool-card,.research-card,.vault-card,.maker-card,.video-card,.ai-eyes-camera-panel,.ai-eyes-result-panel,.about-card,.settings-card{
+ background:#111923!important;border:1px solid #293746!important;border-radius:12px!important;
+ box-shadow:0 10px 26px #0002!important;color:#e9edf2!important;
+}
+.panel h2,.panel h3,.card h2,.card h3{color:#e8edf2!important}
+.panel p,.panel small,.muted{color:#92a1b1!important}
+.field-label,label{color:#9fb0bf!important}
+input,textarea,select{
+ background:#0d151e!important;color:#e8edf2!important;
+ border:1px solid #2c3b49!important;border-radius:8px!important;
+ box-shadow:none!important;
+}
+input::placeholder,textarea::placeholder{color:#687b8e!important}
+input:focus,textarea:focus,select:focus{border-color:#7897ad!important;box-shadow:0 0 0 2px #7897ad20!important}
+.callout{border-radius:8px!important}
+.status{background:#172720!important;color:#9ed1b1!important;border:1px solid #2e5741!important;border-radius:6px!important}
+.status-dot{background:#8eb89b!important;box-shadow:none!important}
+#idris-support-links{background:#111923!important;color:#e9edf2!important;border:1px solid #293746!important}
+#idris-support-links p{color:#93a1b1!important}
+#idris-support-links a:first-child{background:#d6e2e9!important;color:#14202a!important}
+#idris-support-links a:last-child{border-color:#344454!important;color:#b7c9d6!important}
+.auth-card{
+ background:#111923!important;border:1px solid #2c3b49!important;border-radius:14px!important;
+ box-shadow:0 24px 70px #0008!important;color:#e9edf2!important;
+}
+.auth-card h1{color:#f0f4f7!important;letter-spacing:-.04em!important}
+.auth-card p,.auth-note{color:#93a1b1!important}
+.auth-card label{color:#aebdca!important}
+.auth-action{background:#d6e2e9!important;color:#14202a!important;border-radius:8px!important}
+.auth-google{background:#18232e!important;color:#d7e0e7!important;border:1px solid #334454!important}
+/* Overview — editorial dashboard, not a neon landing page */
+#home{max-width:1180px!important;margin:0 auto!important}
+.dash-hero{
+ position:relative!important;overflow:hidden!important;isolation:isolate!important;
+ background:#111923!important;border:1px solid #2c3b49!important;border-radius:14px!important;
+ box-shadow:none!important;padding:38px 40px 24px!important;margin:22px auto 18px!important;
+}
+.dash-hero:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:#9ebbd0!important;opacity:1!important}
+.dash-hero:after{content:"ID / STUDIO";position:absolute;right:28px;top:24px;color:#708397!important;font-size:9px;letter-spacing:.2em;font-weight:800}
+.dash-hero-copy{max-width:660px!important;position:relative!important;z-index:2!important}
+.dash-date{color:#75899d!important;font-size:9px!important;letter-spacing:.15em!important;font-weight:750!important;margin:12px 0 8px!important}
+.dash-hero h1{font-size:clamp(36px,5vw,58px)!important;line-height:1.02!important;letter-spacing:-.06em!important;font-weight:650!important;color:#f0f4f7!important;margin:10px 0 14px!important}
+.dash-hero h1 .gradient{color:#b6c9d6!important}
+.dash-hero p{color:#9cabb9!important;font-size:13px!important;max-width:520px!important}
+.dash-hero-actions{margin-top:22px!important;gap:9px!important}
+.dash-orbit{display:none!important}
+.dash-hero-foot{border-top:1px solid #ffffff12!important;color:#74879a!important;margin-top:30px!important;padding-top:13px!important}
+.dash-hero-foot .live-pulse{display:none!important}
+.frontier-strip{
+ background:#121d28!important;border:1px solid #2a3a49!important;border-radius:10px!important;
+ box-shadow:none!important;color:#dce5eb!important;padding:14px 17px!important;
+}
+.frontier-spark{display:none!important}
+.frontier-strip b{color:#dce5eb!important;font-size:10px!important;letter-spacing:.09em!important}
+.frontier-strip small{color:#899aab!important;font-size:11px!important}
+.frontier-pill{background:#202f3c!important;border:1px solid #3b5265!important;color:#adc3d2!important;border-radius:5px!important;font-size:8px!important;letter-spacing:.11em!important}
+.dash-section-title{margin:28px auto 13px!important}
+.dash-section-title h2{font-size:20px!important;color:#e8edf2!important;letter-spacing:-.045em!important;font-weight:620!important}
+.dash-subtle{color:#718498!important;font-size:9px!important;letter-spacing:.12em!important}
+.dash-quick-grid{gap:11px!important}
+.dash-quick-card{
+ position:relative!important;min-height:142px!important;padding:17px!important;
+ background:#111923!important;border:1px solid #293746!important;border-radius:11px!important;
+ box-shadow:none!important;transition:background .16s,border-color .16s!important;
+}
+.dash-quick-card:before{display:none!important}
+.dash-quick-card:hover{transform:none!important;background:#16212c!important;border-color:#536b7e!important;box-shadow:none!important}
+.dash-quick-icon{width:30px!important;height:30px!important;border-radius:7px!important;background:#1c2a36!important;color:#b1c6d5!important;border:1px solid #334654!important}
+.dash-quick-label{color:#8095a8!important;font-size:8px!important;letter-spacing:.16em!important}
+.dash-quick-card b{color:#e5ebef!important;font-size:15px!important;font-weight:650!important;letter-spacing:-.02em!important}
+.dash-quick-card small{color:#91a1b0!important;font-size:10px!important;line-height:1.55!important}
+.dash-quick-arrow{color:#94afc2!important}
+.dash-panel{background:#111923!important;border:1px solid #293746!important;border-radius:12px!important;box-shadow:none!important;padding:20px!important}
+.dash-panel h3,.dash-vault-panel h3{color:#e5ebef!important;font-size:16px!important;letter-spacing:-.025em!important}
+.dash-panel small,.dash-panel p{color:#91a1b0!important}
+.dash-divider{border-color:#ffffff12!important}
+.dash-stat strong{color:#e5ebef!important;font-size:23px!important;font-weight:650!important}
+.dash-stat span{color:#75899c!important;font-size:8px!important;letter-spacing:.13em!important}
+.dash-vault-art{display:none!important}
+.home-footer-note{color:#75889b!important;border-top:1px solid #ffffff12!important;padding-top:17px!important}
+/* Main chat — restrained, quiet, usable */
+.chat-page{height:calc(100dvh - 64px)!important;min-height:480px!important;overflow:hidden!important}
+#chat .chat-stage{
+ height:100%!important;max-width:930px!important;margin:0 auto!important;
+ background:transparent!important;border:0!important;border-radius:0!important;
+ box-shadow:none!important;overflow:hidden!important;
+}
+#chat .chat-log-area{
+ flex:1!important;min-height:0!important;overflow-y:auto!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ padding:clamp(34px,8vh,88px) 18px 20px!important;
+}
+#chat .chat-first-greeting{max-width:650px!important;width:100%!important;text-align:left!important;margin:0 auto 24px!important}
+#chat .welcome-mark{
+ width:46px!important;height:46px!important;margin:0 0 25px!important;
+ border-radius:9px!important;background:#17232e!important;color:#c5d3dd!important;
+ border:1px solid #344657!important;box-shadow:none!important;
+ font-size:16px!important;font-weight:800!important;letter-spacing:-.08em!important;
+}
+#chat .welcome-kicker{color:#8498aa!important;font-size:9px!important;letter-spacing:.17em!important;font-weight:800!important;margin-bottom:12px!important}
+#chat .welcome-kicker span{color:#62788b!important;padding:0 5px!important}
+#chat .chat-first-greeting h1{
+ color:#eff3f6!important;font-size:clamp(29px,5vw,43px)!important;
+ line-height:1.12!important;letter-spacing:-.055em!important;font-weight:620!important;
+ margin:0 0 11px!important;max-width:590px!important;
+}
+#chat .chat-first-greeting .welcome-subtitle{
+ color:#95a4b3!important;font-size:14px!important;line-height:1.7!important;
+ max-width:530px!important;margin:0 0 24px!important;
+}
+#chat .welcome-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important;max-width:650px!important;margin:0!important}
+#chat .welcome-action{
+ display:flex!important;align-items:center!important;gap:10px!important;
+ min-height:62px!important;padding:11px 12px!important;text-align:left!important;
+ background:#101923!important;border:1px solid #2a3947!important;
+ border-radius:9px!important;color:#e9edf2!important;box-shadow:none!important;
+ transition:background .15s,border-color .15s!important;
+}
+#chat .welcome-action:hover{background:#17232e!important;border-color:#647c90!important}
+#chat .welcome-action-icon{
+ width:29px!important;height:29px!important;flex:0 0 29px!important;
+ display:grid!important;place-items:center!important;
+ border-radius:7px!important;background:#1b2a36!important;
+ color:#b1c4d2!important;font-size:14px!important;
+}
+#chat .welcome-action b{display:block!important;color:#e5ebef!important;font-size:11px!important;font-weight:700!important}
+#chat .welcome-action small{display:block!important;color:#8193a4!important;font-size:9px!important;margin-top:3px!important}
+#chat .chatlog{width:100%!important;max-width:760px!important;color:#e9edf2!important}
+#chat .chat-compose-dock{
+ flex:0 0 auto!important;width:100%!important;max-width:790px!important;
+ margin:0 auto!important;padding:12px 10px calc(15px + env(safe-area-inset-bottom))!important;
+ background:linear-gradient(180deg,transparent,#0b1016 20%)!important;
+}
+#chat .chat-compose{
+ display:flex!important;align-items:flex-end!important;gap:9px!important;
+ min-height:58px!important;padding:7px 8px!important;
+ background:#111b25!important;border:1px solid #354656!important;
+ border-radius:12px!important;box-shadow:none!important;
+}
+#chat .chat-compose:focus-within{border-color:#829eb2!important;box-shadow:0 0 0 2px #829eb21c!important}
+#chat .chat-compose textarea{color:#edf2f6!important;background:transparent!important;font-size:14px!important;padding:10px 3px!important}
+#chat .chat-compose textarea::placeholder{color:#788b9d!important}
+#chat .compose-plus,#chat .compose-voice{
+ background:transparent!important;color:#9aafbf!important;
+ border:1px solid #344757!important;border-radius:8px!important;
+ width:38px!important;height:38px!important;flex:0 0 38px!important;
+}
+#chat .compose-plus:hover,#chat .compose-voice:hover{background:#1b2935!important}
+#chat .send-round{
+ width:38px!important;height:38px!important;flex:0 0 38px!important;
+ border-radius:8px!important;background:#c5d5df!important;color:#14212b!important;
+ box-shadow:none!important;font-size:19px!important;
+}
+#chat .chat-compose-note{color:#75899b!important;font-size:9px!important;text-align:center!important}
+#chat .chat-under-tools{color:#7f91a2!important}
+#chat .chat-extra-panel{background:#111923!important;border-color:#293746!important}
+@media(min-width:900px){
+ main{padding:0 42px 38px!important}
+ .topbar{max-width:1180px!important}
+ .chat-page{height:calc(100dvh - 64px)!important}
+ #chat .chat-log-area{padding-top:clamp(55px,13vh,125px)!important}
+}
+@media(max-width:899px){
+ body{padding-left:0!important;background:#0b1016!important}
+ .shell{display:block!important;min-height:100dvh!important}
+ .side{
+  width:min(285px,84vw)!important;background:#0e151e!important;
+  transform:translateX(-110%)!important;visibility:hidden!important;
+  box-shadow:18px 0 44px #0008!important;
+ }
+ body.menu-open .side{transform:translateX(0)!important;visibility:visible!important}
+ .drawer-scrim{background:#03070cbf!important;backdrop-filter:blur(3px)!important}
+ main{padding:0 13px 22px!important;min-height:100dvh!important}
+ .topbar{height:60px!important;min-height:60px!important;margin:0 auto 12px!important}
+ .menu-toggle{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;border:1px solid #2b3b4b!important;border-radius:8px!important;background:#111b25!important}
+ .menu-toggle span{background:#c0cdd7!important}
+ .chat-page{height:calc(100dvh - 72px)!important;min-height:470px!important}
+ #chat .chat-stage{height:100%!important;max-width:100%!important}
+ #chat .chat-log-area{padding:clamp(28px,6vh,58px) 7px 14px!important}
+ #chat .chat-first-greeting{margin-bottom:18px!important}
+ #chat .welcome-mark{width:42px!important;height:42px!important;margin-bottom:19px!important}
+ #chat .chat-first-greeting h1{font-size:clamp(28px,8vw,36px)!important;max-width:340px!important}
+ #chat .chat-first-greeting .welcome-subtitle{font-size:13px!important;margin-bottom:20px!important}
+ #chat .welcome-actions{grid-template-columns:1fr!important;gap:7px!important;max-width:100%!important}
+ #chat .welcome-action{min-height:56px!important;padding:9px 11px!important;border-radius:8px!important}
+ #chat .welcome-action-icon{width:29px!important;height:29px!important;flex-basis:29px!important}
+ #chat .chat-compose-dock{padding:8px 0 calc(9px + env(safe-area-inset-bottom))!important}
+ #chat .chat-compose{min-height:56px!important;padding:6px 7px!important;border-radius:10px!important}
+ #chat .compose-plus,#chat .compose-voice,#chat .send-round{width:36px!important;height:36px!important;flex-basis:36px!important}
+ #chat .chat-compose-note{font-size:8px!important;padding:0 10px!important}
+ .dash-hero{padding:27px 22px 20px!important;margin:12px 0 14px!important;border-radius:11px!important}
+ .dash-hero:after{top:16px!important;right:17px!important;font-size:8px!important}
+ .dash-hero h1{font-size:clamp(34px,9vw,46px)!important}
+ .dash-hero p{max-width:95%!important;font-size:12px!important}
+ .frontier-pill{display:none!important}
+ .dash-section-title{margin:22px 0 11px!important}
+ .dash-section-title h2{font-size:18px!important}
+ .dash-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ .dash-quick-card{min-height:132px!important;padding:13px!important}
+ .dash-quick-card b{font-size:13px!important}
+ .dash-quick-card small{font-size:9px!important}
+ .dash-bottom-grid{grid-template-columns:1fr!important;gap:9px!important}
+ .dash-panel{padding:15px!important}
+ .hero{padding:22px 0 16px!important}
+ .hero h1{font-size:34px!important}
+ .grid{grid-template-columns:1fr!important}
+ .ai-eyes-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:380px){
+ main{padding-left:10px!important;padding-right:10px!important}
+ #chat .chat-log-area{padding-top:25px!important}
+ #chat .chat-first-greeting h1{font-size:27px!important}
+ #chat .welcome-action{min-height:53px!important}
+ #chat .chat-compose-note{font-size:8px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+</style>
 </head>
 <body>
 <div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -1723,6 +2040,8 @@ input:focus,textarea:focus,select:focus{border-color:#9186eb;box-shadow:0 0 0 4p
  <div class="sidebar-chat-tools">
   <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations"></label>
   <nav class="nav sidebar-primary-nav" id="sideNav" aria-label="Main navigation">
+<button data-page="home"><span class="ico" aria-hidden="true">⌂</span>Overview</button>
+<button class="active" data-page="chat"><span class="ico" aria-hidden="true">↗</span>AI Assistant</button>
 <button data-studio-action="image"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m20.5 15-5-5L5 20"/></svg></span>Images</button>
 <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v15H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Library</button>
 <button data-studio-action="projects"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5h7l2 2h8v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M3.5 7.5v-2a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v2"/></svg></span>Projects</button>
@@ -1744,9 +2063,9 @@ input:focus,textarea:focus,select:focus{border-color:#9186eb;box-shadow:0 0 0 4p
  <section class="page" id="home">
   <div class="dash-hero">
    <div class="dash-hero-copy">
-    <div class="eyebrow"><span class="live-pulse"></span> YOUR PERSONAL AI WORKSPACE</div>
+    <div class="eyebrow"><span class="live-pulse"></span> IDRIS AI STUDIO / EXECUTIVE WORKSPACE</div>
     <div class="dash-date" id="dashDate">YOUR STUDIO · TODAY</div>
-    <h1>Make room for<br><span class="gradient">big ideas.</span></h1>
+    <h1>One workspace.<br><span class="gradient">Many ways forward.</span></h1>
     <p>One workspace for thinking, creating, researching and turning plans into something real.</p>
     <div class="dash-hero-actions"><button class="primary-btn" data-go="chat">✦ Start a conversation <span>→</span></button><button class="soft-btn" data-go="research">Explore research ↗</button></div>
    </div>
@@ -1754,7 +2073,7 @@ input:focus,textarea:focus,select:focus{border-color:#9186eb;box-shadow:0 0 0 4p
    <div class="dash-hero-foot"><span><i class="live-pulse"></i> IDRIS AI STUDIO</span><span>BUILT BY I D LABS</span></div>
   </div>
 
-  <div class="frontier-strip"><div class="frontier-strip-left"><span class="frontier-spark">✦</span><div><b>IDRIS AI STUDIO · FRONTIER 2.0</b><small>A refreshed workspace with a clearer identity, smarter assistant guidance and a redesigned interface.</small></div></div><span class="frontier-pill">FRONTIER UPGRADE</span></div>
+  <div class="frontier-strip"><div class="frontier-strip-left"><span class="frontier-spark">✦</span><div><b>IDRIS AI STUDIO · FRONTIER 2.0</b><small>A focused workspace for thinking, research and creative work.</small></div></div><span class="frontier-pill">FRONTIER UPGRADE</span></div>
 
   <div class="dash-section-title"><div><span class="eyebrow">QUICK START</span><h2>What are we creating today?</h2></div><span class="dash-subtle">CHOOSE A WORKSPACE</span></div>
   <div class="dash-quick-grid">
@@ -1835,8 +2154,9 @@ input:focus,textarea:focus,select:focus{border-color:#9186eb;box-shadow:0 0 0 4p
    <div class="chat-log-area" id="chatLogArea">
     <div class="chat-first-greeting" id="chatFirstGreeting">
      <div class="welcome-mark" aria-hidden="true">ID</div>
-     <h1>What can I help with?</h1>
-     <p class="welcome-subtitle">Ask anything, explore an idea, or create something with IDRIS.</p>
+     <div class="welcome-kicker">IDRIS AI STUDIO <span>·</span> YOUR WORKSPACE</div>
+     <h1>What would you like to work on?</h1>
+     <p class="welcome-subtitle">Ask a question, develop an idea, or create something useful.</p>
      <div class="welcome-actions">
       <button type="button" class="welcome-action" data-starter="Help me think through an idea step by step."><span class="welcome-action-icon">✦</span><span><b>Ask IDRIS</b><small>Get help with an idea</small></span></button>
       <button type="button" class="welcome-action" data-studio-action="image"><span class="welcome-action-icon">▧</span><span><b>Create an image</b><small>Turn words into visuals</small></span></button>
