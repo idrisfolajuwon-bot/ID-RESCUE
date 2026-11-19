@@ -2389,37 +2389,45 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
 <div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
 
 <div class="shell">
-<aside class="side">
+<aside class="side" aria-label="IDRIS navigation">
  <div class="brand">
- <div class="brand-identity">
-  <div class="brand-symbol" aria-hidden="true"><span>I</span><i>D</i></div>
-  <div class="brand-copy"><div class="brand-name">IDRIS <span>AI</span></div><div class="brand-sub">STUDIO / I D LABS</div></div>
+  <div class="brand-identity">
+   <div class="brand-symbol" aria-hidden="true"><span>I</span><i>D</i></div>
+   <div class="brand-copy"><div class="brand-name">IDRIS <span>AI</span></div><div class="brand-sub">STUDIO / I D LABS</div></div>
+  </div>
+  <button class="sidebar-search-trigger" type="button" aria-label="Search chats" title="Search chats">
+   <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg>
+  </button>
  </div>
- <button class="sidebar-search-trigger" type="button" aria-label="Search chats" title="Search chats"><span aria-hidden="true">⌕</span></button>
-</div>
+ <button type="button" class="sidebar-new-chat" data-new-chat>
+  <span class="sidebar-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5H6.5A2.5 2.5 0 0 0 4 7.5v10A2.5 2.5 0 0 0 6.5 20h10a2.5 2.5 0 0 0 2.5-2.5V12"/><path d="m15.5 4.5 4 4M10 14l7.9-7.9a2.1 2.1 0 0 1 3 3L13 17l-4 1z"/></svg></span>
+  <span>New chat</span>
+ </button>
  <div class="sidebar-chat-tools">
-  <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations"></label>
+  <label class="sidebar-search">
+   <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg>
+   <input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations">
+  </label>
   <nav class="nav sidebar-primary-nav" id="sideNav" aria-label="Main navigation">
-  <div class="nav-group-label">YOUR SPACE</div>
-  <button class="active" data-page="chat"><span class="ico" aria-hidden="true">◌</span><span>Chat</span></button>
-  <button data-page="explore"><span class="ico" aria-hidden="true">⌕</span><span>Explore</span></button>
-  <button data-page="vault"><span class="ico" aria-hidden="true">▤</span><span>Library</span></button>
-  <button data-page="about"><span class="ico" aria-hidden="true">⚙</span><span>Help &amp; settings</span></button>
- </nav>
-  <div class="sidebar-history-heading">RECENT THREADS</div>
+   <div class="nav-group-label">Workspace</div>
+   <button class="active" data-page="chat"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-2.5 1.5.8-4A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg></span><span>Chat</span></button>
+   <button data-page="explore"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.8 8.2-2.3 5.3-5.3 2.3 2.3-5.3z"/></svg></span><span>Explore</span></button>
+   <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"/><path d="m4.5 7.8 7.5 4.3 7.5-4.3M12 12.1V21"/></svg></span><span>Library</span></button>
+   <button data-page="about"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.2 1-1.5 2.6-1.5-.6a8 8 0 0 1-1.7 1l-.3 1.6h-3l-.3-1.6a8 8 0 0 1-1.7-1l-1.5.6-1.5-2.6 1.2-1a7 7 0 0 1 0-2l-1.2-1 1.5-2.6 1.5.6a8 8 0 0 1 1.7-1l.3-1.6h3l.3 1.6a8 8 0 0 1 1.7 1l1.5-.6 1.5 2.6-1.2 1a7 7 0 0 1 0 2Z"/></svg></span><span>Settings</span></button>
+  </nav>
+  <div class="sidebar-history-heading">Recent</div>
   <div class="sidebar-recent" id="sidebarRecent"><div class="sidebar-empty">Your chats will appear here.</div></div>
  </div>
  <div class="side-bottom">
-  <button class="sidebar-guide-link" type="button" data-page="about"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 4.4 1.3c-1.1 1.2-2.1 1.5-2.1 3.2M12 17.2h.01"/></svg></span>Help &amp; guide</button>
-  <div class="side-account-row"><button type="button" class="sidebar-new-chat" data-new-chat><span>＋</span> New chat</button><div class="profile"><span class="avatar">ID</span><div><b style="font-size:11px">I D LABS</b><small>Personal creative space</small></div></div></div>
+  <div class="profile"><span class="avatar">ID</span><div><b>I D LABS</b><small>Personal workspace</small></div></div>
  </div>
 </aside>
 <div class="drawer-scrim" id="drawerScrim"></div>
 <main>
  <header class="topbar">
  <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
- <button type="button" class="topbar-new-chat" data-new-chat aria-label="New chat" title="New chat"><span aria-hidden="true">＋</span></button>
- <div class="topbar-context"><span class="topbar-overline">IDRIS AI STUDIO</span><div class="crumb" id="crumb">I D LABS / OVERVIEW</div></div>
+ <div class="topbar-context"><div class="crumb" id="crumb">IDRIS AI</div><span class="topbar-overline">STUDIO / I D LABS</span></div>
+ <button type="button" class="topbar-new-chat" data-new-chat aria-label="New chat" title="New chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg></button>
  <div class="top-actions"><span class="topbar-edition">FORM / 01 <i></i> PRIVATE WORKSPACE</span><button class="soft-btn" data-go="about">Studio guide <span>↗</span></button></div>
 </header>
  <section class="page" id="home">
@@ -2566,20 +2574,20 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
     <div class="chat-first-greeting" id="chatFirstGreeting">
      <div class="welcome-mark" aria-hidden="true"><span>I</span><i>D</i></div>
      <div class="welcome-kicker">IDRIS AI STUDIO</div>
-     <h1>What can I help<br><em>you with today?</em></h1>
-     <p class="welcome-subtitle">Ask a question, share an idea or tell me what you are working on.</p>
+     <h1>What can I help with?</h1>
+     <p class="welcome-subtitle">Ask a question or start a conversation.</p>
     </div>
     <div class="chatlog" id="chatLog"></div>
    </div>
    <div class="chat-compose-dock">
     <div class="chat-compose">
-     <button type="button" class="compose-plus" id="composeTools" aria-label="Attach images and documents" title="Attach images, PDFs, Word or text files">＋</button><input id="chatFileInput" type="file" accept="image/png,image/jpeg,image/webp,.pdf,application/pdf,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.txt,.md,.csv,.json" multiple hidden>
+     <button type="button" class="compose-plus" id="composeTools" aria-label="Attach images and documents" title="Attach images, PDFs, Word or text files"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><input id="chatFileInput" type="file" accept="image/png,image/jpeg,image/webp,.pdf,application/pdf,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.txt,.md,.csv,.json" multiple hidden>
      <textarea id="chatDraft" placeholder="Message IDRIS AI…" rows="1" aria-label="Message IDRIS"></textarea>
-     <button class="compose-voice" id="voiceShortcut" type="button" aria-label="Voice input" title="Voice input">⌁</button>
-     <button class="send-round" id="sendToAI" aria-label="Send message">↑</button>
+     <button class="compose-voice" id="voiceShortcut" type="button" aria-label="Voice input" title="Voice input"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3m-4 0h8"/></svg></button>
+     <button class="send-round" id="sendToAI" aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button>
     </div>
     <div class="chat-attachment-list" id="chatAttachmentList" aria-live="polite"></div>
-    <div class="chat-compose-note">Attach images, PDFs, Word documents or text files. IDRIS AI can make mistakes; check important information.</div>
+    <div class="chat-compose-note">IDRIS AI can make mistakes. Check important information.</div>
     <div class="chat-under-tools" aria-hidden="true">
      <button class="soft-btn" id="saveChatDraft" tabindex="-1">Save message</button>
      <button class="soft-btn" id="clearChat" tabindex="-1">New chat</button>
@@ -2867,7 +2875,7 @@ function getItems(){try{const a=JSON.parse(localStorage.getItem(KEY)||'[]');retu
 function putItems(a){try{localStorage.setItem(KEY,JSON.stringify(a.slice(0,250)));refreshCounts();return true}catch{toast('Storage is full or unavailable. Export a backup and remove older items.');return false}}
 function save(type,title,content){const a=getItems();a.unshift({id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),type,title:String(title).slice(0,100),content:String(content).slice(0,12000),created:new Date().toISOString()});if(putItems(a)){toast('Saved to your Creation Vault.');return true}return false}
 function refreshCounts(){$('statSaved').textContent=getItems().length}
-function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('crumb').textContent='I D LABS / '+page.replace('-',' ').toUpperCase();if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',about:'Settings'};$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('[data-new-chat]').forEach(b=>b.addEventListener('click',()=>{newConversation();closeMenu()}));
 function syncHistorySearch(source){
  const other=source.id==='sidebarHistorySearch'?$ ('historySearch'):$('sidebarHistorySearch');
@@ -3449,71 +3457,150 @@ window.addEventListener('pagehide',stopCamera);
 (()=>{const nav=document.querySelector('.idris-bottom-nav');if(!nav)return;const update=()=>{const active=document.querySelector('.page.active')?.id||'chat';nav.querySelectorAll('[data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===active||(active==='maker'||active==='research'||active==='aieyes'||active==='videolab'||active==='prompts')&&b.dataset.go==='explore'));};nav.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){const route=document.querySelector('.side [data-page="'+b.dataset.go+'"]');if(route)route.click();nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));}});document.addEventListener('click',e=>{if(e.target.closest('[data-go]')||e.target.closest('[data-page]'))setTimeout(update,0);});update();})();
 </script>
 
-<style id="idris-pure-white-clean">
-:root{color-scheme:light!important;--bg:#fff!important;--surface:#fff!important;--surface2:#f7f7f8!important;--surface3:#f0f0f0!important;--line:#e7e7e7!important;--text:#202123!important;--muted:#707070!important;--mint:#202123!important;--blue:#555!important;--violet:#555!important;--gold:#777!important;--accent:#202123!important;--shadow:0 2px 10px rgba(0,0,0,.035)!important}
-html,body{background:#fff!important;color:#202123!important}
-body{background:#fff!important}
-.shell{background:#fff!important}
-.side{background:#f9f9f9!important;border-right:1px solid #ededed!important;box-shadow:none!important;color:#202123!important;backdrop-filter:none!important}
-.brand-mark,.brand-symbol{background:#202123!important;color:#fff!important;box-shadow:none!important}
-.brand-name,.brand-sub{color:#202123!important}
-.nav-label,.sidebar-history-heading,.nav-group-label{color:#858585!important}
-.side .nav button,.sidebar-primary-nav button,.sidebar-chat-item{background:transparent!important;color:#353535!important;border-color:transparent!important;box-shadow:none!important}
-.side .nav button:hover,.sidebar-primary-nav button:hover,.sidebar-chat-item:hover{background:#ededed!important;color:#202123!important}
-.side .nav button.active,.sidebar-primary-nav button.active,.sidebar-chat-item.active{background:#e9e9e9!important;color:#202123!important;border-color:transparent!important}
-.side .nav button .ico{color:#555!important}
-.sidebar-search,.sidebar-search input{background:#fff!important;color:#202123!important;border-color:#e5e5e5!important}
-.sidebar-new-chat{background:#fff!important;color:#202123!important;border:1px solid #e4e4e4!important;box-shadow:none!important}
-.sidebar-new-chat span{color:#202123!important}
-.side-bottom .profile{border-color:#e8e8e8!important}
-main,.page,.chat-page{background:#fff!important;color:#202123!important}
-.topbar{background:#fff!important;border-color:#eee!important;box-shadow:none!important;display:flex!important;align-items:center!important;gap:10px!important}
-.topbar-context{min-width:0}
-.topbar-overline,.topbar-edition{display:none!important}
-.crumb{color:#303030!important;font-size:13px!important;font-weight:650!important}
-.menu-toggle{width:40px!important;height:40px!important;flex:0 0 40px!important;border:1px solid #e7e7e7!important;border-radius:12px!important;background:#fff!important;box-shadow:none!important}
-.menu-toggle span{background:#333!important}
-.topbar-new-chat{width:40px!important;height:40px!important;flex:0 0 40px!important;margin-left:auto!important;display:grid!important;place-items:center!important;border:1px solid #e7e7e7!important;border-radius:12px!important;background:#fff!important;color:#222!important;font-size:25px!important;line-height:1!important;cursor:pointer!important}
-.topbar-new-chat:active{background:#f2f2f2!important}
+<style id="idris-chatgpt-layout-v2">
+:root{color-scheme:light!important;--idris-ink:#202123;--idris-muted:#737373;--idris-line:#e7e7e7;--idris-soft:#f7f7f8}
+*{box-sizing:border-box}
+html,body{width:100%;min-height:100%;margin:0;background:#fff!important;color:var(--idris-ink)!important}
+body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;font-size:14px!important;overflow-x:hidden}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #8b8b8b!important;outline-offset:2px!important}
+.shell{display:block!important;width:100%!important;max-width:none!important;min-height:100dvh!important;margin:0!important;background:#fff!important}
+.side{position:fixed!important;inset:0 auto 0 0!important;width:260px!important;height:100dvh!important;max-height:100dvh!important;padding:13px 13px calc(12px + env(safe-area-inset-bottom))!important;display:flex!important;flex-direction:column!important;gap:8px!important;overflow:hidden!important;background:#f9f9f9!important;border:0!important;border-right:1px solid #ededed!important;box-shadow:none!important;backdrop-filter:none!important;z-index:120!important;transform:translateX(-110%)!important;visibility:hidden!important;transition:transform .18s ease,visibility .18s ease!important}
+body.menu-open .side{transform:translateX(0)!important;visibility:visible!important}
+.brand{display:flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;min-height:48px!important;padding:2px 5px 9px!important;margin:0!important}
+.brand-identity{display:flex!important;align-items:center!important;gap:10px!important;min-width:0!important}
+.brand-symbol{width:34px!important;height:34px!important;flex:0 0 34px!important;display:grid!important;place-items:center!important;border-radius:10px!important;background:#202123!important;color:#fff!important;box-shadow:none!important;font-size:15px!important;font-weight:800!important}
+.brand-symbol span,.brand-symbol i{display:inline!important;font-style:normal!important;color:#fff!important}
+.brand-name{font-size:15px!important;font-weight:720!important;letter-spacing:-.35px!important;color:#202123!important;line-height:1.2!important}
+.brand-name span{font-weight:450!important}
+.brand-sub{margin-top:3px!important;color:#777!important;font-size:9px!important;letter-spacing:1.2px!important}
+.sidebar-search-trigger{width:35px!important;height:35px!important;flex:0 0 35px!important;display:grid!important;place-items:center!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#444!important;font-size:0!important}
+.sidebar-search-trigger:hover{background:#ededed!important}
+.sidebar-search-trigger svg,.sidebar-search svg{width:18px!important;height:18px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.sidebar-new-chat{width:100%!important;min-height:42px!important;flex:0 0 auto!important;display:flex!important;align-items:center!important;gap:11px!important;padding:9px 11px!important;margin:0!important;border:0!important;border-radius:9px!important;background:transparent!important;color:#202123!important;text-align:left!important;font-size:14px!important;font-weight:550!important;box-shadow:none!important}
+.sidebar-new-chat:hover{background:#ededed!important}
+.sidebar-btn-icon{width:21px!important;height:21px!important;display:grid!important;place-items:center!important;flex:0 0 21px!important}
+.sidebar-btn-icon svg{width:19px!important;height:19px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.sidebar-chat-tools{display:flex!important;flex:1 1 auto!important;min-height:0!important;flex-direction:column!important;gap:5px!important;margin:0!important;padding:0 1px!important;overflow:hidden!important}
+.sidebar-search{display:none!important;min-height:39px!important;flex:0 0 auto!important;align-items:center!important;gap:9px!important;margin:0 3px 5px!important;padding:0 10px!important;border:1px solid #e5e5e5!important;border-radius:9px!important;background:#fff!important;color:#555!important}
+.sidebar-search.search-open{display:flex!important}
+.sidebar-search input{width:100%!important;min-width:0!important;height:36px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:#202123!important;font-size:13px!important;box-shadow:none!important}
+.sidebar-search input:focus{outline:0!important}
+.sidebar-search input::placeholder{color:#858585!important}
+.sidebar-primary-nav{display:flex!important;flex:0 0 auto!important;flex-direction:column!important;gap:2px!important;margin:0!important;padding:0!important}
+.nav-group-label{padding:8px 10px 5px!important;color:#858585!important;font-size:11px!important;font-weight:550!important;letter-spacing:0!important;text-transform:none!important}
+.sidebar-primary-nav button{width:100%!important;min-height:40px!important;display:flex!important;align-items:center!important;gap:11px!important;padding:8px 10px!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#353535!important;font-size:13.5px!important;font-weight:500!important;text-align:left!important;box-shadow:none!important;transform:none!important}
+.sidebar-primary-nav button:hover{background:#ededed!important;color:#202123!important}
+.sidebar-primary-nav button.active{background:#e9e9e9!important;color:#202123!important;border:0!important;font-weight:620!important}
+.sidebar-primary-nav button .ico{width:21px!important;height:21px!important;flex:0 0 21px!important;display:grid!important;place-items:center!important;color:#505050!important;font-size:0!important}
+.sidebar-primary-nav button .ico svg{width:19px!important;height:19px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.sidebar-history-heading{flex:0 0 auto!important;margin:14px 9px 5px!important;padding:0!important;color:#777!important;font-size:12px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
+.sidebar-recent{flex:1 1 auto!important;min-height:30px!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:0 2px!important;display:flex!important;flex-direction:column!important;gap:2px!important}
+.sidebar-history-group{display:flex!important;flex-direction:column!important;gap:2px!important}
+.sidebar-history-group .sidebar-history-heading{margin:10px 8px 4px!important;color:#888!important;font-size:11px!important;font-weight:500!important}
+.sidebar-chat-item{width:100%!important;min-height:36px!important;display:flex!important;align-items:center!important;gap:8px!important;padding:7px 9px!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#444!important;font-size:12.5px!important;line-height:1.35!important;text-align:left!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;box-shadow:none!important}
+.sidebar-chat-item:hover,.sidebar-chat-item.active{background:#ededed!important;color:#202123!important}
+.sidebar-chat-icon{display:none!important}
+.sidebar-chat-copy,.sidebar-chat-title{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.sidebar-empty{padding:9px 9px!important;color:#858585!important;font-size:12px!important;line-height:1.5!important}
+.sidebar-search-snippet{display:none!important}
+.side-bottom{flex:0 0 auto!important;margin:0!important;padding:10px 2px 0!important;border:0!important;border-top:1px solid #e8e8e8!important}
+.side-bottom .profile{min-height:47px!important;display:flex!important;align-items:center!important;gap:10px!important;padding:5px 6px!important;border:0!important;background:transparent!important}
+.side-bottom .avatar{width:34px!important;height:34px!important;flex:0 0 34px!important;display:grid!important;place-items:center!important;border:0!important;border-radius:50%!important;background:#e8e8e8!important;color:#333!important;font-size:11px!important;font-weight:700!important}
+.side-bottom .profile b{display:block!important;color:#333!important;font-size:12px!important;font-weight:600!important}
+.side-bottom .profile small{display:block!important;margin-top:2px!important;color:#858585!important;font-size:10px!important}
+.drawer-scrim{display:block!important;position:fixed!important;inset:0!important;z-index:110!important;background:rgba(0,0,0,.22)!important;opacity:0!important;pointer-events:none!important;transition:opacity .18s ease!important;backdrop-filter:none!important}
+body.menu-open .drawer-scrim{opacity:1!important;pointer-events:auto!important}
+main{width:100%!important;max-width:1400px!important;min-width:0!important;margin:0 auto!important;padding:0 30px 24px!important;background:#fff!important;color:#202123!important}
+.topbar{position:sticky!important;top:0!important;z-index:30!important;width:100%!important;height:58px!important;min-height:58px!important;display:flex!important;align-items:center!important;gap:12px!important;margin:0 auto 2px!important;padding:0 2px!important;border:0!important;border-bottom:1px solid #f0f0f0!important;border-radius:0!important;background:rgba(255,255,255,.97)!important;box-shadow:none!important;backdrop-filter:blur(10px)!important}
+.menu-toggle{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;flex:0 0 38px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;padding:0!important;border:0!important;border-radius:8px!important;background:transparent!important;box-shadow:none!important;z-index:31!important}
+.menu-toggle:hover{background:#f0f0f0!important}
+.menu-toggle span{width:18px!important;height:1.7px!important;min-height:1.7px!important;display:block!important;flex:0 0 1.7px!important;border:0!important;border-radius:2px!important;background:#333!important}
+.topbar-context{min-width:0!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:1px!important;margin-left:1px!important}
+.crumb{overflow:hidden!important;color:#202123!important;font-size:15px!important;font-weight:650!important;letter-spacing:-.25px!important;line-height:1.2!important;white-space:nowrap!important;text-overflow:ellipsis!important}
+.topbar-overline{display:none!important}
+.topbar-new-chat{width:38px!important;height:38px!important;min-width:38px!important;flex:0 0 38px!important;display:grid!important;place-items:center!important;margin-left:auto!important;padding:0!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#303030!important;box-shadow:none!important}
+.topbar-new-chat:hover{background:#f0f0f0!important}
+.topbar-new-chat svg{width:21px!important;height:21px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 .top-actions{display:none!important}
-.crumb,.muted,.small,.hero p,.welcome-subtitle,.chat-compose-note,.chat-mini-status{color:#707070!important}
-.panel,.card,.tile,.workspace-card,.saved,.tool-card,.vault-card,.explore-card,.chat-extra-panel{background:#fff!important;border:1px solid #e7e7e7!important;color:#202123!important;box-shadow:0 2px 10px rgba(0,0,0,.035)!important}
-.panel h2,.panel h3,.hero h1,.section-head h2,.workspace-copy b,.tile b{color:#202123!important}
+.page{min-width:0!important;background:#fff!important;color:#202123!important}
+.page.active{animation:none!important}
+.hero{padding-top:30px!important}
+.hero h1,.page-heading h1{color:#202123!important;letter-spacing:-1.2px!important}
+.hero p,.page-heading p,.muted,.small{color:#737373!important}
+.eyebrow{color:#666!important}
+.panel,.card,.tile,.workspace-card,.saved,.tool-card,.vault-card,.explore-card,.chat-extra-panel{background:#fff!important;border:1px solid #e7e7e7!important;color:#202123!important;box-shadow:none!important}
+.panel h2,.panel h3,.section-head h2,.tile b,.workspace-copy b{color:#202123!important}
+.tile:hover{transform:none!important;box-shadow:none!important;border-color:#d5d5d5!important}
 input,textarea,select{background:#fff!important;color:#202123!important;border-color:#dedede!important;box-shadow:none!important}
-input::placeholder,textarea::placeholder{color:#8a8a8a!important}
-.primary-btn,.auth-action{background:#202123!important;color:#fff!important;border-color:#202123!important;box-shadow:none!important}
-.soft-btn,.icon-btn{background:#fff!important;color:#444!important;border-color:#e2e2e2!important;box-shadow:none!important}
-.chat-page{height:calc(100dvh - 64px)!important;min-height:480px!important;overflow:hidden!important}
-#chat .chat-stage{height:100%!important;max-width:900px!important;margin:0 auto!important;background:#fff!important;border:0!important;border-radius:0!important;box-shadow:none!important}
-#chat .chat-log-area{flex:1!important;min-height:0!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;padding:clamp(38px,10vh,100px) 18px 20px!important}
-#chat .chat-first-greeting{width:100%!important;max-width:680px!important;margin:0 auto 20px!important;text-align:left!important}
-#chat .welcome-mark,#chat .welcome-kicker{display:none!important}
-#chat .chat-first-greeting h1{margin:0 0 10px!important;color:#202123!important;font-size:clamp(29px,5vw,42px)!important;line-height:1.15!important;letter-spacing:-.045em!important;font-weight:650!important}
-#chat .chat-first-greeting em{color:#202123!important;font-style:normal!important}
-#chat .chat-first-greeting .welcome-subtitle{margin:0!important;color:#777!important;font-size:14px!important;line-height:1.65!important}
-#chat .welcome-actions{display:none!important}
-#chat .chatlog{width:100%!important;max-width:760px!important;color:#202123!important}
-#chat .chat-compose-dock{flex:0 0 auto!important;width:100%!important;max-width:790px!important;margin:0 auto!important;padding:12px 10px calc(14px + env(safe-area-inset-bottom))!important;background:#fff!important}
-#chat .chat-compose{display:flex!important;align-items:flex-end!important;gap:8px!important;min-height:58px!important;padding:7px 8px!important;background:#fff!important;border:1px solid #d9d9d9!important;border-radius:16px!important;box-shadow:0 2px 10px rgba(0,0,0,.055)!important}
-#chat .chat-compose:focus-within{border-color:#aaa!important;box-shadow:0 0 0 2px #0000000a!important}
-#chat .chat-compose textarea{background:transparent!important;color:#202123!important;font-size:14px!important}
-#chat .chat-compose textarea::placeholder{color:#888!important}
-#chat .compose-plus,#chat .compose-voice{background:transparent!important;color:#555!important;border:0!important;box-shadow:none!important}
-#chat .send-round{background:#202123!important;color:#fff!important;box-shadow:none!important}
+input::placeholder,textarea::placeholder{color:#888!important}
+.primary-btn,.auth-action{background:#202123!important;color:#fff!important;border:1px solid #202123!important;box-shadow:none!important}
+.soft-btn,.icon-btn{background:#fff!important;color:#444!important;border:1px solid #e2e2e2!important;box-shadow:none!important}
+#chat.page.active{display:flex!important;flex-direction:column!important;width:100%!important;height:calc(100dvh - 61px)!important;min-height:430px!important;overflow:hidden!important;background:#fff!important}
+#chat .chat-stage{width:100%!important;max-width:900px!important;height:100%!important;min-height:0!important;display:flex!important;flex:1 1 auto!important;flex-direction:column!important;margin:0 auto!important;overflow:hidden!important;background:#fff!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+#chat .chat-log-area{width:100%!important;max-width:850px!important;min-height:0!important;flex:1 1 auto!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;gap:0!important;margin:0 auto!important;padding:28px 16px 12px!important;overflow-y:auto!important;background:#fff!important}
+#chat:not(.has-messages) .chat-log-area{justify-content:center!important;align-items:center!important}
+#chat .chat-first-greeting{width:100%!important;max-width:680px!important;margin:0 auto!important;padding:0!important;text-align:center!important}
+#chat .welcome-mark,#chat .welcome-kicker,#chat .welcome-actions{display:none!important}
+#chat .chat-first-greeting h1{margin:0!important;color:#202123!important;font-size:clamp(27px,4.5vw,36px)!important;font-weight:620!important;line-height:1.2!important;letter-spacing:-1.2px!important}
+#chat .chat-first-greeting em{font-style:normal!important;color:#202123!important}
+#chat .chat-first-greeting .welcome-subtitle{margin:10px auto 0!important;color:#777!important;font-size:13px!important;line-height:1.5!important}
+#chat:not(.has-messages) #chatLog{display:none!important}
+#chat.has-messages .chat-log-area{justify-content:flex-start!important;align-items:stretch!important;padding-top:18px!important}
+#chat.has-messages .chat-first-greeting{display:none!important}
+#chat .chatlog{width:100%!important;max-width:790px!important;min-height:0!important;max-height:none!important;flex:1 1 auto!important;display:flex!important;flex-direction:column!important;gap:20px!important;margin:0 auto!important;padding:8px 8px 22px!important;overflow-y:auto!important;border:0!important;border-radius:0!important;background:transparent!important;color:#202123!important}
+#chat .bubble{max-width:min(82%,650px)!important;padding:11px 15px!important;border-radius:18px!important;background:#f3f3f3!important;color:#202123!important;font-size:14px!important;line-height:1.6!important;white-space:pre-wrap!important;box-shadow:none!important}
+#chat .bubble.user{align-self:flex-end!important;background:#f1f1f1!important;color:#202123!important}
+#chat .bubble.assistant{align-self:flex-start!important;max-width:100%!important;padding:5px 0!important;background:transparent!important;color:#202123!important}
+#chat .bubble.note{align-self:center!important;color:#777!important;background:transparent!important}
+#chat .chat-compose-dock{width:100%!important;max-width:820px!important;flex:0 0 auto!important;position:relative!important;z-index:8!important;margin:0 auto!important;padding:10px 10px calc(12px + env(safe-area-inset-bottom))!important;background:#fff!important}
+#chat .chat-compose{width:100%!important;min-height:58px!important;display:flex!important;align-items:flex-end!important;gap:8px!important;padding:7px 8px!important;border:1px solid #d9d9d9!important;border-radius:28px!important;background:#fff!important;box-shadow:0 1px 4px rgba(0,0,0,.035)!important}
+#chat .chat-compose:focus-within{border-color:#bcbcbc!important;box-shadow:0 0 0 1px #00000008!important}
+#chat .chat-compose textarea{width:100%!important;min-width:0!important;min-height:40px!important;max-height:160px!important;flex:1 1 auto!important;resize:none!important;margin:0!important;padding:10px 3px!important;border:0!important;border-radius:0!important;outline:0!important;background:transparent!important;color:#202123!important;font-size:15px!important;line-height:1.4!important;box-shadow:none!important}
+#chat .chat-compose textarea:focus{border:0!important;outline:0!important}
+#chat .compose-plus,#chat .compose-voice,#chat .send-round{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;flex:0 0 38px!important;display:grid!important;place-items:center!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;box-shadow:none!important}
+#chat .compose-plus{background:#f1f1f1!important;color:#444!important}
+#chat .compose-voice{background:transparent!important;color:#555!important}
+#chat .send-round{background:#202123!important;color:#fff!important}
+#chat .compose-plus svg,#chat .compose-voice svg,#chat .send-round svg{width:20px!important;height:20px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+#chat .send-round svg{width:19px!important;height:19px!important}
+#chat .chat-attachment-list{padding:0 8px!important}
+#chat .chat-compose-note{margin-top:8px!important;color:#858585!important;font-size:10px!important;line-height:1.35!important;text-align:center!important}
 #chat .chat-under-tools,#chat .chat-extra-panel{display:none!important}
-#chat .chat-compose-note{color:#777!important}
 .idris-bottom-nav{display:none!important}
-.auth-screen,.auth-wrap{background:#fff!important}
-@media(max-width:760px){
- body{padding-left:0!important;background:#fff!important}
- .shell{display:block!important;min-height:100dvh!important}
- .side{background:#f9f9f9!important}
- .topbar{background:#fff!important;min-height:54px!important;padding:5px 0 10px!important}
- .chat-page{height:calc(100dvh - 60px)!important;min-height:460px!important}
- #chat .chat-log-area{padding:35px 15px 16px!important}
- #chat .chat-first-greeting h1{font-size:clamp(28px,8vw,35px)!important}
- #chat .chat-compose-dock{padding:10px 10px calc(14px + env(safe-area-inset-bottom))!important}
- #chat .chat-compose{border-radius:15px!important}
+#idris-support-links{background:#fff!important;color:#333!important;border-color:#e7e7e7!important}
+@media(min-width:900px){
+ body{padding-left:260px!important}
+ .side{transform:translateX(0)!important;visibility:visible!important}
+ .drawer-scrim,.menu-toggle{display:none!important}
+ main{padding:0 34px 24px!important}
+ .topbar{max-width:1000px!important}
+ #chat.page.active{height:calc(100dvh - 61px)!important}
+}
+@media(max-width:899px){
+ body{padding-left:0!important}
+ .side{width:min(286px,86vw)!important;padding:12px 12px calc(12px + env(safe-area-inset-bottom))!important}
+ main{width:100%!important;max-width:none!important;padding:0 12px 8px!important}
+ .topbar{height:55px!important;min-height:55px!important;margin:0 -12px 2px!important;padding:0 10px!important;gap:10px!important}
+ .menu-toggle{display:flex!important}
+ #chat.page.active{height:calc(100dvh - 58px)!important;min-height:400px!important}
+ #chat .chat-log-area{padding:22px 7px 9px!important}
+ #chat .chat-first-greeting h1{font-size:clamp(27px,7.5vw,34px)!important;letter-spacing:-1px!important}
+ #chat .chat-first-greeting .welcome-subtitle{font-size:12px!important}
+ #chat .chat-compose-dock{padding:8px 1px calc(9px + env(safe-area-inset-bottom))!important}
+ #chat .chat-compose{min-height:56px!important;padding:6px 7px!important}
+ #chat .chat-compose textarea{font-size:16px!important}
+ #chat .bubble{max-width:91%!important}
+}
+@media(max-width:380px){
+ .side{width:86vw!important}
+ .brand-name{font-size:14px!important}
+ #chat .chat-compose{gap:5px!important}
+ #chat .compose-plus,#chat .compose-voice,#chat .send-round{width:35px!important;height:35px!important;min-width:35px!important;min-height:35px!important;flex-basis:35px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
 </style>
 
