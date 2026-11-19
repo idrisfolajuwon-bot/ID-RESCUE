@@ -2418,6 +2418,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
 <main>
  <header class="topbar">
  <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
+ <button type="button" class="topbar-new-chat" data-new-chat aria-label="New chat" title="New chat"><span aria-hidden="true">＋</span></button>
  <div class="topbar-context"><span class="topbar-overline">IDRIS AI STUDIO</span><div class="crumb" id="crumb">I D LABS / OVERVIEW</div></div>
  <div class="top-actions"><span class="topbar-edition">FORM / 01 <i></i> PRIVATE WORKSPACE</span><button class="soft-btn" data-go="about">Studio guide <span>↗</span></button></div>
 </header>
@@ -3456,13 +3457,25 @@ body{background:#fff!important}
 .side{background:#f9f9f9!important;border-right:1px solid #ededed!important;box-shadow:none!important;color:#202123!important;backdrop-filter:none!important}
 .brand-mark,.brand-symbol{background:#202123!important;color:#fff!important;box-shadow:none!important}
 .brand-name,.brand-sub{color:#202123!important}
-.nav-label,.sidebar-history-heading{color:#858585!important}
+.nav-label,.sidebar-history-heading,.nav-group-label{color:#858585!important}
 .side .nav button,.sidebar-primary-nav button,.sidebar-chat-item{background:transparent!important;color:#353535!important;border-color:transparent!important;box-shadow:none!important}
 .side .nav button:hover,.sidebar-primary-nav button:hover,.sidebar-chat-item:hover{background:#ededed!important;color:#202123!important}
 .side .nav button.active,.sidebar-primary-nav button.active,.sidebar-chat-item.active{background:#e9e9e9!important;color:#202123!important;border-color:transparent!important}
 .side .nav button .ico{color:#555!important}
+.sidebar-search,.sidebar-search input{background:#fff!important;color:#202123!important;border-color:#e5e5e5!important}
+.sidebar-new-chat{background:#fff!important;color:#202123!important;border:1px solid #e4e4e4!important;box-shadow:none!important}
+.sidebar-new-chat span{color:#202123!important}
+.side-bottom .profile{border-color:#e8e8e8!important}
 main,.page,.chat-page{background:#fff!important;color:#202123!important}
-.topbar{background:#fff!important;border-color:#eee!important;box-shadow:none!important}
+.topbar{background:#fff!important;border-color:#eee!important;box-shadow:none!important;display:flex!important;align-items:center!important;gap:10px!important}
+.topbar-context{min-width:0}
+.topbar-overline,.topbar-edition{display:none!important}
+.crumb{color:#303030!important;font-size:13px!important;font-weight:650!important}
+.menu-toggle{width:40px!important;height:40px!important;flex:0 0 40px!important;border:1px solid #e7e7e7!important;border-radius:12px!important;background:#fff!important;box-shadow:none!important}
+.menu-toggle span{background:#333!important}
+.topbar-new-chat{width:40px!important;height:40px!important;flex:0 0 40px!important;margin-left:auto!important;display:grid!important;place-items:center!important;border:1px solid #e7e7e7!important;border-radius:12px!important;background:#fff!important;color:#222!important;font-size:25px!important;line-height:1!important;cursor:pointer!important}
+.topbar-new-chat:active{background:#f2f2f2!important}
+.top-actions{display:none!important}
 .crumb,.muted,.small,.hero p,.welcome-subtitle,.chat-compose-note,.chat-mini-status{color:#707070!important}
 .panel,.card,.tile,.workspace-card,.saved,.tool-card,.vault-card,.explore-card,.chat-extra-panel{background:#fff!important;border:1px solid #e7e7e7!important;color:#202123!important;box-shadow:0 2px 10px rgba(0,0,0,.035)!important}
 .panel h2,.panel h3,.hero h1,.section-head h2,.workspace-copy b,.tile b{color:#202123!important}
@@ -3487,20 +3500,19 @@ input::placeholder,textarea::placeholder{color:#8a8a8a!important}
 #chat .chat-compose textarea::placeholder{color:#888!important}
 #chat .compose-plus,#chat .compose-voice{background:transparent!important;color:#555!important;border:0!important;box-shadow:none!important}
 #chat .send-round{background:#202123!important;color:#fff!important;box-shadow:none!important}
-#chat .chat-under-tools{color:#777!important}
-.idris-bottom-nav,.mobile-nav{background:#fff!important;border-top:1px solid #e8e8e8!important;box-shadow:0 -2px 8px rgba(0,0,0,.025)!important}
-.idris-bottom-nav button,.mobile-nav button{color:#777!important}
-.idris-bottom-nav button.active,.mobile-nav button.active{color:#202123!important}
+#chat .chat-under-tools,#chat .chat-extra-panel{display:none!important}
+#chat .chat-compose-note{color:#777!important}
+.idris-bottom-nav{display:none!important}
 .auth-screen,.auth-wrap{background:#fff!important}
 @media(max-width:760px){
  body{padding-left:0!important;background:#fff!important}
  .shell{display:block!important;min-height:100dvh!important}
  .side{background:#f9f9f9!important}
- .topbar{background:#fff!important}
+ .topbar{background:#fff!important;min-height:54px!important;padding:5px 0 10px!important}
  .chat-page{height:calc(100dvh - 60px)!important;min-height:460px!important}
  #chat .chat-log-area{padding:35px 15px 16px!important}
  #chat .chat-first-greeting h1{font-size:clamp(28px,8vw,35px)!important}
- #chat .chat-compose-dock{padding:10px 10px calc(76px + env(safe-area-inset-bottom))!important}
+ #chat .chat-compose-dock{padding:10px 10px calc(14px + env(safe-area-inset-bottom))!important}
  #chat .chat-compose{border-radius:15px!important}
 }
 </style>
