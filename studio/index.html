@@ -3037,6 +3037,25 @@ async function readChatStream(response,wait){
  try{while(true){const {value,done}=await reader.read();if(done)break;buffer+=decoder.decode(value,{stream:true});const lines=buffer.split(/\r?\n/);buffer=lines.pop()||'';for(const line of lines)consume(line);}buffer+=decoder.decode();if(buffer.trim())consume(buffer.trim());if(!answer.trim())throw Error('The AI stream ended without a reply.');bubble.remove();wait.remove();addBubble('assistant',answer,sources);return answer;}
  catch(error){bubble.remove();throw error;}
 }
+function shouldUseIntentRouter(message){
+ const t=String(message||'').toLowerCase().replace(/[’]/g,"'");
+ const visualNoun=/\b(image|picture|photo|artwork|illustration|wallpaper|logo|poster|thumbnail|portrait|avatar|cover|drawing|sketch|graphic|banner)\b/.test(t);
+ const visualAction=/\b(create|make|draw|paint|design|generate|edit|change|improve|enhance|redesign|give|show)\b/.test(t);
+ const capabilityOnly=/^(?:(?:can|could|would|do)\s+you\s+(?:also\s+)?(?:create|make|generate|draw)\s+(?:an?\s+)?(?:images?|pictures?|photos?)|are you able to (?:create|make|generate|draw)\s+(?:an?\s+)?(?:images?|pictures?|photos?))\??$/.test(t)
+  || /^(what can you create|what kinds of images can you create)\??$/.test(t);
+ if(capabilityOnly)return false;
+ const nonVisualTask=/\b(code|essay|story|plan|list|table|document|email|message|report|website|app|formula|explanation|summary|schedule|business plan)\b/.test(t);
+ const directCreate=/^(please\s+)?(create|make|draw|paint|design|generate)\s+(?:me\s+)?(?:a|an|the|some|something|anything|one)\b/.test(t);
+ const directQuestionCreate=/^(can|could|would)\s+you\s+(?:please\s+)?(?:create|make|draw|paint|design|generate)\s+(?:me\s+)?(?:a|an|the|some|something|anything|one)\b/.test(t);
+ const openEnded=/\b(surprise me|anything you want to create|anything you want|whatever you want to create|just make something|just create something)\b/.test(t)
+  || /\b(i don't know|idk|anything|something|whatever|surprise me)\b.{0,55}\b(you can|create|make|generate|design|draw)\b/.test(t)
+  || /\b(you can|go ahead and)\s+(create|make|generate|draw)\b/.test(t);
+ let hasPreviousImage=false;
+ try{hasPreviousImage=Boolean((localStorage.getItem('idris-ai-last-image-prompt-v1')||'').trim())}catch{}
+ const imageEdit=hasPreviousImage&&/\b(change|edit|improve|enhance|redesign|brighten|darken|remove|replace|add|make|adjust|fix)\b/.test(t);
+ if(nonVisualTask&&!visualNoun&&!imageEdit&&!openEnded)return false;
+ return (visualNoun&&visualAction)||((directCreate||directQuestionCreate)&&!nonVisualTask)||openEnded||imageEdit;
+}
 async function understandIntent(message){
  const recent=chatMessages.slice(-8).map(m=>({role:m.role,content:m.content}));
  const lastImagePrompt=(localStorage.getItem('idris-ai-last-image-prompt-v1')||'').trim();
@@ -3286,7 +3305,7 @@ $('sendToAI').onclick=async()=>{
    const response=await apiFetch(API_URL+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:messagesForAI,stream:true})});
    const reply=await readChatStream(response,wait);chatMessages.push({role:'assistant',content:reply});storeConversation();
   }else{
-   const decision=await understandIntent(message);
+   const decision=shouldUseIntentRouter(message)?await understandIntent(message):{intent:'chat',prompt:message,reason:'direct chat fast path'};
    if(decision.intent==='image'){
     
     const shape=/\b(landscape|wide|banner|cover)\b/i.test(message)?'wide':/\b(portrait|vertical|phone wallpaper|story)\b/i.test(message)?'portrait':'square';
