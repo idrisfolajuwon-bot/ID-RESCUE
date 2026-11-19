@@ -2409,11 +2409,28 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
    <input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations">
   </label>
   <nav class="nav sidebar-primary-nav" id="sideNav" aria-label="Main navigation">
-   <div class="nav-group-label">Workspace</div>
-   <button class="active" data-page="chat"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-2.5 1.5.8-4A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg></span><span>Chat</span></button>
-   <button data-page="explore"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.8 8.2-2.3 5.3-5.3 2.3 2.3-5.3z"/></svg></span><span>Explore</span></button>
-   <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"/><path d="m4.5 7.8 7.5 4.3 7.5-4.3M12 12.1V21"/></svg></span><span>Library</span></button>
-   <button data-page="about"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.2 1-1.5 2.6-1.5-.6a8 8 0 0 1-1.7 1l-.3 1.6h-3l-.3-1.6a8 8 0 0 1-1.7-1l-1.5.6-1.5-2.6 1.2-1a7 7 0 0 1 0-2l-1.2-1 1.5-2.6 1.5.6a8 8 0 0 1 1.7-1l.3-1.6h3l.3 1.6a8 8 0 0 1 1.7 1l1.5-.6 1.5 2.6-1.2 1a7 7 0 0 1 0 2Z"/></svg></span><span>Settings</span></button>
+   <div class="sidebar-nav-section">
+    <div class="nav-group-label">Workspace</div>
+    <button class="active" data-page="chat"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-2.5 1.5.8-4A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg></span><span>Chat</span></button>
+    <button data-page="explore"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.8 8.2-2.3 5.3-5.3 2.3 2.3-5.3z"/></svg></span><span>Explore</span></button>
+    <button data-page="vault"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"/><path d="m4.5 7.8 7.5 4.3 7.5-4.3M12 12.1V21"/></svg></span><span>Library</span></button>
+   </div>
+   <div class="sidebar-nav-section">
+    <div class="nav-group-label">Create</div>
+    <button data-page="prompts"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15M8 7h8M8 10.5h6"/></svg></span><span>Prompt Studio</span></button>
+    <button data-page="maker"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg></span><span>Image Maker</span></button>
+    <button data-page="videolab"><span class="ico" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3z"/></svg></span><span>Video Lab</span></button>
+    <button data-page="aieyes"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.7"/></svg></span><span>AI Eyes</span></button>
+   </div>
+   <div class="sidebar-nav-section">
+    <div class="nav-group-label">Discover</div>
+    <button data-page="research"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2M8 10.8h5.5M10.8 8v5.5"/></svg></span><span>Research Desk</span></button>
+   </div>
+   <div class="sidebar-nav-section">
+    <div class="nav-group-label">Manage</div>
+    <button data-page="plans"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span><span>Plans &amp; Usage</span></button>
+    <button data-page="about"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.2 1-1.5 2.6-1.5-.6a8 8 0 0 1-1.7 1l-.3 1.6h-3l-.3-1.6a8 8 0 0 1-1.7-1l-1.5.6-1.5-2.6 1.2-1a7 7 0 0 1 0-2l-1.2-1 1.5-2.6 1.5.6a8 8 0 0 1 1.7-1l.3-1.6h3l.3 1.6a8 8 0 0 1 1.7 1l1.5-.6 1.5 2.6-1.2 1a7 7 0 0 1 0 2Z"/></svg></span><span>Settings</span></button>
+   </div>
   </nav>
   <div class="sidebar-history-heading">Recent</div>
   <div class="sidebar-recent" id="sidebarRecent"><div class="sidebar-empty">Your chats will appear here.</div></div>
@@ -3488,13 +3505,15 @@ body.menu-open .side{transform:translateX(0)!important;visibility:visible!import
 .sidebar-search input{width:100%!important;min-width:0!important;height:36px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:#202123!important;font-size:13px!important;box-shadow:none!important}
 .sidebar-search input:focus{outline:0!important}
 .sidebar-search input::placeholder{color:#858585!important}
-.sidebar-primary-nav{display:flex!important;flex:0 0 auto!important;flex-direction:column!important;gap:2px!important;margin:0!important;padding:0!important}
-.nav-group-label{padding:8px 10px 5px!important;color:#858585!important;font-size:11px!important;font-weight:550!important;letter-spacing:0!important;text-transform:none!important}
-.sidebar-primary-nav button{width:100%!important;min-height:40px!important;display:flex!important;align-items:center!important;gap:11px!important;padding:8px 10px!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#353535!important;font-size:13.5px!important;font-weight:500!important;text-align:left!important;box-shadow:none!important;transform:none!important}
+.sidebar-primary-nav{display:flex!important;flex:0 0 auto!important;flex-direction:column!important;gap:10px!important;margin:0!important;padding:0!important}
+.sidebar-nav-section{display:flex!important;flex-direction:column!important;gap:2px!important}
+.nav-group-label{padding:7px 10px 5px!important;color:#858585!important;font-size:10px!important;font-weight:650!important;letter-spacing:.65px!important;text-transform:uppercase!important}
+.sidebar-primary-nav button{width:100%!important;min-height:37px!important;display:flex!important;align-items:center!important;gap:11px!important;padding:7px 10px!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#353535!important;font-size:13px!important;font-weight:500!important;text-align:left!important;box-shadow:none!important;transform:none!important}
 .sidebar-primary-nav button:hover{background:#ededed!important;color:#202123!important}
 .sidebar-primary-nav button.active{background:#e9e9e9!important;color:#202123!important;border:0!important;font-weight:620!important}
-.sidebar-primary-nav button .ico{width:21px!important;height:21px!important;flex:0 0 21px!important;display:grid!important;place-items:center!important;color:#505050!important;font-size:0!important}
-.sidebar-primary-nav button .ico svg{width:19px!important;height:19px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.sidebar-primary-nav button .ico{width:20px!important;height:20px!important;flex:0 0 20px!important;display:grid!important;place-items:center!important;color:#505050!important;font-size:0!important}
+.sidebar-primary-nav button .ico svg{width:18px!important;height:18px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.sidebar-chat-tools{overflow-x:hidden!important;overflow-y:auto!important;scrollbar-width:thin!important}
 .sidebar-history-heading{flex:0 0 auto!important;margin:14px 9px 5px!important;padding:0!important;color:#777!important;font-size:12px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
 .sidebar-recent{flex:1 1 auto!important;min-height:30px!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:0 2px!important;display:flex!important;flex-direction:column!important;gap:2px!important}
 .sidebar-history-group{display:flex!important;flex-direction:column!important;gap:2px!important}
