@@ -1573,6 +1573,39 @@ input:focus,textarea:focus,select:focus{border-color:#7cf5dc88!important;box-sha
 @media(max-width:380px){.dash-hero{padding:24px 16px 18px!important}.dash-hero h1{font-size:38px!important}.dash-hero p{max-width:100%!important}.dash-quick-card{padding:13px!important}}
 @media(prefers-reduced-motion:reduce){.page,.dash-quick-card,.primary-btn{animation:none!important;transition:none!important}}
 
+
+/* Simple, separated navigation and workspace layout */
+:root{--mint:#536b5b;--blue:#536b5b;--violet:#536b5b}
+body{background:#f7f8f6}
+.nav button.active{background:#edf2ed;border-color:#e0e9e0;color:#385541}
+.brand-mark{background:#e9f0e9;color:#405c47;box-shadow:none}
+.primary-btn{background:#49664f;box-shadow:none}
+.welcome-mark{background:#edf2ed;border-color:#e2eae2;color:#49664f;box-shadow:none}
+.welcome-kicker,.explore-heading .eyebrow{color:#58745e}
+.chat-first-greeting{max-width:680px}
+.chat-first-greeting h1{color:#202a23}
+.chat-first-greeting h1 em{color:#58745e}
+.explore-heading{padding:42px 0 25px;max-width:680px}
+.explore-heading h1{font-size:clamp(34px,5vw,52px);letter-spacing:-1.8px;margin:10px 0;color:#202a23}
+.explore-heading p{color:#748074;font-size:14px;line-height:1.7;margin:0}
+.explore-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:900px}
+.explore-card{display:flex;align-items:center;gap:14px;text-align:left;padding:18px;border:1px solid #e5e9e4;border-radius:15px;background:#fff;color:#263329;min-height:94px;transition:border-color .15s,transform .15s}
+.explore-card:hover{border-color:#b9cabb;transform:translateY(-1px)}
+.explore-icon{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:12px;background:#eff4ef;color:#4d6a53;font-size:21px}
+.explore-card>span:nth-child(2){display:grid;gap:4px;flex:1}
+.explore-card b{font-size:13px}.explore-card small{font-size:11px;color:#778277;line-height:1.4}
+.explore-card>i{font-style:normal;color:#879487;font-size:18px}
+.idris-bottom-nav{display:none}
+@media(max-width:650px){
+ .explore-heading{padding:30px 2px 20px}
+ .explore-grid{grid-template-columns:1fr;gap:9px}
+ .explore-card{min-height:78px;padding:13px}
+ main{padding-bottom:105px}
+ .idris-bottom-nav{display:flex;position:fixed;z-index:30;left:0;right:0;bottom:0;justify-content:space-around;padding:8px 5px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e7ebe6;box-shadow:0 -5px 20px rgba(30,45,35,.05)}
+ .idris-bottom-nav button{border:0;background:transparent;color:#7c887d;display:grid;justify-items:center;gap:3px;font-size:10px;font-weight:700;min-width:58px;padding:3px}
+ .idris-bottom-nav button span{font-size:19px;line-height:1.2}
+ .idris-bottom-nav button.active{color:#49664f}
+}
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -2367,16 +2400,11 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
  <div class="sidebar-chat-tools">
   <label class="sidebar-search"><span>⌕</span><input id="sidebarHistorySearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search conversations"></label>
   <nav class="nav sidebar-primary-nav" id="sideNav" aria-label="Main navigation">
-  <div class="nav-group-label">WORKSPACE</div>
-  <button class="active" data-page="home"><span class="ico" aria-hidden="true">⌂</span><span>Overview</span><small>01</small></button>
-  <button data-page="chat"><span class="ico" aria-hidden="true">↗</span><span>AI Assistant</span><small>02</small></button>
-  <button data-page="maker"><span class="ico" aria-hidden="true">▧</span><span>Image Studio</span><small>03</small></button>
-  <button data-page="research"><span class="ico" aria-hidden="true">⌕</span><span>Research Desk</span><small>04</small></button>
-  <button data-page="prompts"><span class="ico" aria-hidden="true">⌘</span><span>Prompt Lab</span><small>05</small></button>
-  <button data-page="videolab"><span class="ico" aria-hidden="true">▹</span><span>Video Lab</span><small>06</small></button>
-  <button data-page="aieyes"><span class="ico" aria-hidden="true">◎</span><span>AI Eyes</span><small>07</small></button>
-  <div class="nav-group-label nav-archive-label">YOUR ARCHIVE</div>
-  <button data-page="vault"><span class="ico" aria-hidden="true">▤</span><span>Creation Vault</span><small>08</small></button>
+  <div class="nav-group-label">YOUR SPACE</div>
+  <button class="active" data-page="chat"><span class="ico" aria-hidden="true">◌</span><span>Chat</span></button>
+  <button data-page="explore"><span class="ico" aria-hidden="true">⌕</span><span>Explore</span></button>
+  <button data-page="vault"><span class="ico" aria-hidden="true">▤</span><span>Library</span></button>
+  <button data-page="about"><span class="ico" aria-hidden="true">⚙</span><span>Help &amp; settings</span></button>
  </nav>
   <div class="sidebar-history-heading">RECENT THREADS</div>
   <div class="sidebar-recent" id="sidebarRecent"><div class="sidebar-empty">Your chats will appear here.</div></div>
@@ -2393,7 +2421,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
  <div class="topbar-context"><span class="topbar-overline">IDRIS AI STUDIO</span><div class="crumb" id="crumb">I D LABS / OVERVIEW</div></div>
  <div class="top-actions"><span class="topbar-edition">FORM / 01 <i></i> PRIVATE WORKSPACE</span><button class="soft-btn" data-go="about">Studio guide <span>↗</span></button></div>
 </header>
- <section class="page active" id="home">
+ <section class="page" id="home">
  <div class="studio-home">
   <div class="studio-masthead">
    <div class="studio-hero-main">
@@ -2475,7 +2503,22 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
  </div>
 </section>
 
-<section class="page" id="prompts">
+<section class="page" id="explore">
+  <div class="explore-heading">
+   <span class="eyebrow">DISCOVER WHAT YOU CAN DO</span>
+   <h1>Explore.</h1>
+   <p>Useful tools for creating, learning and finding answers. Choose one to get started.</p>
+  </div>
+  <div class="explore-grid">
+   <button class="explore-card" data-go="maker"><span class="explore-icon">▧</span><span><b>Image Studio</b><small>Create original images from your ideas.</small></span><i>→</i></button>
+   <button class="explore-card" data-go="research"><span class="explore-icon">⌕</span><span><b>Research Desk</b><small>Explore information and check sources.</small></span><i>→</i></button>
+   <button class="explore-card" data-go="aieyes"><span class="explore-icon">◎</span><span><b>AI Eyes</b><small>Upload an image and ask what it shows.</small></span><i>→</i></button>
+   <button class="explore-card" data-go="videolab"><span class="explore-icon">▷</span><span><b>Video Lab</b><small>Plan a video and organise its scenes.</small></span><i>→</i></button>
+   <button class="explore-card" data-go="prompts"><span class="explore-icon">⌘</span><span><b>Prompt Lab</b><small>Turn rough ideas into clear prompts.</small></span><i>→</i></button>
+  </div>
+ </section>
+
+ <section class="page" id="prompts">
   <div class="hero"><div class="eyebrow">IDEA → CLEAR INSTRUCTIONS</div><h1>Prompt <span class="gradient">Lab.</span></h1><p>Shape your idea into a useful prompt. Choose a goal, add the details that matter, and copy or save the finished result.</p></div>
   <div class="grid">
    <div class="panel"><h2>BUILD A PROMPT</h2>
@@ -2516,19 +2559,14 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   </div>
  </section>
 
- <section class="page chat-page" id="chat">
+ <section class="page chat-page active" id="chat">
   <div class="chat-stage">
    <div class="chat-log-area" id="chatLogArea">
     <div class="chat-first-greeting" id="chatFirstGreeting">
      <div class="welcome-mark" aria-hidden="true"><span>I</span><i>D</i></div>
-     <div class="welcome-kicker"><span class="welcome-kicker-number">01</span> THE THINKING DESK <span>·</span> IDRIS AI</div>
-     <h1>What are we<br><em>making sense of?</em></h1>
-     <p class="welcome-subtitle">Bring a question, a rough idea or a challenge. Start wherever you are — we'll work from there.</p>
-     <div class="welcome-actions">
-      <button type="button" class="welcome-action" data-starter="Help me think through an idea step by step."><span class="welcome-action-icon">01</span><span><b>Think it through</b><small>Work out an idea or problem</small></span><i>↗</i></button>
-      <button type="button" class="welcome-action" data-studio-action="image"><span class="welcome-action-icon">02</span><span><b>Make something visual</b><small>Create an original image</small></span><i>↗</i></button>
-      <button type="button" class="welcome-action" data-page="videolab"><span class="welcome-action-icon">03</span><span><b>Shape a story</b><small>Plan a video sequence</small></span><i>↗</i></button>
-     </div>
+     <div class="welcome-kicker">IDRIS AI STUDIO</div>
+     <h1>What can I help<br><em>you with today?</em></h1>
+     <p class="welcome-subtitle">Ask a question, share an idea or tell me what you are working on.</p>
     </div>
     <div class="chatlog" id="chatLog"></div>
    </div>
@@ -3392,6 +3430,9 @@ window.addEventListener('pagehide',stopCamera);
 })();
 </script>
 
+<script>
+(()=>{const nav=document.querySelector('.idris-bottom-nav');if(!nav)return;const update=()=>{const active=document.querySelector('.page.active')?.id||'chat';nav.querySelectorAll('[data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===active||(active==='maker'||active==='research'||active==='aieyes'||active==='videolab'||active==='prompts')&&b.dataset.go==='explore'));};nav.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));}});document.addEventListener('click',e=>{if(e.target.closest('[data-go]')||e.target.closest('[data-page]'))setTimeout(update,0);});update();})();
+</script>
 <section id="idris-support-links" aria-label="Support and privacy" style="max-width:1040px;margin:28px auto 18px;padding:18px 20px;border:1px solid #e5e9f1;border-radius:16px;background:#fff;color:#26324a;text-align:center">
  <strong style="display:block;font-size:13px;margin-bottom:6px">Need help with IDRIS AI STUDIO?</strong>
  <p style="margin:0 0 12px;color:#738097;font-size:12px">Contact support or read how your information is handled.</p>
@@ -3399,4 +3440,11 @@ window.addEventListener('pagehide',stopCamera);
   <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="display:inline-block;padding:10px 14px;border-radius:10px;background:#6657d9;color:#fff;text-decoration:none;font-size:12px;font-weight:800">Contact support</a>
   <a href="./privacy.html" style="display:inline-block;padding:10px 14px;border:1px solid #dfe5ef;border-radius:10px;color:#5144c7;text-decoration:none;font-size:12px;font-weight:800">Privacy policy</a>
  </div>
-</section></body></html>
+</section>
+<nav class="idris-bottom-nav" aria-label="Quick navigation">
+ <button class="active" data-go="chat"><span>◌</span>Chat</button>
+ <button data-go="explore"><span>⌕</span>Explore</button>
+ <button data-go="vault"><span>▤</span>Library</button>
+ <button data-go="about"><span>⚙</span>Settings</button>
+</nav>
+</body></html>
