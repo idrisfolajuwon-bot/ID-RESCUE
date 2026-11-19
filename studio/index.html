@@ -2560,17 +2560,35 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
  </section>
 
  <section class="page chat-page active" id="chat">
-  <div class="chat-stage">
-   <div class="chat-log-area" id="chatLogArea">
-    <div class="chat-first-greeting" id="chatFirstGreeting">
+  <div class="chat-stage idris-home-stage">
+   <div class="idris-home-top">
+    <div class="idris-home-brand">
+     <div class="idris-home-logo"><span>I</span><i>D</i></div>
+     <div><strong>IDRIS AI STUDIO</strong><small>Your intelligent workspace</small></div>
+    </div>
+    <span class="idris-online"><i></i> Online</span>
+   </div>
+   <div class="idris-home-actions">
+    <button class="idris-new-chat" type="button" data-new-chat><span>＋</span> New Chat</button>
+    <button class="idris-nav-tile" type="button" data-go="explore"><span class="idris-tile-icon">⌕</span><b>Explore</b></button>
+    <button class="idris-nav-tile" type="button" data-go="vault"><span class="idris-tile-icon">▤</span><b>Library</b></button>
+    <button class="idris-nav-tile" type="button" data-go="about"><span class="idris-tile-icon">⚙</span><b>Settings</b></button>
+   </div>
+   <div class="chat-log-area idris-home-chat-area" id="chatLogArea">
+    <div class="chat-first-greeting idris-home-greeting" id="chatFirstGreeting">
      <div class="welcome-mark" aria-hidden="true"><span>I</span><i>D</i></div>
-     <div class="welcome-kicker">IDRIS AI STUDIO</div>
      <h1>What can I help<br><em>you with today?</em></h1>
-     <p class="welcome-subtitle">Ask a question, share an idea or tell me what you are working on.</p>
+     <p class="welcome-subtitle">Your ideas. Your tools. One studio.</p>
+    </div>
+    <div class="idris-home-tools">
+     <button type="button" class="idris-tool-tile" data-go="maker"><span>▧</span><b>Image Studio</b><small>Create images</small></button>
+     <button type="button" class="idris-tool-tile" data-go="research"><span>⌕</span><b>Research Desk</b><small>Explore topics</small></button>
+     <button type="button" class="idris-tool-tile" data-go="aieyes"><span>◎</span><b>AI Eyes</b><small>Understand images</small></button>
+     <button type="button" class="idris-tool-tile" data-go="videolab"><span>▷</span><b>Video Lab</b><small>Create videos</small></button>
     </div>
     <div class="chatlog" id="chatLog"></div>
    </div>
-   <div class="chat-compose-dock">
+   <div class="chat-compose-dock idris-home-compose-dock">
     <div class="chat-compose">
      <button type="button" class="compose-plus" id="composeTools" aria-label="Attach images and documents" title="Attach images, PDFs, Word or text files">＋</button><input id="chatFileInput" type="file" accept="image/png,image/jpeg,image/webp,.pdf,application/pdf,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.txt,.md,.csv,.json" multiple hidden>
      <textarea id="chatDraft" placeholder="Message IDRIS AI…" rows="1" aria-label="Message IDRIS"></textarea>
@@ -2578,7 +2596,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
      <button class="send-round" id="sendToAI" aria-label="Send message">↑</button>
     </div>
     <div class="chat-attachment-list" id="chatAttachmentList" aria-live="polite"></div>
-    <div class="chat-compose-note">Attach images, PDFs, Word documents or text files. IDRIS AI can make mistakes; check important information.</div>
+    <div class="chat-compose-note">IDRIS AI can make mistakes. Check important information.</div>
     <div class="chat-under-tools" aria-hidden="true">
      <button class="soft-btn" id="saveChatDraft" tabindex="-1">Save message</button>
      <button class="soft-btn" id="clearChat" tabindex="-1">New chat</button>
@@ -3515,4 +3533,53 @@ input::placeholder,textarea::placeholder{color:#97a39b}
 }
 </style>
 
+
+<style id="idris-home-layout-rebuild">
+.idris-home-stage{width:min(100%,1050px);margin:0 auto;min-height:calc(100vh - 78px);display:flex!important;flex-direction:column!important;padding:24px clamp(14px,3vw,32px) 20px;gap:22px}
+.idris-home-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 2px 18px;border-bottom:1px solid #e1e9e3}
+.idris-home-brand{display:flex;align-items:center;gap:12px}
+.idris-home-logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#087443,#3b9867);display:grid;place-items:center;color:white;font-size:18px;font-weight:900;letter-spacing:-2px;box-shadow:0 7px 18px #08744322}
+.idris-home-logo i{font-style:normal;margin-left:-5px}
+.idris-home-brand strong{display:block;color:#17251c;font-size:13px;letter-spacing:1.1px}
+.idris-home-brand small{display:block;color:#7b897f;font-size:11px;margin-top:3px}
+.idris-online{display:flex;align-items:center;gap:7px;color:#648071;font-size:11px;background:#edf7f0;border:1px solid #dceee1;padding:7px 11px;border-radius:99px}
+.idris-online i{width:7px;height:7px;border-radius:50%;background:#159653;display:inline-block}
+.idris-home-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.idris-home-actions button{min-height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:12px}
+.idris-new-chat{background:#087443!important;color:white!important;border:1px solid #087443!important;font-weight:750;box-shadow:0 5px 14px #08744320}
+.idris-new-chat span{font-size:19px;line-height:1}
+.idris-nav-tile{background:#fff!important;border:1px solid #e0e9e3!important;color:#35463b!important}
+.idris-nav-tile:hover,.idris-tool-tile:hover{border-color:#a8cdb4!important;background:#f8fcf9!important}
+.idris-tile-icon{color:#087443;font-size:18px}
+.idris-home-chat-area{flex:1;min-height:230px;padding:clamp(22px,5vh,48px) 4px 10px!important;display:flex;flex-direction:column;align-items:stretch}
+.idris-home-greeting{margin:0 auto 25px!important;text-align:center!important;max-width:650px}
+.idris-home-greeting .welcome-mark{width:48px;height:48px;margin:0 auto 16px;background:#e4f3e9!important;border:1px solid #d4e9da!important;color:#087443!important;box-shadow:none!important}
+.idris-home-greeting .welcome-kicker{display:none}
+.idris-home-greeting h1{font-size:clamp(31px,5vw,45px)!important;line-height:1.14!important;letter-spacing:-1.6px!important;color:#17251c!important;margin:0!important}
+.idris-home-greeting h1 em{color:#087443!important;font-style:normal}
+.idris-home-greeting .welcome-subtitle{font-size:13px!important;color:#77867c!important;margin-top:12px!important}
+.idris-home-tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;max-width:820px;margin:0 auto 20px}
+.idris-tool-tile{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:6px;min-height:120px;padding:18px!important;background:#fff!important;border:1px solid #e0e9e3!important;border-radius:16px!important;color:#17251c!important;box-shadow:0 6px 20px rgba(20,55,34,.035)!important}
+.idris-tool-tile>span{font-size:23px;color:#087443;margin-bottom:4px}
+.idris-tool-tile b{font-size:12px}
+.idris-tool-tile small{font-size:11px;color:#7d8a81}
+.idris-home-compose-dock{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(245,248,246,0),#f5f8f6 20%)!important;padding:14px 0 8px!important;margin-top:auto}
+.idris-home-compose-dock .chat-compose{max-width:850px;margin:0 auto;background:#fff!important;border:1px solid #d6e2d9!important;border-radius:19px!important;box-shadow:0 8px 28px rgba(23,65,40,.08)!important}
+.idris-home-compose-dock .chat-compose-note{text-align:center;color:#8a968e!important;font-size:10px}
+.idris-home-compose-dock .chat-under-tools{display:none!important}
+.idris-home-stage .chat-extra-panel{display:none!important}
+.idris-home-stage .chatlog{width:100%;max-width:850px;margin:0 auto}
+@media(max-width:700px){
+ .idris-home-stage{min-height:calc(100dvh - 65px);padding:15px 13px 12px;gap:15px}
+ .idris-home-top{padding-bottom:13px}
+ .idris-home-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .idris-home-actions button{min-height:48px}
+ .idris-home-chat-area{padding:24px 0 8px!important}
+ .idris-home-greeting{margin-bottom:22px!important}
+ .idris-home-greeting h1{font-size:32px!important}
+ .idris-home-tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .idris-tool-tile{min-height:104px;padding:14px!important}
+ .idris-home-compose-dock{padding:10px 0 calc(8px + env(safe-area-inset-bottom))!important}
+}
+</style>
 </body></html>
