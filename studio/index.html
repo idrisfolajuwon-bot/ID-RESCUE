@@ -3430,9 +3430,6 @@ window.addEventListener('pagehide',stopCamera);
 })();
 </script>
 
-<script>
-(()=>{const nav=document.querySelector('.idris-bottom-nav');if(!nav)return;const update=()=>{const active=document.querySelector('.page.active')?.id||'chat';nav.querySelectorAll('[data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===active||(active==='maker'||active==='research'||active==='aieyes'||active==='videolab'||active==='prompts')&&b.dataset.go==='explore'));};nav.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));}});document.addEventListener('click',e=>{if(e.target.closest('[data-go]')||e.target.closest('[data-page]'))setTimeout(update,0);});update();})();
-</script>
 <section id="idris-support-links" aria-label="Support and privacy" style="max-width:1040px;margin:28px auto 18px;padding:18px 20px;border:1px solid #e5e9f1;border-radius:16px;background:#fff;color:#26324a;text-align:center">
  <strong style="display:block;font-size:13px;margin-bottom:6px">Need help with IDRIS AI STUDIO?</strong>
  <p style="margin:0 0 12px;color:#738097;font-size:12px">Contact support or read how your information is handled.</p>
@@ -3447,4 +3444,7 @@ window.addEventListener('pagehide',stopCamera);
  <button data-go="vault"><span>▤</span>Library</button>
  <button data-go="about"><span>⚙</span>Settings</button>
 </nav>
+<script>
+(()=>{const nav=document.querySelector('.idris-bottom-nav');if(!nav)return;const update=()=>{const active=document.querySelector('.page.active')?.id||'chat';nav.querySelectorAll('[data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===active||(active==='maker'||active==='research'||active==='aieyes'||active==='videolab'||active==='prompts')&&b.dataset.go==='explore'));};nav.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));}});document.addEventListener('click',e=>{if(e.target.closest('[data-go]')||e.target.closest('[data-page]'))setTimeout(update,0);});update();})();
+</script>
 </body></html>
