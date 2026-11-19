@@ -3447,4 +3447,72 @@ window.addEventListener('pagehide',stopCamera);
 <script>
 (()=>{const nav=document.querySelector('.idris-bottom-nav');if(!nav)return;const update=()=>{const active=document.querySelector('.page.active')?.id||'chat';nav.querySelectorAll('[data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===active||(active==='maker'||active==='research'||active==='aieyes'||active==='videolab'||active==='prompts')&&b.dataset.go==='explore'));};nav.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){const route=document.querySelector('.side [data-page="'+b.dataset.go+'"]');if(route)route.click();nav.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));}});document.addEventListener('click',e=>{if(e.target.closest('[data-go]')||e.target.closest('[data-page]'))setTimeout(update,0);});update();})();
 </script>
+
+<style id="idris-white-green-redesign">
+:root{color-scheme:light;--bg:#f5f8f6;--surface:#ffffff;--surface2:#f0f6f2;--surface3:#e6f1e9;--line:#dce7df;--text:#17251c;--muted:#718078;--mint:#087443;--blue:#267b55;--violet:#45866a;--gold:#a87926;--danger:#c34d58;--shadow:0 12px 34px rgba(24,62,40,.08)}
+html,body{background:#f5f8f6!important;color:#17251c!important}
+body{background:linear-gradient(180deg,#fbfdfb 0%,#f3f7f4 100%)!important}
+button,input,textarea,select{color:#17251c}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline-color:#087443}
+.shell{background:transparent;max-width:1500px;grid-template-columns:258px minmax(0,1fr)}
+.side{background:#fff!important;border-right:1px solid #e1e9e3!important;box-shadow:5px 0 24px rgba(20,55,34,.025);backdrop-filter:none}
+.brand{padding-bottom:25px}
+.brand-symbol,.brand-mark{background:linear-gradient(145deg,#087443,#3d9a68)!important;color:#fff!important;box-shadow:0 7px 20px #08744322!important}
+.brand-name,.brand-copy .brand-name{color:#17251c!important}
+.brand-sub{color:#849188!important}
+.nav-label,.nav-group-label,.sidebar-history-heading{color:#87958b!important}
+.nav button{color:#59685e!important;border-radius:12px}
+.nav button:hover{background:#f0f6f2!important;color:#075b36!important}
+.nav button.active{background:#e5f3e9!important;border-color:#d3e8d9!important;color:#075b36!important}
+.nav button.active .ico{color:#087443}
+.sidebar-search{background:#f6f9f7!important;border:1px solid #e3ebe5!important;color:#718078!important}
+.sidebar-search input{color:#17251c!important}
+.sidebar-search input::placeholder{color:#98a49c}
+.sidebar-new-chat{background:#087443!important;color:#fff!important;border-color:#087443!important}
+.profile,.side-account-row{border-color:#e3ebe5!important}
+.profile small{color:#829087!important}
+.sidebar-guide-link{color:#65736a!important}
+main{background:transparent!important;min-width:0}
+.topbar{background:rgba(255,255,255,.88)!important;border-bottom:1px solid #e4ebe6!important;backdrop-filter:blur(14px)}
+.topbar-overline,.crumb{color:#77857c!important}
+.topbar-edition{color:#849188!important}
+.soft-btn{background:#fff!important;border:1px solid #dce7df!important;color:#526158!important}
+.page{color:#17251c}
+.chat-page{background:transparent!important}
+.chat-stage{max-width:1050px;margin:0 auto;min-height:calc(100vh - 80px)}
+.chat-log-area{padding:clamp(32px,7vh,76px) 22px 24px!important}
+.chat-first-greeting{text-align:center;max-width:680px;margin:0 auto 28px!important}
+.welcome-mark{background:#e5f3e9!important;border:1px solid #d4e9da!important;color:#087443!important;box-shadow:none!important}
+.welcome-kicker{color:#087443!important;letter-spacing:2px}
+.chat-first-greeting h1{color:#17251c!important;font-size:clamp(30px,5vw,46px)!important;line-height:1.13!important;letter-spacing:-1.6px}
+.chat-first-greeting h1 em{color:#087443!important}
+.welcome-subtitle{color:#78867d!important}
+.chat-compose-dock{background:linear-gradient(180deg,rgba(245,248,246,0),#f5f8f6 24%)!important;padding:18px 22px 22px!important}
+.chat-compose{background:#fff!important;border:1px solid #d6e2d9!important;border-radius:20px!important;box-shadow:0 8px 28px rgba(23,65,40,.08)!important}
+.chat-compose textarea{color:#17251c!important}
+.chat-compose textarea::placeholder{color:#98a49c!important}
+.compose-plus,.compose-voice{color:#64756a!important}
+.send-round{background:#087443!important;color:#fff!important;box-shadow:0 5px 14px #08744325}
+.chat-compose-note,.chat-mini-status{color:#89968e!important}
+.chatlog .message,.chatlog .bubble{color:#17251c}
+.panel,.studio-card,.tool-card,.vault-card,.explore-card{background:#fff!important;border-color:#e0e9e3!important;color:#17251c!important;box-shadow:0 8px 24px rgba(20,55,34,.045)}
+input,textarea,select{background:#fff;color:#17251c;border-color:#dce7df}
+input::placeholder,textarea::placeholder{color:#97a39b}
+.primary-btn,.auth-action{background:#087443!important;color:#fff!important;border-color:#087443!important}
+.auth-screen,.auth-wrap{background:#f5f8f6!important}
+.idris-bottom-nav{background:rgba(255,255,255,.96)!important;border-top:1px solid #e0e9e3!important;box-shadow:0 -8px 25px rgba(20,55,34,.05)}
+.idris-bottom-nav button{color:#718078!important}
+.idris-bottom-nav button.active{color:#087443!important}
+@media(max-width:760px){
+ .shell{display:block}
+ .side{background:#fff!important}
+ .topbar{background:rgba(255,255,255,.94)!important}
+ .chat-stage{min-height:calc(100dvh - 68px)}
+ .chat-log-area{padding:34px 16px 20px!important}
+ .chat-compose-dock{padding:12px 12px calc(76px + env(safe-area-inset-bottom))!important}
+ .chat-compose{border-radius:18px!important}
+ .chat-first-greeting h1{font-size:34px!important}
+}
+</style>
+
 </body></html>
