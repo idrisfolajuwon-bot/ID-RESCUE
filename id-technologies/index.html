@@ -3,30 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090d18">
-<meta name="description" content="I D TECHNOLOGIES — a home for products built by I D LABS.">
-<title>I D TECHNOLOGIES — Home</title>
+<meta name="theme-color" content="#080d18">
+<meta name="description" content="I D LABS Platform — one home for AI, communication and digital work.">
+<title>I D LABS Platform</title>
 <style>
-:root{color-scheme:dark;--bg:#090d18;--panel:#111a2b;--line:#26344b;--muted:#9eacc2;--text:#f5f7fb;--blue:#6da8ff;--cyan:#58dfd0}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#142d50 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-.wrap{width:min(1080px,92%);margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid #ffffff18}.brand{font-weight:800;letter-spacing:.12em;font-size:14px}.tag{color:var(--muted);font-size:13px}
-.hero{padding:70px 0 42px;max-width:760px}.eyebrow{color:var(--cyan);font-weight:700;letter-spacing:.16em;font-size:12px;text-transform:uppercase}.hero h1{font-size:clamp(38px,8vw,68px);line-height:1.03;letter-spacing:-.045em;margin:14px 0}.hero p{color:var(--muted);font-size:18px;max-width:620px;margin:18px 0 0}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:26px 0 16px}.section-head h2{font-size:22px;margin:0}.section-head p{color:var(--muted);font-size:13px;margin:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:16px;padding-bottom:50px}.card{background:linear-gradient(145deg,#152238,#0f1726);border:1px solid var(--line);border-radius:20px;padding:23px;min-height:240px;display:flex;flex-direction:column}.icon{width:46px;height:46px;border-radius:14px;background:#23446b;color:#b9d7ff;display:grid;place-items:center;font-weight:900;font-size:18px}.chat .icon{background:#16483f;color:#a6f5e7}.card h3{font-size:22px;margin:18px 0 6px}.card p{color:var(--muted);margin:0 0 20px;font-size:14px}.card a{margin-top:auto;display:inline-flex;align-self:flex-start;text-decoration:none;color:#081321;background:linear-gradient(90deg,var(--blue),var(--cyan));font-weight:800;padding:10px 15px;border-radius:11px;font-size:14px}.status{color:#b8c7dc;font-size:12px;margin-top:12px}
-.note{border-top:1px solid #ffffff18;padding:22px 0 35px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-@media(max-width:560px){.hero{padding:52px 0 30px}.hero p{font-size:16px}.section-head{display:block}.section-head p{margin-top:5px}.card{min-height:220px}}
+:root{color-scheme:dark;--bg:#080d18;--panel:#111a2b;--panel2:#17243a;--line:#26364e;--text:#f4f7fc;--muted:#9cacc3;--blue:#78aaff;--mint:#68e3cf}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -5%,#1a3760 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.shell{width:min(1180px,94%);margin:auto}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff16}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.12em;font-size:14px}.mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(140deg,#82b6ff,#68e3cf);color:#081321;font-weight:950;letter-spacing:-.05em}.topright{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px}.avatar{width:34px;height:34px;border-radius:50%;background:#20334f;display:grid;place-items:center;color:#c7dcff;font-weight:800}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:26px;padding:26px 0 48px}.side{border:1px solid var(--line);background:#0e1726;border-radius:18px;padding:14px;height:max-content;position:sticky;top:16px}.side-label{font-size:10px;color:#8295b1;letter-spacing:.16em;font-weight:800;margin:12px 10px 7px}.nav{display:flex;gap:11px;align-items:center;padding:10px;border-radius:10px;color:#c2cee0;text-decoration:none;font-size:13px}.nav.active{background:#1c3150;color:#fff}.nav span{width:20px;text-align:center;color:var(--mint)}.side-note{border-top:1px solid var(--line);margin-top:14px;padding:13px 9px 4px;color:var(--muted);font-size:11px}
+main{min-width:0}.welcome{padding:18px 0 25px}.eyebrow{color:var(--mint);font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:800}.welcome h1{font-size:clamp(30px,5vw,48px);line-height:1.08;letter-spacing:-.045em;margin:10px 0}.welcome p{max-width:660px;color:var(--muted);margin:0;font-size:15px}
+.banner{border:1px solid #315078;background:linear-gradient(110deg,#172e4d,#14273c 60%,#123b40);border-radius:18px;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px;margin:8px 0 27px}.banner strong{font-size:16px}.banner p{margin:4px 0 0;color:#b6c8dc;font-size:13px}.pill{white-space:nowrap;border:1px solid #5b8a9a;color:#b9fff0;padding:7px 10px;border-radius:999px;font-size:11px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 0 13px}.section-head h2{font-size:19px;margin:0}.section-head p{margin:0;color:var(--muted);font-size:12px}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product{border:1px solid var(--line);background:linear-gradient(145deg,#142137,#101827);border-radius:17px;padding:20px;display:flex;flex-direction:column;min-height:225px}.product-top{display:flex;align-items:center;justify-content:space-between}.product-icon{height:43px;width:43px;border-radius:13px;display:grid;place-items:center;font-size:15px;font-weight:900;background:#24456d;color:#c6ddff}.product.chat .product-icon{background:#16483f;color:#a6f5e7}.product small{color:#9fb0c7;font-size:10px;letter-spacing:.1em;text-transform:uppercase}.product h3{font-size:19px;margin:16px 0 5px}.product p{font-size:13px;color:var(--muted);margin:0 0 18px}.open{display:inline-flex;align-self:flex-start;margin-top:auto;text-decoration:none;background:linear-gradient(90deg,var(--blue),var(--mint));color:#071321;font-weight:850;padding:9px 13px;border-radius:10px;font-size:12px}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.tile{border:1px solid var(--line);background:#101a2a;border-radius:14px;padding:15px}.tile b{display:block;font-size:13px;margin-bottom:4px}.tile p{font-size:11px;color:var(--muted);margin:0}
+.notice{margin-top:23px;border:1px solid #34445d;background:#101827;border-radius:14px;padding:15px;color:var(--muted);font-size:12px}.notice b{color:#e7eef9}
+footer{border-top:1px solid #ffffff16;color:#7f90a8;padding:20px 0 28px;font-size:11px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:760px){.layout{grid-template-columns:1fr;gap:16px}.side{position:static;display:flex;overflow:auto;gap:4px;padding:8px}.side-label,.side-note{display:none}.nav{white-space:nowrap;padding:9px 11px}.nav span{display:none}.tools{grid-template-columns:1fr}.banner{align-items:flex-start;flex-direction:column}}
+@media(max-width:480px){.products{grid-template-columns:1fr}.topright .hint{display:none}.welcome{padding-top:8px}}
 </style>
 </head>
 <body>
-<header class="wrap top"><div class="brand">I D TECHNOLOGIES</div><div class="tag">Explore our products</div></header>
-<main class="wrap">
-<section class="hero"><div class="eyebrow">Technology • Creativity • Connection</div><h1>Ideas built into<br>real products.</h1><p>Welcome to I D TECHNOLOGIES — one place to discover the digital products being built by our team. Choose a product below to explore it.</p></section>
-<section aria-labelledby="products"><div class="section-head"><h2 id="products">Our products</h2><p>Two projects. One growing technology family.</p></div>
-<div class="grid">
-<article class="card"><div class="icon">AI</div><h3>IDRIS AI STUDIO</h3><p>An AI workspace for conversations, creative work, image understanding, document tools and research.</p><a href="../studio/">Open AI Studio</a><div class="status">AI assistant and creative workspace</div></article>
-<article class="card chat"><div class="icon">C</div><h3>CHATDUN</h3><p>A messaging project focused on chats, updates, contacts and calls, with username-based identity and private phone numbers.</p><a href="https://idrisfolajuwon-bot.github.io/chatdun/" target="_blank" rel="noopener">Open ChatDun</a><div class="status">Messaging project by I D LABS</div></article>
+<header class="shell"><div class="brand"><div class="mark">ID</div><span>I D LABS</span></div><div class="topright"><span class="hint">PLATFORM PREVIEW</span><div class="avatar">ID</div></div></header>
+<div class="shell layout">
+<aside class="side" aria-label="Platform navigation">
+<div class="side-label">PLATFORM</div>
+<a class="nav active" href="#overview"><span>⌂</span>Overview</a>
+<a class="nav" href="#products"><span>▦</span>My products</a>
+<a class="nav" href="#workspace"><span>▤</span>Workspace</a>
+<a class="nav" href="#account"><span>◎</span>Account</a>
+<div class="side-note">One ecosystem for products built under I D LABS.</div>
+</aside>
+<main id="overview">
+<section class="welcome"><div class="eyebrow">One ecosystem · many possibilities</div><h1>Your digital world,<br>in one place.</h1><p>Welcome to the I D LABS Platform. Discover your products, open your tools and bring your digital work together from one central home.</p></section>
+<section class="banner"><div><strong>Welcome to I D LABS Platform</strong><p>Your central starting point for AI, communication and digital projects.</p></div><div class="pill">PLATFORM PREVIEW</div></section>
+<section id="products"><div class="section-head"><h2>Your products</h2><p>Open a product to continue</p></div>
+<div class="products">
+<article class="product"><div class="product-top"><div class="product-icon">AI</div><small>AI · CREATION</small></div><h3>IDRIS AI STUDIO</h3><p>Your AI workspace for conversations, creative tools, image understanding, documents and research.</p><a class="open" href="../studio/">Open AI Studio ↗</a></article>
+<article class="product chat"><div class="product-top"><div class="product-icon">C</div><small>COMMUNICATION</small></div><h3>CHATDUN</h3><p>Your messaging project for chats, updates, contacts and communication features.</p><a class="open" href="https://idrisfolajuwon-bot.github.io/chatdun/" target="_blank" rel="noopener">Open ChatDun ↗</a></article>
 </div></section>
+<section id="workspace" style="margin-top:28px"><div class="section-head"><h2>Platform workspace</h2><p>Central tools</p></div><div class="tools">
+<div class="tile"><b>My projects</b><p>A future home for your work and project shortcuts.</p></div>
+<div class="tile"><b>Discover</b><p>Find more tools and products as the ecosystem grows.</p></div>
+<div class="tile"><b>Activity</b><p>A future place to see updates across connected products.</p></div>
+</div></section>
+<section id="account" class="notice"><b>Account and connected services</b><br>This first platform version is a central product hub. Shared sign-in, synced profiles and cross-product data are not active yet; they need a secure account service and careful integration before they can be switched on.</section>
 </main>
-<footer class="wrap note"><span>I D TECHNOLOGIES</span><span>Built with care by I D LABS.</span></footer>
+</div>
+<footer class="shell"><span>I D LABS · PLATFORM</span><span>Built for ideas that grow into products.</span></footer>
 </body>
 </html>
