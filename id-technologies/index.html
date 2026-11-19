@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d18">
+<meta name="description" content="I D TECHNOLOGIES — a home for products built by I D LABS.">
+<title>I D TECHNOLOGIES — Home</title>
+<style>
+:root{color-scheme:dark;--bg:#090d18;--panel:#111a2b;--line:#26344b;--muted:#9eacc2;--text:#f5f7fb;--blue:#6da8ff;--cyan:#58dfd0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#142d50 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{width:min(1080px,92%);margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid #ffffff18}.brand{font-weight:800;letter-spacing:.12em;font-size:14px}.tag{color:var(--muted);font-size:13px}
+.hero{padding:70px 0 42px;max-width:760px}.eyebrow{color:var(--cyan);font-weight:700;letter-spacing:.16em;font-size:12px;text-transform:uppercase}.hero h1{font-size:clamp(38px,8vw,68px);line-height:1.03;letter-spacing:-.045em;margin:14px 0}.hero p{color:var(--muted);font-size:18px;max-width:620px;margin:18px 0 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:26px 0 16px}.section-head h2{font-size:22px;margin:0}.section-head p{color:var(--muted);font-size:13px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:16px;padding-bottom:50px}.card{background:linear-gradient(145deg,#152238,#0f1726);border:1px solid var(--line);border-radius:20px;padding:23px;min-height:240px;display:flex;flex-direction:column}.icon{width:46px;height:46px;border-radius:14px;background:#23446b;color:#b9d7ff;display:grid;place-items:center;font-weight:900;font-size:18px}.chat .icon{background:#16483f;color:#a6f5e7}.card h3{font-size:22px;margin:18px 0 6px}.card p{color:var(--muted);margin:0 0 20px;font-size:14px}.card a{margin-top:auto;display:inline-flex;align-self:flex-start;text-decoration:none;color:#081321;background:linear-gradient(90deg,var(--blue),var(--cyan));font-weight:800;padding:10px 15px;border-radius:11px;font-size:14px}.status{color:#b8c7dc;font-size:12px;margin-top:12px}
+.note{border-top:1px solid #ffffff18;padding:22px 0 35px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:560px){.hero{padding:52px 0 30px}.hero p{font-size:16px}.section-head{display:block}.section-head p{margin-top:5px}.card{min-height:220px}}
+</style>
+</head>
+<body>
+<header class="wrap top"><div class="brand">I D TECHNOLOGIES</div><div class="tag">Explore our products</div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Technology • Creativity • Connection</div><h1>Ideas built into<br>real products.</h1><p>Welcome to I D TECHNOLOGIES — one place to discover the digital products being built by our team. Choose a product below to explore it.</p></section>
+<section aria-labelledby="products"><div class="section-head"><h2 id="products">Our products</h2><p>Two projects. One growing technology family.</p></div>
+<div class="grid">
+<article class="card"><div class="icon">AI</div><h3>IDRIS AI STUDIO</h3><p>An AI workspace for conversations, creative work, image understanding, document tools and research.</p><a href="../studio/">Open AI Studio</a><div class="status">AI assistant and creative workspace</div></article>
+<article class="card chat"><div class="icon">C</div><h3>CHATDUN</h3><p>A messaging project focused on chats, updates, contacts and calls, with username-based identity and private phone numbers.</p><a href="https://idrisfolajuwon-bot.github.io/chatdun/" target="_blank" rel="noopener">Open ChatDun</a><div class="status">Messaging project by I D LABS</div></article>
+</div></section>
+</main>
+<footer class="wrap note"><span>I D TECHNOLOGIES</span><span>Built with care by I D LABS.</span></footer>
+</body>
+</html>
