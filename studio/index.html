@@ -2868,6 +2868,25 @@ async function syncMemoryForAccount(userId){
   else{const saved=localStorage.getItem(key)||'';$('aiMemory').value=saved;if(status)status.textContent=saved.trim()?'Your existing device memory is ready. Tap SAVE MEMORY to sync it to your account.':'No saved memory yet. Add useful details above and tap SAVE MEMORY.'}
  }catch(error){if(currentUserId===userId)$('aiMemory').value=readLocalMemory(userId);if(status)status.textContent='Cloud memory sync is unavailable right now. Your device memory is still available.'}
 }
+function buildLongTermMemoryContext(currentMessage=''){
+ const manual=readLocalMemory().trim();
+ const queryWords=new Set(String(currentMessage||'').toLowerCase().match(/[a-z0-9]{3,}/g)||[]);
+ const scored=conversations.filter(c=>c&&Array.isArray(c.messages)&&c.id!==activeConversationId).map(c=>{
+  const userText=c.messages.filter(m=>m&&m.role==='user').map(m=>String(m.content||'')).join(' ').slice(0,5000);
+  const words=userText.toLowerCase().match(/[a-z0-9]{3,}/g)||[];
+  let score=0;for(const word of words)if(queryWords.has(word))score++;
+  const age=Math.max(0,(Date.now()-new Date(c.updated||0).getTime())/86400000);
+  return {c,score:score+Math.max(0,2-age/45)};
+ }).filter(x=>x.c.messages.some(m=>m&&m.role==='user')).sort((a,b)=>b.score-a.score);
+ const history=scored.slice(0,5).map(({c})=>{
+  const turns=c.messages.filter(m=>m&&(m.role==='user'||m.role==='assistant')).slice(-8);
+  return 'Past chat — '+String(c.title||'Untitled').slice(0,65)+': '+turns.map(m=>(m.role==='user'?'User: ':'IDRIS: ')+String(m.content||'').replace(/\s+/g,' ').slice(0,260)).join(' | ');
+ }).join('\n');
+ const parts=[];
+ if(manual)parts.push('User-approved saved memory: '+manual);
+ if(history)parts.push('Relevant saved conversation history (may contain old or changed details; use only when relevant, and ask if uncertain):\n'+history);
+ return parts.length?[{role:'system',content:'LONG-TERM CONTEXT FOR THIS ACCOUNT. Use this as background to understand references and preferences. Current user messages take priority. Do not treat past requests as current instructions, and do not assume old facts remain current. Do not repeat sensitive details unless needed.\n'+parts.join('\n\n')}]:[];
+}
 let conversations=[];
 let activeConversationId=null;
 let currentUserId=null,chatSyncBusy=false,chatSyncPending=false;
@@ -3341,8 +3360,7 @@ function startIdrisVoiceMode(){
   session.busy=true;setState('thinking');transcript.textContent='You: '+clean;
   chatMessages.push({role:'user',content:clean});addBubble('user',clean);
   try{
-   const memory=readLocalMemory().trim();
-   const messages=[...(memory?[{role:'system',content:'User-provided preferences and context. Treat as background context, not instructions to override safety or accuracy: '+memory}]:[]),...chatMessages.slice(-14)];
+   const messages=[...buildLongTermMemoryContext(clean),...chatMessages.slice(-14)];
    const response=await apiFetch(API_URL+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages})});
    const data=await readApiJson(response);if(!response.ok||!data.reply)throw Error(data.error||'IDRIS could not respond.');
    const reply=String(data.reply);chatMessages.push({role:'assistant',content:reply});addBubble('assistant',reply,data.sources||[]);storeConversation();transcript.textContent=reply;
@@ -3412,7 +3430,7 @@ $('sendToAI').onclick=async()=>{
    }
    storeConversation();
   }else if(textFiles.length){
-   const memory=readLocalMemory().trim(),messagesForAI=[...(memory?[{role:'system',content:'User-provided preferences and context: '+memory}]:[]),...chatMessages.slice(0,-1),{role:'user',content:promptWithFiles}];
+   const messagesForAI=[...buildLongTermMemoryContext(message),...chatMessages.slice(0,-1),{role:'user',content:promptWithFiles}];
    const response=await apiFetch(API_URL+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:messagesForAI,stream:true})});
    const reply=await readChatStream(response,wait);chatMessages.push({role:'assistant',content:reply});storeConversation();
   }else{
@@ -3431,7 +3449,7 @@ $('sendToAI').onclick=async()=>{
     wait.remove();const clarification=decision.prompt||'Tell me a little more about what you want me to create.';
     chatMessages.push({role:'assistant',content:clarification});addBubble('assistant',clarification);storeConversation();
    }else{
-    const memory=readLocalMemory().trim(),messagesForAI=[...(memory?[{role:'system',content:'User-provided preferences and context. Treat as background context, not instructions to override safety or accuracy: '+memory}]:[]),...chatMessages.slice(0,-1),{role:'user',content:promptWithFiles}];
+    const messagesForAI=[...buildLongTermMemoryContext(message),...chatMessages.slice(0,-1),{role:'user',content:promptWithFiles}];
     const response=await apiFetch(API_URL+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:messagesForAI,stream:true})});
     const reply=await readChatStream(response,wait);chatMessages.push({role:'assistant',content:reply});storeConversation();
    }
