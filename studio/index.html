@@ -2384,6 +2384,15 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
+<style id="idris-inline-site-preview">
+.site-preview-card{width:min(100%,760px);margin:17px 0 5px;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fff;color:#202123;box-shadow:0 3px 14px rgba(0,0,0,.045)}
+.site-preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border-bottom:1px solid #eceef2;background:#fafafa}
+.site-preview-label{display:grid;gap:3px;min-width:0}.site-preview-label span{font-size:9px;font-weight:850;letter-spacing:1.1px;color:#596579}.site-preview-label small{font-size:11px;color:#858b98;overflow-wrap:anywhere}
+.site-preview-open{flex:0 0 auto;color:#fff!important;background:#202123;border-radius:8px;padding:8px 10px;text-decoration:none!important;font-size:10px;font-weight:750}
+.site-preview-frame-wrap{position:relative;background:#f3f4f6;min-height:190px}.site-preview-frame{display:block;width:100%;height:clamp(250px,48vw,430px);border:0;background:#fff}
+.site-preview-fallback{padding:18px;text-align:center;color:#596579;font-size:12px;line-height:1.6;background:#f7f7f8}.site-preview-fallback[hidden]{display:none}
+@media(max-width:650px){.site-preview-card{border-radius:11px;margin-top:13px}.site-preview-head{padding:10px}.site-preview-open{font-size:9px;padding:8px}.site-preview-frame{height:310px}}
+</style>
 </head>
 <body>
 <div id="authGate"><div class="auth-card"><div class="auth-brand">IDRIS AI STUDIO <span style="color:#7185a8">/ I D LABS</span></div><h1 id="authHeading">Welcome back</h1><p id="authIntro">Sign in to continue to your AI workspace.</p><form id="authForm"><div id="authNameWrap" hidden><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Name"></div><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"><button class="auth-action" id="authSubmit" type="submit">Sign in</button></form><button class="auth-action auth-google" id="authGoogle" type="button">Continue with Google</button><div class="auth-error" id="authError" role="status"></div><div class="auth-links"><button id="authSwitch" type="button">Create account</button><button id="authForgot" type="button">Forgot password?</button></div><div class="auth-note">Your password is handled securely by Supabase. Never share it with anyone.</div></div></div>
@@ -3040,6 +3049,39 @@ async function checkAI(){
  try{const r=await apiFetch(API_URL+'/health',{cache:'no-store'});const d=await readApiJson(r);if(!r.ok||!d.ok)throw Error();const model=String(d.chat_model||'').toLowerCase().includes('gemma-4')?'Gemma 4 26B':'Live AI';setAIStatus(true,model+' engine connected.');}
  catch{setAIStatus(false,'The backend is deployed, but the health check did not complete. Try again shortly.');}
 }
+function appendWebsitePreview(messageElement,messageText){
+ const text=String(messageText||'');
+ const creationContext=/\\b(created|built|published|deployed|launched|website|web\\s?app|landing page|live site|your site|your app)\\b/i.test(text);
+ if(!creationContext)return;
+ const matches=text.match(/https?:\\/\\/[^\\s<>"'\\])}]+/gi)||[];
+ let target=null;
+ for(const raw of matches){
+  try{
+   const candidate=new URL(raw.replace(/[.,;!?]+$/,''));
+   if(!['http:','https:'].includes(candidate.protocol)||candidate.username||candidate.password)continue;
+   const host=candidate.hostname.toLowerCase();
+   if(host==='localhost'||host.endsWith('.localhost')||host.endsWith('.local')||/^127\\./.test(host)||/^10\\./.test(host)||/^192\\.168\\./.test(host)||/^169\\.254\\./.test(host)||/^172\\.(1[6-9]|2[0-9]|3[01])\\./.test(host))continue;
+   target=candidate.href;break;
+  }catch{}
+ }
+ if(!target)return;
+ const site=new URL(target),card=document.createElement('section');card.className='site-preview-card';
+ const head=document.createElement('div');head.className='site-preview-head';
+ const label=document.createElement('div');label.className='site-preview-label';
+ const eyebrow=document.createElement('span');eyebrow.textContent='LIVE WEBSITE PREVIEW';
+ const host=document.createElement('small');host.textContent=site.hostname;
+ label.append(eyebrow,host);
+ const open=document.createElement('a');open.className='site-preview-open';open.href=target;open.target='_blank';open.rel='noopener noreferrer';open.textContent='Open live site ↗';
+ head.append(label,open);
+ const frameWrap=document.createElement('div');frameWrap.className='site-preview-frame-wrap';
+ const frame=document.createElement('iframe');frame.className='site-preview-frame';frame.src=target;frame.title='Visual preview of '+site.hostname;frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin');
+ const fallback=document.createElement('div');fallback.className='site-preview-fallback';fallback.textContent='This website does not allow an embedded preview. Open the live site to view it.';fallback.hidden=true;
+ let loaded=false;
+ const timer=window.setTimeout(()=>{if(!loaded)fallback.hidden=false;},9000);
+ frame.addEventListener('load',()=>{loaded=true;fallback.hidden=true;window.clearTimeout(timer);},{once:true});
+ frame.addEventListener('error',()=>{fallback.hidden=false;window.clearTimeout(timer);});
+ frameWrap.append(frame,fallback);card.append(head,frameWrap);messageElement.appendChild(card);
+}
 function addBubble(role,text,sources=[]){
  $('chat')?.classList.add('has-messages');
  const el=document.createElement('div');
@@ -3062,7 +3104,7 @@ function addBubble(role,text,sources=[]){
   closeList();el.innerHTML=htmlOut;
   if(Array.isArray(sources)&&sources.length){const box=document.createElement('div');box.style.cssText='margin-top:12px;padding-top:10px;border-top:1px solid #e5e9f1;font-size:11px;display:grid;gap:7px';const label=document.createElement('strong');label.textContent='Sources';label.style.color='#6657d9';box.appendChild(label);sources.slice(0,5).forEach((source,index)=>{try{const u=new URL(source.url);if(!['https:','http:'].includes(u.protocol))return;const a=document.createElement('a');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='['+(index+1)+'] '+String(source.title||u.hostname).slice(0,110);a.style.cssText='color:#4c65b7;text-decoration:underline;overflow-wrap:anywhere';box.appendChild(a)}catch{}});if(box.children.length>1)el.appendChild(box);}
  }
- $('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
+ appendWebsitePreview(el,text);$('chatLog').appendChild(el);$('chatLog').scrollTop=$('chatLog').scrollHeight;
 }
 async function readChatStream(response,wait){
  if(!response.ok){const d=await readApiJson(response);throw Error(d.error||'The AI could not respond.');}
