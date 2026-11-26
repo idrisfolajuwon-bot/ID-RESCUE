@@ -2573,7 +2573,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
     <label class="field-label" for="artName">WHAT SHOULD IDRIS CREATE?</label><input id="artName" maxlength="240" placeholder="e.g. A futuristic white Mercedes on a Lagos street at night">
     <label class="field-label" for="artDesc">EXTRA DETAILS</label><textarea id="artDesc" maxlength="500" placeholder="Style, lighting, mood, background, camera angle…"></textarea>
     <div class="row"><div><label class="field-label" for="artPalette">STYLE</label><select id="artPalette"><option value="photorealistic">Photorealistic</option><option value="cinematic">Cinematic</option><option value="digital art">Digital art</option><option value="illustration">Illustration</option></select></div><div><label class="field-label" for="artShape">FORMAT</label><select id="artShape"><option value="square">Square</option><option value="portrait">Portrait</option><option value="wide">Landscape</option></select></div></div>
-    <div class="actions"><button class="primary-btn" id="generateAIImage">✦ GENERATE IMAGE</button><button class="soft-btn" id="renderArt">USE TEMPLATE</button></div>
+    <div class="actions"><button class="primary-btn" id="generateAIImage">✦ GENERATE IMAGE</button><button class="soft-btn" id="generateSchnellImage">✦ TEST FLUX.1 SCHNELL</button><button class="soft-btn" id="renderArt">USE TEMPLATE</button></div>
     <p class="muted small">AI generation runs through the secure IDRIS AI backend. Generation availability depends on your connected Workers AI account limits.</p>
    </div>
    <div class="panel"><h2>YOUR AI CREATION</h2><div class="preview-wrap" id="artPreview"><div class="preview-empty">Your generated image will appear here.</div></div><div class="actions"><button class="soft-btn" id="saveArt">SAVE TO VAULT</button><button class="primary-btn" id="downloadPng">DOWNLOAD PNG</button></div><p class="muted small" id="imageStatus">Ready when you are.</p></div>
@@ -3029,8 +3029,27 @@ $('generateAIImage').onclick=async()=>{
  }catch(err){$('artPreview').innerHTML='<div class="preview-empty">Could not generate the image.</div>';status.textContent=err.message||'Generation failed.';toast(status.textContent)}
  finally{btn.disabled=false;btn.textContent='✦ GENERATE IMAGE'}
 };
+$('generateSchnellImage').onclick=async()=>{
+ const prompt=$('artName').value.trim(),details=$('artDesc').value.trim(),style=$('artPalette').value,btn=$('generateSchnellImage'),status=$('imageStatus');
+ if(!prompt)return toast('Describe the image you want first.');
+ const humanSubject=/\\b(person|people|human|man|woman|boy|girl|child|children|face|portrait|model|family|couple|friend|soldier|player|footballer|artist|personnel|character)\\b/i.test(prompt+' '+details);
+ const photoStyle=style==='photorealistic'||style==='cinematic';
+ const realismGuide=photoStyle?'Create a highly realistic photographic image with believable materials, natural lighting, accurate perspective, lifelike detail and realistic shadows.':'';
+ const humanGuide=humanSubject&&photoStyle?'If a human is shown, use natural facial features, realistic skin texture, believable eyes, natural hair, accurate hands and fingers, and anatomically correct proportions.':'';
+ const fullPrompt=[prompt,details,style?'Visual style: '+style:'',realismGuide,humanGuide,'Respect the requested subject and composition; do not add text, logos or extra people unless requested.'].filter(Boolean).join('. ');
+ btn.disabled=true;btn.textContent='TESTING…';status.textContent='Testing FLUX.1 Schnell…';
+ $('artPreview').innerHTML='<div class="preview-empty">Testing the FLUX.1 Schnell model… This can take a moment.</div>';
+ try{
+  const r=await apiFetch(API_URL+'/image-schnell-test',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:fullPrompt,steps:4})});
+  if(!r.ok){let msg='FLUX.1 Schnell test failed.';try{const d=await readApiJson(r);msg=d.error||msg}catch{}throw Error(msg)}
+  generatedImageBlob=await r.blob();generatedImageUrl=URL.createObjectURL(generatedImageBlob);
+  $('artPreview').innerHTML='<img id="generatedImage" alt="FLUX.1 Schnell test image">';
+  $('generatedImage').src=generatedImageUrl;status.textContent='FLUX.1 Schnell test image created successfully.';
+ }catch(err){$('artPreview').innerHTML='<div class="preview-empty">Could not generate the test image.</div>';status.textContent=err.message||'FLUX.1 Schnell test failed.';toast(status.textContent)}
+ finally{btn.disabled=false;btn.textContent='✦ TEST FLUX.1 SCHNELL'}
+};
 $('downloadPng').onclick=()=>{
- if(generatedImageBlob){download('idris-ai-image.png',generatedImageBlob);toast('Image downloaded.');return}
+ if(generatedImageBlob){const ext=generatedImageBlob.type==='image/jpeg'?'jpg':'png';download('idris-ai-image.'+ext,generatedImageBlob);toast('Image downloaded.');return}
  toast('Generate an AI image first.');
 };
 $('saveArt').onclick=()=>{
