@@ -2571,7 +2571,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   <div class="grid">
    <div class="panel"><h2>CREATE YOUR IMAGE</h2>
     <label class="field-label" for="artName">WHAT SHOULD IDRIS CREATE?</label><input id="artName" maxlength="240" placeholder="e.g. A futuristic white Mercedes on a Lagos street at night">
-    <label class="field-label" for="artDesc">EXTRA DETAILS</label><textarea id="artDesc" maxlength="500" placeholder="Style, lighting, mood, background, camera angle…"></textarea>
+    <label class="field-label" for="artDesc">EXTRA DETAILS</label><textarea id="artDesc" maxlength="500" placeholder="Style, lighting, mood, background, camera angle…"></textarea><div class="actions"><button class="soft-btn" id="enhanceArtPrompt" type="button">✦ SMART PROMPT BOOST</button><span class="muted small">Runs on your device. No image credits used.</span></div>
     <div class="row"><div><label class="field-label" for="artPalette">STYLE</label><select id="artPalette"><option value="photorealistic">Photorealistic</option><option value="cinematic">Cinematic</option><option value="digital art">Digital art</option><option value="illustration">Illustration</option></select></div><div><label class="field-label" for="artShape">FORMAT</label><select id="artShape"><option value="square">Square</option><option value="portrait">Portrait</option><option value="wide">Landscape</option></select></div></div>
     <div class="actions"><button class="primary-btn" id="generateAIImage">✦ GENERATE IMAGE</button><button class="soft-btn" id="generateSchnellImage">✦ TEST FLUX.1 SCHNELL</button><button class="soft-btn" id="renderArt">USE TEMPLATE</button></div>
     <p class="muted small">AI generation runs through the secure IDRIS AI backend. Generation availability depends on your connected Workers AI account limits.</p>
@@ -3006,6 +3006,18 @@ $('downloadPng').onclick=()=>{if(!currentSvg)renderArt();const blob=new Blob([cu
 
 // Real AI image generation
 let generatedImageUrl='',generatedImageBlob=null;
+$('enhanceArtPrompt').onclick=()=>{
+ const idea=$('artName').value.trim(),details=$('artDesc').value.trim(),style=$('artPalette').value,shape=$('artShape').value;
+ if(!idea)return toast('Add your main image idea first.');
+ const marker='[IDRIS SMART PROMPT BOOST]';
+ const base=details.split(marker)[0].trim();
+ const shapeGuide=shape==='portrait'?'Use a vertical portrait composition with a clear focal subject and balanced headroom.':shape==='wide'?'Use a wide landscape composition with a balanced foreground, middle ground and background.':'Use a balanced square composition with the main subject clearly framed.';
+ const styleGuide=style==='photorealistic'?'Aim for convincing real-world photography: natural light, realistic materials and textures, accurate perspective, fine details and believable shadows.':style==='cinematic'?'Use cinematic composition, intentional lighting, atmospheric depth, rich but natural colour and a clear visual focal point.':style==='illustration'?'Use a polished illustration style, clean intentional shapes, coherent details and a consistent visual language.':'Use a refined digital-art finish, detailed forms, coherent lighting and a deliberate colour palette.';
+ const boost='Keep the original subject and requested details as the priority. '+shapeGuide+' '+styleGuide+' Make the scene visually coherent, with clear subject-background separation and no unnecessary clutter. Do not invent extra objects, people, text or logos unless requested.';
+ $('artDesc').value=[base,marker,boost].filter(Boolean).join('\n\n').slice(0,500);
+ $('imageStatus').textContent='Prompt boosted locally. No image-generation credits used.';
+ toast('Smart Prompt Boost added.');
+};
 $('generateAIImage').onclick=async()=>{
  const prompt=$('artName').value.trim(),details=$('artDesc').value.trim(),style=$('artPalette').value,shape=$('artShape').value,btn=$('generateAIImage'),status=$('imageStatus');
  if(!prompt)return toast('Describe the image you want first.');
