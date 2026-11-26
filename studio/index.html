@@ -3051,16 +3051,16 @@ async function checkAI(){
 }
 function appendWebsitePreview(messageElement,messageText){
  const text=String(messageText||'');
- const creationContext=/\\b(created|built|published|deployed|launched|website|web\\s?app|landing page|live site|your site|your app)\\b/i.test(text);
+ const creationContext=/\b(created|built|published|deployed|launched|website|web\s?app|landing page|live site|your site|your app)\b/i.test(text);
  if(!creationContext)return;
- const matches=text.match(/https?:\\/\\/[^\\s<>"'\\])}]+/gi)||[];
+ const matches=text.match(/https?:\/\/\S+/gi)||[];
  let target=null;
  for(const raw of matches){
   try{
-   const candidate=new URL(raw.replace(/[.,;!?]+$/,''));
+   const candidate=new URL(raw.replace(/[),.;!?]+$/,''));
    if(!['http:','https:'].includes(candidate.protocol)||candidate.username||candidate.password)continue;
    const host=candidate.hostname.toLowerCase();
-   if(host==='localhost'||host.endsWith('.localhost')||host.endsWith('.local')||/^127\\./.test(host)||/^10\\./.test(host)||/^192\\.168\\./.test(host)||/^169\\.254\\./.test(host)||/^172\\.(1[6-9]|2[0-9]|3[01])\\./.test(host))continue;
+   if(host==='localhost'||host.endsWith('.localhost')||host.endsWith('.local')||/^127\./.test(host)||/^10\./.test(host)||/^192\.168\./.test(host)||/^169\.254\./.test(host)||/^172\.(1[6-9]|2[0-9]|3[01])\./.test(host))continue;
    target=candidate.href;break;
   }catch{}
  }
@@ -3075,11 +3075,7 @@ function appendWebsitePreview(messageElement,messageText){
  head.append(label,open);
  const frameWrap=document.createElement('div');frameWrap.className='site-preview-frame-wrap';
  const frame=document.createElement('iframe');frame.className='site-preview-frame';frame.src=target;frame.title='Visual preview of '+site.hostname;frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin');
- const fallback=document.createElement('div');fallback.className='site-preview-fallback';fallback.textContent='This website does not allow an embedded preview. Open the live site to view it.';fallback.hidden=true;
- let loaded=false;
- const timer=window.setTimeout(()=>{if(!loaded)fallback.hidden=false;},9000);
- frame.addEventListener('load',()=>{loaded=true;fallback.hidden=true;window.clearTimeout(timer);},{once:true});
- frame.addEventListener('error',()=>{fallback.hidden=false;window.clearTimeout(timer);});
+ const fallback=document.createElement('div');fallback.className='site-preview-fallback';fallback.textContent='If the preview is blank, this website may block embedding. Use “Open live site” above to view it.';
  frameWrap.append(frame,fallback);card.append(head,frameWrap);messageElement.appendChild(card);
 }
 function addBubble(role,text,sources=[]){
