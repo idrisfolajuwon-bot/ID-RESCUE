@@ -3074,7 +3074,7 @@ function appendWebsitePreview(messageElement,messageText){
  const open=document.createElement('a');open.className='site-preview-open';open.href=target;open.target='_blank';open.rel='noopener noreferrer';open.textContent='Open live site ↗';
  head.append(label,open);
  const frameWrap=document.createElement('div');frameWrap.className='site-preview-frame-wrap';
- const frame=document.createElement('iframe');frame.className='site-preview-frame';frame.src=target;frame.title='Visual preview of '+site.hostname;frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin');
+ const frame=document.createElement('iframe');frame.className='site-preview-frame';frame.src=target;frame.title='Visual preview of '+site.hostname;frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox');
  const fallback=document.createElement('div');fallback.className='site-preview-fallback';fallback.textContent='If the preview is blank, this website may block embedding. Use “Open live site” above to view it.';
  frameWrap.append(frame,fallback);card.append(head,frameWrap);messageElement.appendChild(card);
 }
