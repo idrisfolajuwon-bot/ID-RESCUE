@@ -3858,10 +3858,45 @@ input::placeholder,textarea::placeholder{color:#888!important}
  const currentCode=()=>String($('abCode').value||'').trim();
  const validHtml=value=>/^<!doctype html>/i.test(value)&&/<\/html>\s*$/i.test(value); const withPreviewPolicy=code=>{const p='<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src https: data: blob:; font-src data:; media-src data: blob:; connect-src \'none\'; form-action \'none\'; frame-src \'none\'; object-src \'none\'; base-uri \'none\'">';const i=code.toLowerCase().indexOf('<head');const e=i>=0?code.indexOf('>',i):-1;return e>=0?code.slice(0,e+1)+p+code.slice(e+1):'<!doctype html><html><head>'+p+'</head><body>'+code+'</body></html>'};
  const updateCode=()=>{const code=currentCode(),count=$('abCodeCount');if(count)count.textContent=code.length.toLocaleString()+' characters';$('abImprove').disabled=!code||busy;$('abPreviewButton').disabled=!validHtml(code)||busy;$('abPublish').disabled=!validHtml(code)||busy;$('abDownload').disabled=!validHtml(code);$('abCopy').disabled=!code;$('abSaveVault').disabled=!validHtml(code)};
- const request=async(path,payload)=>{if(typeof window.idrisApiFetch!=='function')throw new Error('The Studio API is not ready. Refresh the page and sign in again.');const response=await window.idrisApiFetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload||{})});let data={};try{data=await response.json()}catch{}if(!response.ok)throw new Error(data.error||'Request failed (HTTP '+response.status+').');return data};
+ const request=async(path,payload)=>{
+  if(typeof window.idrisApiFetch!=='function')throw new Error('The Studio API is not ready. Refresh the page and sign in again.');
+  const response=await window.idrisApiFetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload||{})});
+  const type=(response.headers.get('content-type')||'').toLowerCase();
+  if(type.includes('text/event-stream')){
+   if(!response.ok)throw new Error('The generation request failed (HTTP '+response.status+').');
+   const reader=response.body.getReader(),decoder=new TextDecoder();
+   let buffer='',result=null,streamError='';
+   const consume=line=>{
+    if(!line.startsWith('data:'))return;
+    const raw=line.slice(5).trim();
+    if(!raw||raw==='[DONE]')return;
+    let data;try{data=JSON.parse(raw)}catch{return}
+    if(data.type==='progress'){
+     const count=Number(data.characters||0);
+     status(count?'IDRIS is writing your app · '+count.toLocaleString()+' characters received…':'IDRIS is starting your app…');
+     return;
+    }
+    if(data.type==='error'){streamError=String(data.error||'App generation failed.');return}
+    if(data.type==='done')result=data;
+   };
+   while(true){
+    const part=await reader.read();if(part.done)break;
+    buffer+=decoder.decode(part.value,{stream:true});
+    const lines=buffer.split(/\r?\n/);buffer=lines.pop()||'';
+    for(const line of lines)consume(line);
+   }
+   buffer+=decoder.decode();if(buffer.trim())consume(buffer.trim());
+   if(streamError)throw new Error(streamError);
+   if(!result)throw new Error('The app-generation stream ended before a complete app arrived. Your prompt is still here; try again.');
+   return result;
+  }
+  let data={};try{data=await response.json()}catch{}
+  if(!response.ok)throw new Error(data.error||'Request failed (HTTP '+response.status+').');
+  return data;
+ };
  const setBusy=value=>{busy=value;$('abGenerate').disabled=value;$('abImprove').disabled=value||!currentCode();$('abPublish').disabled=value||!validHtml(currentCode());$('abPreviewButton').disabled=value||!validHtml(currentCode());$('abRefresh').disabled=value};
  const preview=()=>{const code=currentCode();if(!validHtml(code)){status('Generate a complete app before previewing it.','error');return false}generatedHtml=code;$('abPreview').srcdoc=withPreviewPolicy(code);$('abPreviewEmpty').hidden=true;$('abPreviewState').textContent='Preview loaded';status('Preview loaded in an isolated browser frame. Test the buttons and forms here.','success');updateCode();return true};
- const generate=async improve=>{if(busy)return;const prompt=$('abPrompt').value.trim(),title=$('abTitle').value.trim()||'My New App';if(!prompt){status('Describe the app you want first.','error');$('abPrompt').focus();return}if(improve&&!currentCode()){status('Generate an app before asking for improvements.','error');return}setBusy(true);status(improve?'IDRIS AI is improving your app…':'IDRIS AI is building your app…');$('abPreviewEmpty').hidden=false;$('abPreviewEmpty').querySelector('b').textContent='Building your app';$('abPreviewEmpty').querySelector('span').textContent='The AI is writing the code. Your previous code will be replaced only when a complete result is ready.';try{const result=await request('/app-builder/generate',{title:title,prompt:prompt,html:improve?currentCode():''});if(!validHtml(String(result.html||'')))throw new Error('The AI response was not a complete HTML document. Try again.');generatedHtml=result.html;$('abCode').value=generatedHtml;updateCode();preview();status('Your app code is ready. Preview it, make changes, then publish when it looks right.','success');}catch(error){status(error.message||'App generation failed.','error');$('abPreviewEmpty').hidden=false;$('abPreviewEmpty').querySelector('b').textContent='No preview yet';$('abPreviewEmpty').querySelector('span').textContent='Try another description or generate again.'}finally{setBusy(false);updateCode()}};
+ const generate=async improve=>{if(busy)return;const prompt=$('abPrompt').value.trim(),title=$('abTitle').value.trim()||'My New App';if(!prompt){status('Describe the app you want first.','error');$('abPrompt').focus();return}if(improve&&!currentCode()){status('Generate an app before asking for improvements.','error');return}setBusy(true);status(improve?'IDRIS AI is improving your app…':'IDRIS AI is building your app…');$('abPreviewEmpty').hidden=false;$('abPreviewEmpty').querySelector('b').textContent='Building your app';$('abPreviewEmpty').querySelector('span').textContent='The AI is writing the code. Your previous code will be replaced only when a complete result is ready.';try{const result=await request('/app-builder/generate',{title:title,prompt:prompt,html:improve?currentCode():'',stream:true});if(!validHtml(String(result.html||'')))throw new Error('The AI response was not a complete HTML document. Try again.');generatedHtml=result.html;$('abCode').value=generatedHtml;updateCode();preview();status('Your app code is ready. Preview it, make changes, then publish when it looks right.','success');}catch(error){status(error.message||'App generation failed.','error');$('abPreviewEmpty').hidden=false;$('abPreviewEmpty').querySelector('b').textContent='No preview yet';$('abPreviewEmpty').querySelector('span').textContent='Try another description or generate again.'}finally{setBusy(false);updateCode()}};
  $('abGenerate').addEventListener('click',()=>generate(false));
  $('abImprove').addEventListener('click',()=>generate(true));
  $('abPreviewButton').addEventListener('click',preview);
