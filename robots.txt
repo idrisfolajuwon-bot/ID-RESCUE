@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 
+User-agent: meta-webindexer
+Allow: /
+
 User-agent: OAI-SearchBot
 Allow: /
 
