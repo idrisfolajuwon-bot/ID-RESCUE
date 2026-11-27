@@ -2427,6 +2427,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
    <div class="sidebar-nav-section">
     <div class="nav-group-label">Create</div>
     <button data-page="prompts"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15M8 7h8M8 10.5h6"/></svg></span><span>Prompt Studio</span></button>
+    <button data-page="appbuilder"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m8 9-2 3 2 3m8-6 2 3-2 3m-4-7-2 8"/></svg></span><span>App Builder</span></button>
     <button data-page="maker"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg></span><span>Image Maker</span></button>
     <button data-page="videolab"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3z"/></svg></span><span>Video Lab</span></button>
     <button data-page="aieyes"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.7"/></svg></span><span>AI Eyes</span></button>
@@ -2513,6 +2514,11 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
     <div class="module-top"><span>04 / REFINE</span><span class="module-open">↗</span></div>
     <div class="module-title-wrap"><h3>Prompt Lab</h3><p>Give your ideas clearer instructions and direction.</p></div>
     <div class="module-bottom"><span>IDEA ENGINEERING</span><b>04</b></div>
+   </button>
+   <button class="studio-module studio-module-featured" data-go="appbuilder">
+    <div class="module-top"><span>05 / BUILD</span><span class="module-open">OPEN APP BUILDER ↗</span></div>
+    <div class="module-title-wrap"><h3>App Builder</h3><p>Describe an idea, generate a working web app, preview it and publish a live link.</p></div>
+    <div class="module-bottom"><span>CREATE · TEST · PUBLISH</span><b>05</b></div>
    </button>
    <button class="studio-module" data-go="videolab">
     <div class="module-top"><span>05 / SEQUENCE</span><span class="module-open">↗</span></div>
@@ -2706,6 +2712,44 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   <div class="panel"><h2>HOW THE TOOLS WORK</h2><div class="callout info">AI chat and supported image-generation requests use the secure IDRIS AI backend. Web Explorer opens an external Google News search; you can paste article text into the studio for AI analysis.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">CONTACT &amp; SUPPORT</h2><p class="muted small">Need help, found a bug, or have a suggestion? Email the I D LABS support team at <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">support.idrisailabs@gmail.com</a>. Your email app will open with a support message ready to write.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Frontier 2.0 · AI workspace by I D LABS.</p></div></div>
  </section>
  <footer class="footer">IDRIS AI STUDIO · BY I D LABS · FRONTIER 2.0 · MADE TO CREATE · <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">CONTACT SUPPORT</a></footer>
+
+<section class="page" id="appbuilder">
+ <div class="ab-heading">
+  <div><span class="ab-kicker">IDRIS AI STUDIO / CREATE</span><h1>Build an app.<br><em>Bring it to life.</em></h1><p>Describe what you want. IDRIS AI writes the app, lets you preview it, and publishes a live link.</p></div>
+  <div class="ab-mark" aria-hidden="true">{ }</div>
+ </div>
+ <div class="ab-notice"><b>Version 1 · Standalone web apps</b><span>Build interactive browser apps with HTML, CSS and JavaScript. Private databases, accounts, payments, and Android APK builds are not included in this first release. App data is temporary unless the app provides its own supported storage.</span></div>
+ <div class="ab-layout">
+  <div class="ab-panel ab-brief">
+   <div class="ab-panel-head"><div><span class="ab-step">01 / YOUR IDEA</span><h2>What should we build?</h2></div><span class="ab-ai-mark">✦ AI</span></div>
+   <label class="ab-label" for="abTitle">APP NAME</label>
+   <input id="abTitle" maxlength="80" placeholder="e.g. Idris Study Planner" value="My New App">
+   <label class="ab-label" for="abPrompt">DESCRIBE THE APP</label>
+   <textarea id="abPrompt" maxlength="2600" placeholder="Explain what the app should do, who it is for, and the main features."></textarea>
+   <div class="ab-examples"><button type="button" data-ab-example="Create a student study planner with subjects, a weekly timetable, task checkboxes and a progress summary.">Study planner</button><button type="button" data-ab-example="Create a simple shop inventory app to add products, track stock quantities and search items.">Inventory app</button><button type="button" data-ab-example="Create a personal expense tracker with categories, totals and a clear monthly overview.">Expense tracker</button></div>
+   <div class="ab-actions">
+    <button type="button" class="ab-primary" id="abGenerate">✦ Generate app</button>
+    <button type="button" class="ab-secondary" id="abImprove" disabled>Improve app</button>
+   </div>
+   <p class="ab-status" id="abStatus" role="status" aria-live="polite">Ready. Describe your app to begin.</p>
+   <div class="ab-divider"></div>
+   <div class="ab-panel-head"><div><span class="ab-step">02 / YOUR CODE</span><h2>App source</h2></div><span class="ab-code-count" id="abCodeCount">0 characters</span></div>
+   <textarea id="abCode" class="ab-code" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Your complete HTML app will appear here after generation." aria-label="Generated HTML source"></textarea>
+   <div class="ab-code-actions"><button type="button" class="ab-secondary" id="abDownload" disabled>Download HTML</button><button type="button" class="ab-secondary" id="abCopy" disabled>Copy code</button><button type="button" class="ab-secondary" id="abSaveVault" disabled>Save to Library</button></div>
+  </div>
+  <div class="ab-panel ab-preview-panel">
+   <div class="ab-panel-head"><div><span class="ab-step">03 / LIVE PREVIEW</span><h2>Try your app</h2></div><span class="ab-preview-state" id="abPreviewState">Not previewed</span></div>
+   <div class="ab-preview-frame"><iframe id="abPreview" title="App preview" sandbox="allow-scripts allow-forms allow-modals allow-popups allow-downloads" referrerpolicy="no-referrer"></iframe><div class="ab-preview-empty" id="abPreviewEmpty"><div>↗</div><b>Your app preview will appear here</b><span>Generate an app, then preview it before publishing.</span></div></div>
+   <div class="ab-actions ab-preview-actions"><button type="button" class="ab-primary" id="abPreviewButton" disabled>Preview app</button><button type="button" class="ab-publish" id="abPublish" disabled>Publish live app ↗</button></div>
+   <div class="ab-published-result" id="abPublishedResult" hidden></div>
+   <div class="ab-divider"></div>
+   <div class="ab-panel-head"><div><span class="ab-step">04 / YOUR PROJECTS</span><h2>Published apps</h2></div><button type="button" class="ab-refresh" id="abRefresh">Refresh</button></div>
+   <div class="ab-app-list" id="abAppList"><div class="ab-empty-list">Your published apps will appear here after you publish one.</div></div>
+  </div>
+ </div>
+ <p class="ab-footnote">AI-generated code should be reviewed before use. Never place passwords, private keys, or sensitive personal information inside an app's source code.</p>
+</section>
+
 </main>
 </div>
 
@@ -2959,7 +3003,7 @@ function putItems(a){const key=accountStorageKey(KEY);if(!key){toast('Sign in to
 function save(type,title,content){const a=getItems();a.unshift({id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),type,title:String(title).slice(0,100),content:String(content).slice(0,12000),created:new Date().toISOString()});if(putItems(a)){toast('Saved to your Creation Vault.');return true}return false}
 window.idrisSaveToVault=(type,title,content)=>save(type,title,content);
 function refreshCounts(){$('statSaved').textContent=getItems().length}
-function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',about:'Settings'};$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();window.scrollTo({top:0,behavior:'smooth'})}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',appbuilder:'App Builder',about:'Settings'};$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('[data-new-chat]').forEach(b=>b.addEventListener('click',()=>{newConversation();closeMenu()}));
 function syncHistorySearch(source){
  const other=source.id==='sidebarHistorySearch'?$ ('historySearch'):$('sidebarHistorySearch');
@@ -3741,5 +3785,99 @@ input::placeholder,textarea::placeholder{color:#888!important}
  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
 </style>
+
+
+<style id="idris-app-builder-styles">
+#abuilder{}
+#appbuilder{max-width:1100px;margin:0 auto;padding:22px 0 38px}
+.ab-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:30px 0 22px}
+.ab-kicker,.ab-step{font-size:10px;letter-spacing:1.5px;font-weight:800;color:#7568d9}
+.ab-heading h1{font-size:clamp(34px,5vw,54px);line-height:1.04;letter-spacing:-2px;margin:12px 0;color:#222b40}
+.ab-heading h1 em{font-style:normal;color:#7568d9}
+.ab-heading p{max-width:610px;color:#758198;font-size:14px;line-height:1.65;margin:0}
+.ab-mark{width:74px;height:74px;flex:0 0 74px;display:grid;place-items:center;border:1px solid #e4e0fc;border-radius:22px;background:#f4f2ff;color:#6657d9;font-size:29px;font-weight:800}
+.ab-notice{display:grid;gap:4px;padding:14px 16px;margin:0 0 15px;border:1px solid #dfe8f4;border-radius:14px;background:#f5f9ff;color:#455d78;font-size:11px;line-height:1.55}
+.ab-notice b{color:#263e5d;font-size:12px}
+.ab-layout{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:14px;align-items:start}
+.ab-panel{min-width:0;border:1px solid #e5e8f0;border-radius:17px;background:#fff;padding:18px;box-shadow:0 7px 24px rgba(30,45,80,.04)}
+.ab-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.ab-panel-head h2{font-size:16px;letter-spacing:-.3px;color:#26324a;margin:4px 0 0}
+.ab-ai-mark{font-size:10px;font-weight:900;color:#675bd6;background:#efedff;border-radius:20px;padding:6px 9px}
+.ab-label{display:block;margin:15px 0 6px;color:#59677e;font-size:9px;font-weight:850;letter-spacing:1px}
+#abTitle,#abPrompt,#abCode{display:block;width:100%;padding:12px 13px;border:1px solid #dfe5ef;border-radius:11px;background:#fff;color:#202a40;font:inherit;outline:none}
+#abTitle:focus,#abPrompt:focus,#abCode:focus{border-color:#8e83e8;box-shadow:0 0 0 3px #7467db14}
+#abPrompt{min-height:145px;resize:vertical;font-size:13px;line-height:1.6}
+.ab-examples{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.ab-examples button,.ab-refresh{border:1px solid #e2e6ef;border-radius:30px;background:#fafbfe;color:#65728a;padding:7px 9px;font-size:10px;font-weight:700}
+.ab-examples button:hover,.ab-refresh:hover{border-color:#c4bdf5;color:#5d50ca}
+.ab-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ab-primary,.ab-secondary,.ab-publish{min-height:40px;border:1px solid #e1e5ef;border-radius:10px;padding:10px 13px;font-size:11px;font-weight:850}
+.ab-primary{background:#6657d9;color:#fff;border-color:#6657d9}
+.ab-secondary{background:#fff;color:#48566f}
+.ab-publish{background:#1f7658;color:#fff;border-color:#1f7658}
+.ab-primary:disabled,.ab-secondary:disabled,.ab-publish:disabled{opacity:.42;cursor:not-allowed}
+.ab-status{min-height:20px;margin:11px 0 0;color:#6f7b91;font-size:11px;line-height:1.5}
+.ab-status.error{color:#b5475b}.ab-status.success{color:#21805a}
+.ab-divider{height:1px;background:#edf0f5;margin:18px 0}
+.ab-code-count,.ab-preview-state{font-size:9px;color:#8994a8}
+#abCode{min-height:260px;resize:vertical;background:#f8f9fc;color:#303c53;font:11px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}
+.ab-code-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.ab-preview-frame{position:relative;min-height:370px;border:1px solid #e4e8f0;border-radius:13px;overflow:hidden;background:#fafbfe}
+#abPreview{display:block;width:100%;height:430px;border:0;background:#fff}
+.ab-preview-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:24px;text-align:center;color:#7a879b;background:#fafbfe}
+.ab-preview-empty div{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:#efedff;color:#6657d9;font-size:22px}
+.ab-preview-empty b{font-size:13px;color:#49566e}.ab-preview-empty span{max-width:230px;font-size:11px;line-height:1.5}
+.ab-preview-actions>*{flex:1}
+.ab-published-result{margin-top:12px;padding:13px;border:1px solid #d7ebe2;border-radius:12px;background:#f2fbf6}
+.ab-published-result b{display:block;color:#245f47;font-size:12px;margin-bottom:5px}
+.ab-published-result a{display:block;color:#356fba;font-size:11px;overflow-wrap:anywhere;margin:4px 0 10px}
+.ab-published-result button{border:1px solid #cae2d5;border-radius:8px;background:#fff;color:#286348;padding:7px 10px;font-size:10px;font-weight:800}
+.ab-app-list{display:grid;gap:8px}
+.ab-empty-list{padding:18px 12px;border:1px dashed #dfe5ef;border-radius:11px;color:#8490a4;text-align:center;font-size:11px;line-height:1.5}
+.ab-app-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:center;padding:11px;border:1px solid #e7ebf2;border-radius:11px;background:#fbfcfe}
+.ab-app-item b{display:block;overflow-wrap:anywhere;color:#303c53;font-size:11px}
+.ab-app-item small{display:block;color:#8792a6;font-size:9px;margin-top:3px}
+.ab-app-item a{display:inline-block;color:#516bb5;font-size:10px;margin-top:5px;overflow-wrap:anywhere}
+.ab-app-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.ab-app-actions button{border:1px solid #e1e6ef;background:#fff;border-radius:8px;color:#596780;padding:6px 8px;font-size:9px;font-weight:800}
+.ab-app-actions button.danger{color:#bd465e;border-color:#f0dce2}
+.ab-footnote{margin:13px 2px 0;color:#939daf;font-size:10px;line-height:1.6}
+@media(max-width:820px){.ab-layout{grid-template-columns:1fr}.ab-preview-frame{min-height:340px}#abPreview{height:390px}}
+@media(max-width:520px){#appbuilder{padding-top:10px}.ab-heading{padding:25px 0 18px}.ab-heading h1{font-size:38px}.ab-mark{width:56px;height:56px;flex-basis:56px;border-radius:17px;font-size:23px}.ab-panel{padding:14px}.ab-preview-frame{min-height:300px}#abPreview{height:330px}.ab-actions button{flex:1}.ab-app-item{grid-template-columns:1fr}.ab-app-actions{justify-content:flex-start}}
+</style>
+
+
+<script id="idris-app-builder-script">
+(()=>{'use strict';
+ const $=id=>document.getElementById(id);
+ const API='https://idris-ai-studio-api.idrisfolajuwon.workers.dev';
+ const PUBLISH='https://idris-published-apps.idrisfolajuwon.workers.dev';
+ let generatedHtml='',busy=false;
+ const status=(message,kind)=>{const el=$('abStatus');if(!el)return;el.textContent=message;el.className='ab-status'+(kind?' '+kind:'')};
+ const toast=message=>{const el=$('toast');if(el){el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400)}};
+ const currentCode=()=>String($('abCode').value||'').trim();
+ const validHtml=value=>/^<!doctype html>/i.test(value)&&/<\/html>\s*$/i.test(value);
+ const updateCode=()=>{const code=currentCode(),count=$('abCodeCount');if(count)count.textContent=code.length.toLocaleString()+' characters';$('abImprove').disabled=!code||busy;$('abPreviewButton').disabled=!validHtml(code)||busy;$('abPublish').disabled=!validHtml(code)||busy;$('abDownload').disabled=!validHtml(code);$('abCopy').disabled=!code;$('abSaveVault').disabled=!validHtml(code)};
+ const request=async(path,payload)=>{if(typeof window.idrisApiFetch!=='function')throw new Error('The Studio API is not ready. Refresh the page and sign in again.');const response=await window.idrisApiFetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload||{})});let data={};try{data=await response.json()}catch{}if(!response.ok)throw new Error(data.error||'Request failed (HTTP '+response.status+').');return data};
+ const setBusy=value=>{busy=value;$('abGenerate').disabled=value;$('abImprove').disabled=value||!currentCode();$('abPublish').disabled=value||!validHtml(currentCode());$('abPreviewButton').disabled=value||!validHtml(currentCode());$('abRefresh').disabled=value};
+ const preview=()=>{const code=currentCode();if(!validHtml(code)){status('Generate a complete app before previewing it.','error');return false}generatedHtml=code;$('abPreview').srcdoc=code;$('abPreviewEmpty').hidden=true;$('abPreviewState').textContent='Preview loaded';status('Preview loaded in an isolated browser frame. Test the buttons and forms here.','success');updateCode();return true};
+ const generate=async improve=>{if(busy)return;const prompt=$('abPrompt').value.trim(),title=$('abTitle').value.trim()||'My New App';if(!prompt){status('Describe the app you want first.','error');$('abPrompt').focus();return}if(improve&&!currentCode()){status('Generate an app before asking for improvements.','error');return}setBusy(true);status(improve?'IDRIS AI is improving your app…':'IDRIS AI is building your app…');$('abPreviewEmpty').hidden=false;$('abPreviewEmpty').querySelector('b').textContent='Building your app';$('abPreviewEmpty').querySelector('span').textContent='The AI is writing the code. Your previous code will be replaced only when a complete result is ready.';try{const result=await request('/app-builder/generate',{title:title,prompt:prompt,html:improve?currentCode():''});if(!validHtml(String(result.html||'')))throw new Error('The AI response was not a complete HTML document. Try again.');generatedHtml=result.html;$('abCode').value=generatedHtml;updateCode();preview();status('Your app code is ready. Preview it, make changes, then publish when it looks right.','success');}catch(error){status(error.message||'App generation failed.','error');$('abPreviewEmpty').hidden=false;$('abPreviewEmpty').querySelector('b').textContent='No preview yet';$('abPreviewEmpty').querySelector('span').textContent='Try another description or generate again.'}finally{setBusy(false);updateCode()}};
+ $('abGenerate').addEventListener('click',()=>generate(false));
+ $('abImprove').addEventListener('click',()=>generate(true));
+ $('abPreviewButton').addEventListener('click',preview);
+ $('abCode').addEventListener('input',()=>{generatedHtml=currentCode();updateCode();$('abPreviewState').textContent='Code edited · preview again'});
+ $('abDownload').addEventListener('click',()=>{const code=currentCode();if(!validHtml(code))return;const blob=new Blob([code],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(($('abTitle').value.trim()||'idris-app').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'idris-app')+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+ $('abCopy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(currentCode());toast('App code copied.')}catch{status('Clipboard access is not available in this browser.','error')}});
+ $('abSaveVault').addEventListener('click',()=>{const code=currentCode();if(!validHtml(code))return;if(typeof window.idrisSaveToVault==='function')window.idrisSaveToVault('Web App',($('abTitle').value.trim()||'Untitled app'),code);else status('The Library save function is not available.','error')});
+ $('abPublish').addEventListener('click',async()=>{if(busy)return;const code=currentCode();if(!validHtml(code)){status('Preview a complete app before publishing.','error');return}setBusy(true);status('Publishing your app…');try{const result=await request('/app-builder/publish',{title:$('abTitle').value.trim()||'My New App',html:code});const url=String(result.url||'');if(!url.startsWith(PUBLISH+'/a/'))throw new Error('The server did not return a valid app link.');const box=$('abPublishedResult');box.hidden=false;box.replaceChildren();const label=document.createElement('b');label.textContent='Your app is published';const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=url;const copy=document.createElement('button');copy.type='button';copy.textContent='Copy app link';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(url);toast('Published app link copied.')}catch{status('Clipboard access is not available. Copy the link above.','error')}});const open=document.createElement('a');open.href=url;open.target='_blank';open.rel='noopener noreferrer';open.textContent='Open live app ↗';open.style.cssText='display:inline-block;margin-left:9px;color:#286348;font-size:10px;font-weight:800';box.append(label,link,copy,open);status('Published successfully. Your app now has a public link.','success');loadApps();}catch(error){status(error.message||'Publishing failed.','error')}finally{setBusy(false);updateCode()}});
+ const renderApps=apps=>{const host=$('abAppList');host.replaceChildren();if(!apps.length){const empty=document.createElement('div');empty.className='ab-empty-list';empty.textContent='No published apps yet. Your first published app will appear here.';host.appendChild(empty);return}apps.forEach(app=>{const item=document.createElement('article');item.className='ab-app-item';const info=document.createElement('div'),title=document.createElement('b'),date=document.createElement('small'),link=document.createElement('a');title.textContent=app.title||'Untitled app';date.textContent=app.createdAt?new Date(app.createdAt).toLocaleString():'Published app';link.href=app.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open live app ↗';info.append(title,date,link);const actions=document.createElement('div');actions.className='ab-app-actions';const copy=document.createElement('button');copy.type='button';copy.textContent='Copy link';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(app.url);toast('App link copied.')}catch{status('Clipboard access is not available.','error')}});const remove=document.createElement('button');remove.type='button';remove.className='danger';remove.textContent='Delete';remove.addEventListener('click',async()=>{if(!confirm('Delete this published app? Its public link will stop working.'))return;remove.disabled=true;try{await request('/app-builder/delete',{id:app.id});item.remove();toast('Published app deleted.');if(!host.children.length)renderApps([])}catch(error){status(error.message||'Could not delete the app.','error');remove.disabled=false}});actions.append(copy,remove);item.append(info,actions);host.appendChild(item)})};
+ const loadApps=async()=>{const host=$('abAppList');host.innerHTML='<div class="ab-empty-list">Loading your published apps…</div>';try{const data=await request('/app-builder/mine',{});renderApps(Array.isArray(data.apps)?data.apps:[])}catch(error){host.replaceChildren();const empty=document.createElement('div');empty.className='ab-empty-list';empty.textContent=error.message||'Could not load your published apps.';host.appendChild(empty)}};
+ window.idrisAppBuilderLoad=loadApps;
+ $('abRefresh').addEventListener('click',loadApps);
+ document.querySelectorAll('[data-ab-example]').forEach(button=>button.addEventListener('click',()=>{$('abPrompt').value=button.dataset.abExample||'';$('abPrompt').focus()}));
+ $('abPreviewEmpty').hidden=false;
+ updateCode();
+})();
+</script>
 
 </body></html>
