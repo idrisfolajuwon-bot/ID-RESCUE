@@ -3873,7 +3873,7 @@ input::placeholder,textarea::placeholder{color:#888!important}
     let data;try{data=JSON.parse(raw)}catch{return}
     if(data.type==='progress'){
      const count=Number(data.characters||0);
-     status(count?'IDRIS is writing your app · '+count.toLocaleString()+' characters received…':'IDRIS is starting your app…');
+     status(data.continuing?'IDRIS is finishing the remaining app code…':count?'IDRIS is writing your app · '+count.toLocaleString()+' characters received…':'IDRIS is starting your app…');
      return;
     }
     if(data.type==='error'){streamError=String(data.error||'App generation failed.');return}
