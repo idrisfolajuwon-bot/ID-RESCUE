@@ -2859,14 +2859,27 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   </article>
  </div>
  <article class="pf-panel" style="margin-top:18px">
-  <div class="pf-panel-head"><div><span class="pf-step">05 / NEW RECOVERY PATH</span><h2>Report a phone that was never registered</h2></div><span class="pf-lock">⌖</span></div>
-  <p class="pf-body-copy">Lost your phone before joining IDRIS? The future unregistered-phone recovery flow will let an owner create a case from another device, verify ownership, and follow authorized recovery assistance.</p>
+  <div class="pf-panel-head"><div><span class="pf-step">05 / UNREGISTERED PHONE</span><h2>Create a recovery case</h2></div><span class="pf-lock">⌖</span></div>
+  <p class="pf-body-copy">If your phone was lost before it joined IDRIS, you can create a private case from this signed-in account. This records the basic details so a future ownership-review process can be added.</p>
+  <form id="pfUnregisteredCaseForm" class="pf-register-form">
+   <div class="pf-form-row">
+    <div><label class="pf-form-label" for="pfCaseBrand">PHONE BRAND</label><input id="pfCaseBrand" maxlength="40" required placeholder="e.g. TECNO" autocomplete="off"></div>
+    <div><label class="pf-form-label" for="pfCaseModel">PHONE MODEL</label><input id="pfCaseModel" maxlength="80" required placeholder="e.g. Pop 10C" autocomplete="off"></div>
+   </div>
+   <label class="pf-form-label" for="pfCaseArea">LAST-SEEN AREA (TOWN OR NEIGHBOURHOOD ONLY)</label>
+   <input id="pfCaseArea" maxlength="80" required placeholder="e.g. Epe" autocomplete="off">
+   <label class="pf-form-label" for="pfCaseLastSeen">WHEN WAS IT LAST SEEN?</label>
+   <input id="pfCaseLastSeen" type="datetime-local" required>
+   <button class="pf-secondary-action" id="pfCaseSubmit" type="submit">Create private recovery case</button>
+   <p class="pf-result" id="pfCaseStatus" role="status" aria-live="polite">Sign in to your IDRIS account first. Do not enter an IMEI, phone number, password, OTP or identity document here.</p>
+  </form>
   <div class="pf-device-facts">
-   <div><span>DEVICE IDENTITY</span><b>IMEI and phone model, handled privately after secure intake is ready</b></div>
-   <div><span>OWNER CHECK</span><b>Ownership evidence and account verification will be required</b></div>
-   <div><span>NETWORK SUPPORT</span><b>Provider assistance only through official, authorized processes</b></div>
+   <div><span>PRIVATE RECORD</span><b>Only the signed-in account can retrieve its case through the secure service</b></div>
+   <div><span>OWNERSHIP</span><b>Account sign-in is not proof that you own the missing phone</b></div>
+   <div><span>NETWORK SUPPORT</span><b>No carrier location request is sent; official provider cooperation is not connected yet</b></div>
   </div>
-  <p class="pf-result" role="status" aria-live="polite"><b>Development preview · Not accepting reports yet.</b> An IMEI identifies a device but does not reveal GPS coordinates by itself. IDRIS will only show a location supplied by a verified, authorized source.</p>
+  <div class="pf-registered-wrap"><div class="pf-registered-head"><b>Your recovery cases</b><button type="button" id="pfRefreshCases" class="pf-refresh-link">Refresh</button></div><div id="pfCaseList" class="pf-device-list"><p class="pf-result">Sign in to load your recovery cases.</p></div></div>
+  <p class="pf-result">Important: an IMEI identifies a device but does not reveal GPS coordinates by itself. IDRIS will never display a guessed location.</p>
  </article>
  <div class="pf-footer-note">OWNER-ONLY RECOVERY · LAST REPORTED LOCATION · REPORT TIME AND ACCURACY SHOWN</div>
 </section>
@@ -3166,7 +3179,7 @@ function save(type,title,content){const a=getItems();a.unshift({id:(crypto.rando
 window.idrisSaveToVault=(type,title,content)=>save(type,title,content);
 function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',appbuilder:'App Builder',phonefinder:'Phone Finder',about:'Settings'};
-$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();if(page==='phonefinder')loadPhoneFinderDevices();window.scrollTo({top:0,behavior:'smooth'})}
+$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();if(page==='phonefinder'){loadPhoneFinderDevices();loadPhoneRecoveryCases();}window.scrollTo({top:0,behavior:'smooth'})}
 
 async function phoneFinderRequest(action,payload={}) {
  if(!supabaseClient)throw new Error('Sign in to your IDRIS account first.');
@@ -3311,6 +3324,30 @@ async function loadPhoneFinderDevices(){
   host.replaceChildren();const p=document.createElement('p');p.className='pf-result';p.textContent='Could not load your devices: '+(ex.message||'Please try again.');host.append(p);
  }
 }
+async function loadPhoneRecoveryCases(){
+ const host=$('pfCaseList');if(!host)return;
+ host.replaceChildren();
+ if(!supabaseClient||!currentUserId){
+  const p=document.createElement('p');p.className='pf-result';p.textContent='Sign in to view your private recovery cases.';host.append(p);return;
+ }
+ const loading=document.createElement('p');loading.className='pf-result';loading.textContent='Loading your recovery cases…';host.append(loading);
+ try{
+  const result=await phoneFinderRequest('list_cases');
+  host.replaceChildren();
+  if(!result.cases||!result.cases.length){const p=document.createElement('p');p.className='pf-result';p.textContent='No unregistered-phone cases yet.';host.append(p);return}
+  result.cases.forEach(item=>{
+   const card=document.createElement('article');card.className='pf-device-item';
+   const info=document.createElement('div');info.className='pf-device-item-info';
+   const title=document.createElement('b');title.textContent=item.case_reference+' · '+item.brand+' '+item.model;
+   const detail=document.createElement('small');detail.textContent='Last seen: '+item.last_seen_area+' · '+new Date(item.last_seen_at).toLocaleString();
+   const state=document.createElement('span');state.className='pf-device-state';
+   state.textContent='Case: '+String(item.status||'submitted').replaceAll('_',' ')+' · ownership: '+String(item.ownership_status||'pending').replaceAll('_',' ');
+   info.append(title,detail,state);card.append(info);host.append(card);
+  });
+ }catch(ex){
+  host.replaceChildren();const p=document.createElement('p');p.className='pf-result';p.textContent='Could not load cases: '+(ex.message||'Please try again.');host.append(p);
+ }
+}
 $('pfRegisterForm')?.addEventListener('submit',async event=>{
  event.preventDefault();
  const status=$('pfRegisterStatus'),button=$('pfRegisterButton');
@@ -3333,6 +3370,28 @@ $('pfRegisterForm')?.addEventListener('submit',async event=>{
  finally{button.disabled=false;button.textContent='Register this device'}
 });
 $('pfRefreshDevices')?.addEventListener('click',loadPhoneFinderDevices);
+$('pfUnregisteredCaseForm')?.addEventListener('submit',async event=>{
+ event.preventDefault();
+ const status=$('pfCaseStatus'),button=$('pfCaseSubmit');
+ if(!supabaseClient||!currentUserId){status.textContent='Sign in to your IDRIS account before creating a case.';return}
+ const brand=$('pfCaseBrand').value.trim(),model=$('pfCaseModel').value.trim();
+ const area=$('pfCaseArea').value.trim(),lastSeenValue=$('pfCaseLastSeen').value;
+ if(!brand||!model||!area||!lastSeenValue){status.textContent='Complete all four fields first.';return}
+ const lastSeen=new Date(lastSeenValue);
+ if(Number.isNaN(lastSeen.getTime())||lastSeen.getTime()>Date.now()+5*60*1000){status.textContent='Choose a valid time in the past.';return}
+ button.disabled=true;button.textContent='SAVING CASE…';status.textContent='Verifying your IDRIS sign-in and saving a private case…';
+ try{
+  const {data,error}=await supabaseClient.auth.getUser();
+  if(error||!data?.user||data.user.id!==currentUserId)throw new Error('Your IDRIS sign-in could not be verified. Please sign in again.');
+  const result=await phoneFinderRequest('create_case',{brand,model,last_seen_area:area,last_seen_at:lastSeen.toISOString()});
+  $('pfUnregisteredCaseForm').reset();
+  status.textContent='Private case created: '+result.case.case_reference+'. Ownership is still pending; no phone location was found and no carrier request was sent.';
+  await loadPhoneRecoveryCases();
+ }catch(ex){status.textContent=ex.message||'Could not create the recovery case. Please try again.'}
+ finally{button.disabled=false;button.textContent='Create private recovery case'}
+});
+$('pfRefreshCases')?.addEventListener('click',loadPhoneRecoveryCases);
+
 
 $('pfBrowserCheck')?.addEventListener('click',()=>{
  const secure=window.isSecureContext===true;
