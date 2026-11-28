@@ -84,7 +84,7 @@ class PhoneFinderService : Service(), LocationListener {
         }
 
         if (!hasLocationPermission()) {
-            stopSelf()
+            stopRecovery()
             return START_NOT_STICKY
         }
 
@@ -94,11 +94,11 @@ class PhoneFinderService : Service(), LocationListener {
             started = true
         } catch (security: SecurityException) {
             Log.w("PhoneFinder", "Location permission was removed", security)
-            stopSelf()
+            stopRecovery()
             return START_NOT_STICKY
         } catch (error: Exception) {
             Log.e("PhoneFinder", "Could not start location updates", error)
-            stopSelf()
+            stopRecovery()
             return START_NOT_STICKY
         }
         return START_STICKY
