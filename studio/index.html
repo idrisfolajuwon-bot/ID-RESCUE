@@ -1623,6 +1623,24 @@ body{background:#f7f8f6}
 .pf-step{font-size:9px;font-weight:850;letter-spacing:1.5px;color:#8175d6}
 .pf-panel h2{font-size:17px;color:#26324a;margin:5px 0 0;letter-spacing:-.3px}
 .pf-pill{font-size:9px;letter-spacing:.8px;font-weight:850;border:1px solid #e8e4d7;background:#fbf8ef;color:#92743b;border-radius:30px;padding:6px 9px;white-space:nowrap}
+
+.pf-register-form{display:grid;gap:5px}
+.pf-form-label{display:block;color:#66738a;font-size:9px;font-weight:850;letter-spacing:.8px;margin:9px 0 4px}
+.pf-form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pf-register-form input{width:100%;min-width:0;font-size:12px}
+.pf-registered-wrap{margin-top:15px;border-top:1px solid #edf0f5;padding-top:13px}
+.pf-registered-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.pf-registered-head b{font-size:11px;color:#39455b}
+.pf-refresh-link{border:0;background:transparent;color:#6458cf;font-size:10px;font-weight:800;padding:5px}
+.pf-device-list{display:grid;gap:8px}
+.pf-device-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border:1px solid #e7ebf3;border-radius:12px;background:#fbfcff}
+.pf-device-item-info{display:grid;gap:3px;min-width:0}
+.pf-device-item-info b{font-size:11px;color:#354158;overflow-wrap:anywhere}
+.pf-device-item-info small{font-size:10px;color:#7c899e}
+.pf-device-state{font-size:9px;color:#96783b;font-weight:800}
+.pf-remove-device{flex:0 0 auto;border:1px solid #f0dce2;background:#fff6f8;color:#b64b63;border-radius:9px;padding:7px 9px;font-size:9px;font-weight:850}
+.pf-remove-device:disabled{opacity:.55}
+
 .pf-device-empty{min-height:150px;border:1px dashed #d8deea;background:#fafbfe;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px}
 .pf-phone-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#efedff;color:#6657d9;font-size:25px;margin-bottom:8px}
 .pf-device-empty b{font-size:13px;color:#303b52}.pf-device-empty small{max-width:300px;color:#7c879a;font-size:10px;line-height:1.6;margin-top:5px}
@@ -2793,13 +2811,22 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
  <div class="pf-overview-grid">
   <article class="pf-panel pf-device-panel">
    <div class="pf-panel-head"><div><span class="pf-step">01 / DEVICE SETUP</span><h2>Prepare your phone</h2></div><span class="pf-pill">NOT CONNECTED</span></div>
-   <div class="pf-device-empty"><span class="pf-phone-icon">▯</span><b>No recovery device registered</b><small>When the Android companion is ready, you will pair your own phone here using your signed-in Studio account.</small></div>
+   <form id="pfRegisterForm" class="pf-register-form">
+    <label class="pf-form-label" for="pfNickname">DEVICE NICKNAME</label>
+    <input id="pfNickname" name="nickname" maxlength="40" required placeholder="e.g. My TECNO phone" autocomplete="off">
+    <div class="pf-form-row">
+     <div><label class="pf-form-label" for="pfBrand">BRAND</label><input id="pfBrand" name="brand" maxlength="40" required placeholder="e.g. TECNO" autocomplete="off"></div>
+     <div><label class="pf-form-label" for="pfModel">MODEL</label><input id="pfModel" name="model" maxlength="80" required placeholder="e.g. Pop 10C" autocomplete="off"></div>
+    </div>
+    <button class="pf-secondary-action" id="pfRegisterButton" type="submit">Register this device</button>
+    <p class="pf-result" id="pfRegisterStatus" role="status" aria-live="polite">Register your own device under the IDRIS account you are signed into.</p>
+   </form>
    <div class="pf-device-facts">
-    <div><span>OWNER ACCOUNT</span><b>Use your signed-in IDRIS account</b></div>
-    <div><span>DEVICE DETAILS</span><b>Nickname, brand and model</b></div>
-    <div><span>LOCATION ACCESS</span><b>Explicit Android permission required</b></div>
+    <div><span>OWNER ACCOUNT</span><b>Linked to your signed-in IDRIS account</b></div>
+    <div><span>DEVICE DETAILS</span><b>Nickname, brand and model only</b></div>
+    <div><span>RECOVERY STATUS</span><b>Registration does not activate tracking</b></div>
    </div>
-   <button class="pf-disabled-action" type="button" disabled>Device registration unlocks after Android setup</button>
+   <div class="pf-registered-wrap"><div class="pf-registered-head"><b>Your registered devices</b><button type="button" id="pfRefreshDevices" class="pf-refresh-link">Refresh</button></div><div id="pfDeviceList" class="pf-device-list"><p class="pf-result">Sign in to load your devices.</p></div></div>
   </article>
   <article class="pf-panel pf-recovery-panel">
    <div class="pf-panel-head"><div><span class="pf-step">02 / RECOVERY</span><h2>Find a registered phone</h2></div><span class="pf-lock">⌑</span></div>
@@ -3128,7 +3155,65 @@ function save(type,title,content){const a=getItems();a.unshift({id:(crypto.rando
 window.idrisSaveToVault=(type,title,content)=>save(type,title,content);
 function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',appbuilder:'App Builder',phonefinder:'Phone Finder',about:'Settings'};
-$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();window.scrollTo({top:0,behavior:'smooth'})}
+$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();if(page==='phonefinder')loadPhoneFinderDevices();window.scrollTo({top:0,behavior:'smooth'})}
+
+async function loadPhoneFinderDevices(){
+ const host=$('pfDeviceList');if(!host)return;
+ host.replaceChildren();
+ if(!supabaseClient||!currentUserId){
+  const p=document.createElement('p');p.className='pf-result';p.textContent='Sign in to view devices registered to your IDRIS account.';host.append(p);return;
+ }
+ const loading=document.createElement('p');loading.className='pf-result';loading.textContent='Loading your registered devices…';host.append(loading);
+ try{
+  const {data,error}=await supabaseClient.from('phone_finder_devices')
+   .select('id,nickname,brand,model,status,created_at')
+   .order('created_at',{ascending:false}).limit(20);
+  if(error)throw error;
+  host.replaceChildren();
+  if(!data||!data.length){const p=document.createElement('p');p.className='pf-result';p.textContent='No devices registered yet.';host.append(p);return}
+  data.forEach(device=>{
+   const card=document.createElement('article');card.className='pf-device-item';
+   const info=document.createElement('div');info.className='pf-device-item-info';
+   const title=document.createElement('b');title.textContent=device.nickname;
+   const detail=document.createElement('small');detail.textContent=device.brand+' · '+device.model;
+   const state=document.createElement('span');state.className='pf-device-state';state.textContent=device.status==='awaiting_companion'?'Registered · awaiting Android setup':device.status;
+   info.append(title,detail,state);
+   const remove=document.createElement('button');remove.type='button';remove.className='pf-remove-device';remove.textContent='Remove';
+   remove.addEventListener('click',async()=>{
+    if(!confirm('Remove '+device.nickname+' from your IDRIS account?'))return;
+    remove.disabled=true;
+    try{const {error:removeError}=await supabaseClient.from('phone_finder_devices').delete().eq('id',device.id);if(removeError)throw removeError;await loadPhoneFinderDevices();$('pfRegisterStatus').textContent='Device removed from your account.'}
+    catch(ex){remove.disabled=false;$('pfRegisterStatus').textContent=ex.message||'Could not remove this device.'}
+   });
+   card.append(info,remove);host.append(card);
+  });
+ }catch(ex){
+  host.replaceChildren();const p=document.createElement('p');p.className='pf-result';p.textContent='Could not load your devices: '+(ex.message||'Please try again.');host.append(p);
+ }
+}
+$('pfRegisterForm')?.addEventListener('submit',async event=>{
+ event.preventDefault();
+ const status=$('pfRegisterStatus'),button=$('pfRegisterButton');
+ const nickname=$('pfNickname').value.trim(),brand=$('pfBrand').value.trim(),model=$('pfModel').value.trim();
+ if(!nickname||!brand||!model){status.textContent='Enter a nickname, brand and model.';return}
+ if(!supabaseClient){status.textContent='Secure account connection is not ready. Refresh and sign in again.';return}
+ button.disabled=true;button.textContent='REGISTERING…';status.textContent='Checking your signed-in account…';
+ try{
+  const {data,error:userError}=await supabaseClient.auth.getUser();
+  if(userError||!data?.user||data.user.id!==currentUserId)throw new Error('Your IDRIS sign-in could not be verified. Please sign in again.');
+  const {error}=await supabaseClient.from('phone_finder_devices').insert({
+   owner_id:data.user.id,nickname,brand,model,platform:'android',
+   status:'awaiting_companion',recovery_enabled:false,last_seen_at:null
+  });
+  if(error)throw error;
+  $('pfRegisterForm').reset();
+  status.textContent='Device registered to your account. It is not locatable yet; Android recovery setup is still required.';
+  await loadPhoneFinderDevices();
+ }catch(ex){status.textContent=ex.message||'Device registration failed. Please try again.'}
+ finally{button.disabled=false;button.textContent='Register this device'}
+});
+$('pfRefreshDevices')?.addEventListener('click',loadPhoneFinderDevices);
+
 $('pfBrowserCheck')?.addEventListener('click',()=>{
  const secure=window.isSecureContext===true;
  const geo=!!(navigator.geolocation&&typeof navigator.geolocation.getCurrentPosition==='function');
