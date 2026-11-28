@@ -17,6 +17,7 @@ import android.widget.Toast
 
 class MainActivity : Activity() {
     private lateinit var web: WebView
+    private lateinit var phoneFinderBridge: PhoneFinderBridge
     private val studioUrl = "https://idrisfolajuwon-bot.github.io/ID-RESCUE/studio/"
 
     @Suppress("SetJavaScriptEnabled")
@@ -61,8 +62,15 @@ class MainActivity : Activity() {
                 Toast.makeText(this, "Could not start download", Toast.LENGTH_LONG).show()
             }
         }
+        phoneFinderBridge = PhoneFinderBridge(this, web)
+        web.addJavascriptInterface(phoneFinderBridge, "IDRISPhoneFinder")
         setContentView(web)
         if (savedInstanceState == null) web.loadUrl(studioUrl) else web.restoreState(savedInstanceState)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (::phoneFinderBridge.isInitialized) phoneFinderBridge.onPermissionResult(requestCode, grantResults)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
