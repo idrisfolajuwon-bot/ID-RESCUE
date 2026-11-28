@@ -14,6 +14,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
+import android.os.Bundle
 import android.os.IBinder
 import android.os.Looper
 import android.util.Base64
@@ -127,6 +128,19 @@ class PhoneFinderService : Service(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         reportLocation(location)
+    }
+
+    override fun onProviderEnabled(provider: String) {
+        Log.i("PhoneFinder", "Location provider enabled: $provider")
+    }
+
+    override fun onProviderDisabled(provider: String) {
+        Log.w("PhoneFinder", "Location provider disabled: $provider")
+    }
+
+    @Deprecated("Deprecated by Android; retained for older device compatibility")
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        Log.d("PhoneFinder", "Provider status changed: $provider / $status")
     }
 
     private fun reportLocation(location: Location) {
