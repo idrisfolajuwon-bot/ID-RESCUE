@@ -1634,6 +1634,7 @@ body{background:#f7f8f6}
 .pf-refresh-link{border:0;background:transparent;color:#6458cf;font-size:10px;font-weight:800;padding:5px}
 .pf-device-list{display:grid;gap:8px}
 .pf-device-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border:1px solid #e7ebf3;border-radius:12px;background:#fbfcff}
+.pf-device-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center;justify-content:flex-end}.pf-device-actions .pf-secondary-action{margin-top:0}
 .pf-device-item-info{display:grid;gap:3px;min-width:0}
 .pf-device-item-info b{font-size:11px;color:#354158;overflow-wrap:anywhere}
 .pf-device-item-info small{font-size:10px;color:#7c899e}
@@ -3170,6 +3171,14 @@ async function phoneFinderRequest(action,payload={}) {
  if(!response.ok)throw new Error(result.error||'Phone Finder request failed (HTTP '+response.status+').');
  return result;
 }
+function requestPhoneFinderPermissions(){
+ return new Promise(resolve=>{
+  if(!window.IDRISPhoneFinder||typeof window.IDRISPhoneFinder.prepareRecovery!=='function'){resolve(false);return}
+  window.IDRISPhoneFinderPermissionResult=granted=>{window.IDRISPhoneFinderPermissionResult=null;resolve(!!granted)};
+  window.IDRISPhoneFinder.prepareRecovery();
+  setTimeout(()=>{if(window.IDRISPhoneFinderPermissionResult){window.IDRISPhoneFinderPermissionResult=null;resolve(false)}},120000);
+ });
+}
 async function loadPhoneFinderDevices(){
  const host=$('pfDeviceList');if(!host)return;
  host.replaceChildren();
@@ -3190,34 +3199,70 @@ async function loadPhoneFinderDevices(){
    const title=document.createElement('b');title.textContent=device.nickname;
    const detail=document.createElement('small');detail.textContent=device.brand+' · '+device.model;
    const state=document.createElement('span');state.className='pf-device-state';
-   state.textContent=device.status==='awaiting_companion'?'Registered · Android companion not paired':device.status==='active'?'Connected · location reporting enabled':device.status;
+   state.textContent=device.recovery_enabled?(device.status==='active'?'Recovery active · location reporting': 'Recovery enabled · waiting for phone'):device.status==='paused'?'Recovery paused':device.status==='revoked'?'Recovery revoked':'Registered · setup not started';
    info.append(title,detail,state);
-   const actions=document.createElement('div');actions.style.cssText='display:flex;gap:7px;flex-wrap:wrap;align-items:center';
-   if(device.status==='active'&&device.recovery_enabled){
-    const locate=document.createElement('button');locate.type='button';locate.className='pf-secondary-action';locate.textContent='Check last location';
-    locate.addEventListener('click',async()=>{
-     locate.disabled=true;locate.textContent='CHECKING…';
+   const actions=document.createElement('div');actions.className='pf-device-actions';
+   if(device.recovery_enabled){
+    if(device.status==='active'){
+     const locate=document.createElement('button');locate.type='button';locate.className='pf-secondary-action';locate.textContent='Check last location';
+     locate.addEventListener('click',async()=>{
+      locate.disabled=true;locate.textContent='CHECKING…';
+      try{
+       const result=await phoneFinderRequest('location',{device_id:device.id});
+       let report;
+       if(result.location){
+        const point=result.location;
+        report='Last fresh report: '+new Date(point.reported_at).toLocaleString()+' · '+Number(point.latitude).toFixed(5)+', '+Number(point.longitude).toFixed(5)+(point.accuracy_m==null?'':' · accuracy ±'+Math.round(point.accuracy_m)+' m');
+       }else report='No location report has arrived from this phone yet.';
+       let note=card.querySelector('.pf-location-note');
+       if(!note){note=document.createElement('small');note.className='pf-location-note';note.style.cssText='display:block;margin-top:8px;color:#586780;line-height:1.5';card.append(note)}
+       note.textContent=report;
+      }catch(ex){$('pfRegisterStatus').textContent=ex.message||'Could not retrieve the last location.'}
+      finally{locate.disabled=false;locate.textContent='Check last location'}
+     });
+     actions.append(locate);
+    }
+    const stop=document.createElement('button');stop.type='button';stop.className='pf-remove-device';stop.textContent='Stop recovery';
+    stop.addEventListener('click',async()=>{
+     if(!window.IDRISPhoneFinder||!window.IDRISPhoneFinder.stopRecovery){$('pfRegisterStatus').textContent='Open IDRIS AI STUDIO on the enrolled Android phone to stop its location service.';return}
+     stop.disabled=true;stop.textContent='STOPPING…';
      try{
-      const result=await phoneFinderRequest('location',{device_id:device.id});
-      let report;
-      if(result.location){
-       const point=result.location;
-       report='Last report: '+new Date(point.reported_at).toLocaleString()+' · '+Number(point.latitude).toFixed(5)+', '+Number(point.longitude).toFixed(5)+(point.accuracy_m==null?'':' · accuracy ±'+Math.round(point.accuracy_m)+' m');
-      }else report='No location report has arrived from this phone yet.';
-      let note=card.querySelector('.pf-location-note');
-      if(!note){note=document.createElement('small');note.className='pf-location-note';note.style.cssText='display:block;margin-top:8px;color:#586780;line-height:1.5';card.append(note)}
-      note.textContent=report;
-     }catch(ex){$('pfRegisterStatus').textContent=ex.message||'Could not retrieve the last location.'}
-     finally{locate.disabled=false;locate.textContent='Check last location'}
+      window.IDRISPhoneFinder.stopRecovery();
+      $('pfRegisterStatus').textContent='Location service stopping. Recovery will be paused on the server.';
+      setTimeout(()=>loadPhoneFinderDevices(),1800);
+     }catch(ex){$('pfRegisterStatus').textContent=ex.message||'Could not stop recovery.';stop.disabled=false;stop.textContent='Stop recovery'}
     });
-    actions.append(locate);
+    actions.append(stop);
+   }else if(device.status!=='revoked'){
+    const start=document.createElement('button');start.type='button';start.className='pf-secondary-action';start.textContent='Enable recovery on this phone';
+    start.addEventListener('click',async()=>{
+     if(!window.IDRISPhoneFinder){$('pfRegisterStatus').textContent='To enable recovery, open IDRIS AI STUDIO inside its Android app on the phone you are registering.';return}
+     start.disabled=true;start.textContent='REQUESTING PERMISSION…';
+     try{
+      const granted=await requestPhoneFinderPermissions();
+      if(!granted)throw new Error('Location and notification permissions are required. Nothing was activated.');
+      const enrollment=await phoneFinderRequest('enroll',{device_id:device.id});
+      const started=window.IDRISPhoneFinder.startRecovery(device.id,enrollment.device_token);
+      if(!started){
+       await phoneFinderRequest('revoke',{device_id:device.id});
+       throw new Error('Android could not start the location service. Please try again.');
+      }
+      $('pfRegisterStatus').textContent='Recovery service started. Keep the visible IDRIS Phone Finder notification enabled; waiting for the first fresh location.';
+      setTimeout(()=>loadPhoneFinderDevices(),3500);
+     }catch(ex){$('pfRegisterStatus').textContent=ex.message||'Could not enable recovery.';start.disabled=false;start.textContent='Enable recovery on this phone'}
+    });
+    actions.append(start);
    }
    const remove=document.createElement('button');remove.type='button';remove.className='pf-remove-device';remove.textContent='Remove';
    remove.addEventListener('click',async()=>{
-    if(!confirm('Remove '+device.nickname+' from your IDRIS account? This also revokes its recovery credential and deletes its saved location.'))return;
+    if(!confirm('Remove '+device.nickname+' from your IDRIS account? This revokes its recovery credential and deletes its saved location.'))return;
     remove.disabled=true;
-    try{const {error:removeError}=await supabaseClient.from('phone_finder_devices').delete().eq('id',device.id);if(removeError)throw removeError;await loadPhoneFinderDevices();$('pfRegisterStatus').textContent='Device removed; its recovery credential and saved location were deleted.'}
-    catch(ex){remove.disabled=false;$('pfRegisterStatus').textContent=ex.message||'Could not remove this device.'}
+    try{
+     const {error:removeError}=await supabaseClient.from('phone_finder_devices').delete().eq('id',device.id);
+     if(removeError)throw removeError;
+     await loadPhoneFinderDevices();
+     $('pfRegisterStatus').textContent='Device removed from your account.';
+    }catch(ex){remove.disabled=false;$('pfRegisterStatus').textContent=ex.message||'Could not remove this device.'}
    });
    actions.append(remove);card.append(info,actions);host.append(card);
   });
