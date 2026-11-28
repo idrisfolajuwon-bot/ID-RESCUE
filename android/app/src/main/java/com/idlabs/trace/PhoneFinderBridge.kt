@@ -55,7 +55,7 @@ class PhoneFinderBridge(
     @JavascriptInterface
     fun stopRecovery(): Boolean {
         activity.runOnUiThread {
-            activity.stopService(Intent(activity, PhoneFinderService::class.java))
+            activity.startService(Intent(activity, PhoneFinderService::class.java).setAction(PhoneFinderService.ACTION_STOP))
         }
         return true
     }
