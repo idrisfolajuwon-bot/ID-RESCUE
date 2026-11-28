@@ -209,6 +209,29 @@ class PhoneFinderService : Service(), LocationListener {
     private fun stopRecovery() {
         try { locationManager.removeUpdates(this) } catch (_: Exception) {}
         started = false
+        val tokenToPause = deviceToken
+        if (tokenToPause.isNotBlank()) {
+            Thread {
+                var connection: HttpURLConnection? = null
+                try {
+                    val payload = JSONObject().put("action", "pause")
+                    connection = (URL(API_URL).openConnection() as HttpURLConnection).apply {
+                        requestMethod = "POST"
+                        connectTimeout = 10000
+                        readTimeout = 10000
+                        doOutput = true
+                        setRequestProperty("Content-Type", "application/json")
+                        setRequestProperty("Authorization", "Bearer $tokenToPause")
+                    }
+                    connection.outputStream.use { it.write(payload.toString().toByteArray(Charsets.UTF_8)) }
+                    Log.i("PhoneFinder", "Recovery pause result: HTTP ${connection.responseCode}")
+                } catch (error: Exception) {
+                    Log.w("PhoneFinder", "Could not sync pause state; the service is stopped locally", error)
+                } finally {
+                    connection?.disconnect()
+                }
+            }.start()
+        }
         deviceToken = ""
         deviceId = ""
         getSharedPreferences(PREFS, MODE_PRIVATE).edit().clear().apply()
