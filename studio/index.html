@@ -2807,7 +2807,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   </div>
   <div class="pf-mark" aria-hidden="true">⌖</div>
  </div>
- <div class="pf-truth-banner"><span class="pf-banner-dot"></span><div><b>Foundation workspace added · Recovery is not active yet</b><small>This screen is the first Studio milestone. It does not currently locate or track a phone. The secure Android reporting service and recovery backend still need to be built and tested.</small></div></div>
+ <div class="pf-truth-banner"><span class="pf-banner-dot"></span><div><b>Secure recovery backend deployed · Android companion pending</b><small>Device registration and owner-verified recovery endpoints are in place. A native Android companion still needs to be built, installed and tested before this workspace can receive real phone locations.</small></div></div>
  <div class="pf-overview-grid">
   <article class="pf-panel pf-device-panel">
    <div class="pf-panel-head"><div><span class="pf-step">01 / DEVICE SETUP</span><h2>Prepare your phone</h2></div><span class="pf-pill">NOT CONNECTED</span></div>
@@ -3157,6 +3157,19 @@ function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',appbuilder:'App Builder',phonefinder:'Phone Finder',about:'Settings'};
 $('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();if(page==='phonefinder')loadPhoneFinderDevices();window.scrollTo({top:0,behavior:'smooth'})}
 
+async function phoneFinderRequest(action,payload={}) {
+ if(!supabaseClient)throw new Error('Sign in to your IDRIS account first.');
+ const {data,error:sessionError}=await supabaseClient.auth.getSession();
+ const token=data?.session?.access_token;
+ if(sessionError||!token)throw new Error('Your IDRIS session has expired. Please sign in again.');
+ const response=await fetch(SUPABASE_URL+'/functions/v1/phone-finder',{
+  method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+  body:JSON.stringify({action,...payload}),cache:'no-store'
+ });
+ let result={};try{result=await response.json()}catch{}
+ if(!response.ok)throw new Error(result.error||'Phone Finder request failed (HTTP '+response.status+').');
+ return result;
+}
 async function loadPhoneFinderDevices(){
  const host=$('pfDeviceList');if(!host)return;
  host.replaceChildren();
@@ -3166,7 +3179,7 @@ async function loadPhoneFinderDevices(){
  const loading=document.createElement('p');loading.className='pf-result';loading.textContent='Loading your registered devices…';host.append(loading);
  try{
   const {data,error}=await supabaseClient.from('phone_finder_devices')
-   .select('id,nickname,brand,model,status,created_at')
+   .select('id,nickname,brand,model,status,recovery_enabled,last_seen_at,created_at')
    .order('created_at',{ascending:false}).limit(20);
   if(error)throw error;
   host.replaceChildren();
@@ -3176,16 +3189,37 @@ async function loadPhoneFinderDevices(){
    const info=document.createElement('div');info.className='pf-device-item-info';
    const title=document.createElement('b');title.textContent=device.nickname;
    const detail=document.createElement('small');detail.textContent=device.brand+' · '+device.model;
-   const state=document.createElement('span');state.className='pf-device-state';state.textContent=device.status==='awaiting_companion'?'Registered · awaiting Android setup':device.status;
+   const state=document.createElement('span');state.className='pf-device-state';
+   state.textContent=device.status==='awaiting_companion'?'Registered · Android companion not paired':device.status==='active'?'Connected · location reporting enabled':device.status;
    info.append(title,detail,state);
+   const actions=document.createElement('div');actions.style.cssText='display:flex;gap:7px;flex-wrap:wrap;align-items:center';
+   if(device.status==='active'&&device.recovery_enabled){
+    const locate=document.createElement('button');locate.type='button';locate.className='pf-secondary-action';locate.textContent='Check last location';
+    locate.addEventListener('click',async()=>{
+     locate.disabled=true;locate.textContent='CHECKING…';
+     try{
+      const result=await phoneFinderRequest('location',{device_id:device.id});
+      let report;
+      if(result.location){
+       const point=result.location;
+       report='Last report: '+new Date(point.reported_at).toLocaleString()+' · '+Number(point.latitude).toFixed(5)+', '+Number(point.longitude).toFixed(5)+(point.accuracy_m==null?'':' · accuracy ±'+Math.round(point.accuracy_m)+' m');
+      }else report='No location report has arrived from this phone yet.';
+      let note=card.querySelector('.pf-location-note');
+      if(!note){note=document.createElement('small');note.className='pf-location-note';note.style.cssText='display:block;margin-top:8px;color:#586780;line-height:1.5';card.append(note)}
+      note.textContent=report;
+     }catch(ex){$('pfRegisterStatus').textContent=ex.message||'Could not retrieve the last location.'}
+     finally{locate.disabled=false;locate.textContent='Check last location'}
+    });
+    actions.append(locate);
+   }
    const remove=document.createElement('button');remove.type='button';remove.className='pf-remove-device';remove.textContent='Remove';
    remove.addEventListener('click',async()=>{
-    if(!confirm('Remove '+device.nickname+' from your IDRIS account?'))return;
+    if(!confirm('Remove '+device.nickname+' from your IDRIS account? This also revokes its recovery credential and deletes its saved location.'))return;
     remove.disabled=true;
-    try{const {error:removeError}=await supabaseClient.from('phone_finder_devices').delete().eq('id',device.id);if(removeError)throw removeError;await loadPhoneFinderDevices();$('pfRegisterStatus').textContent='Device removed from your account.'}
+    try{const {error:removeError}=await supabaseClient.from('phone_finder_devices').delete().eq('id',device.id);if(removeError)throw removeError;await loadPhoneFinderDevices();$('pfRegisterStatus').textContent='Device removed; its recovery credential and saved location were deleted.'}
     catch(ex){remove.disabled=false;$('pfRegisterStatus').textContent=ex.message||'Could not remove this device.'}
    });
-   card.append(info,remove);host.append(card);
+   actions.append(remove);card.append(info,actions);host.append(card);
   });
  }catch(ex){
   host.replaceChildren();const p=document.createElement('p');p.className='pf-result';p.textContent='Could not load your devices: '+(ex.message||'Please try again.');host.append(p);
