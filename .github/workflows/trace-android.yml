@@ -1,4 +1,4 @@
-name: Build IDRIS AI STUDIO APK
+name: Build IDRIS Phone Finder Android APK
 on:
   push:
     paths:
@@ -22,26 +22,27 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Build IDRIS AI STUDIO APK
+      - name: Build side-by-side Phone Finder APK
         working-directory: android
         run: gradle assembleDebug
-      - name: Upload installable APK
+      - name: Upload Phone Finder APK
         uses: actions/upload-artifact@v4
         with:
-          name: IDRIS-AI-STUDIO-APK
+          name: IDRIS-PHONE-FINDER-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
-      - name: Publish APK download
+      - name: Publish Phone Finder APK download
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.1.0
           name: IDRIS AI STUDIO Android
           body: |
-            Official Android APK for IDRIS AI STUDIO.
-            Download IDRIS-AI-STUDIO.apk and install it on your Android device.
-            Online AI features require an internet connection.
+            IDRIS Phone Finder companion build.
+            This installs alongside the existing IDRIS AI STUDIO app.
+            Open the app, sign into your IDRIS account, and enable recovery only on your own phone after reviewing Android permissions.
+            Location sharing is visible and can be stopped from the notification.
           files: android/app/build/outputs/apk/debug/app-debug.apk
-          asset_name: IDRIS-AI-STUDIO.apk
+          asset_name: IDRIS-PHONE-FINDER.apk
           overwrite_files: true
           make_latest: true
