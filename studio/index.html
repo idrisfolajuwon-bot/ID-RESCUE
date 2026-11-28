@@ -1649,7 +1649,7 @@ body{background:#f7f8f6}
 .pf-device-facts div{border:1px solid #e9edf4;border-radius:12px;padding:11px;background:#fbfcfe}
 .pf-device-facts div:last-child{grid-column:1/-1}
 .pf-device-facts span,.pf-device-facts b{display:block}.pf-device-facts span{font-size:8px;font-weight:850;letter-spacing:1px;color:#8994a7}.pf-device-facts b{font-size:10px;color:#38445b;margin-top:4px}
-.pf-disabled-action{width:100%;border:1px solid #e1e5ed;background:#f5f6f9;color:#9098a7;border-radius:12px;padding:12px;font-size:10px;font-weight:800;cursor:not-allowed}
+.pf-disabled-action{display:block;width:100%;box-sizing:border-box;text-align:center;text-decoration:none;border:1px solid #e1e5ed;background:#f5f6f9;color:#9098a7;border-radius:12px;padding:12px;font-size:10px;font-weight:800;cursor:not-allowed}.pf-disabled-action.is-ready{border-color:#cce8d8;background:#f0fbf4;color:#24734c;cursor:pointer}
 .pf-lock{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:#f2f3f8;color:#8e97a8}
 .pf-map-placeholder{height:176px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid #dfe7f1;border-radius:15px;background:linear-gradient(140deg,#eef4fb,#f8f9fc);padding:16px}
 .pf-map-grid{position:absolute;inset:0;opacity:.45;background-image:linear-gradient(#d4deeb 1px,transparent 1px),linear-gradient(90deg,#d4deeb 1px,transparent 1px);background-size:30px 30px;transform:rotate(-8deg) scale(1.15)}
@@ -2808,7 +2808,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   </div>
   <div class="pf-mark" aria-hidden="true">⌖</div>
  </div>
- <div class="pf-truth-banner"><span class="pf-banner-dot"></span><div><b>Secure recovery backend deployed · Android companion pending</b><small>Device registration and owner-verified recovery endpoints are in place. A native Android companion still needs to be built, installed and tested before this workspace can receive real phone locations.</small></div></div>
+ <div class="pf-truth-banner"><span class="pf-banner-dot"></span><div><b>Secure recovery backend deployed · Android companion available</b><small>The Android companion can send owner-approved location reports while its visible recovery service is active. This page shows the latest report received; it is not continuous live tracking.</small></div></div>
  <div class="pf-overview-grid">
   <article class="pf-panel pf-device-panel">
    <div class="pf-panel-head"><div><span class="pf-step">01 / DEVICE SETUP</span><h2>Prepare your phone</h2></div><span class="pf-pill">NOT CONNECTED</span></div>
@@ -2831,11 +2831,11 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   </article>
   <article class="pf-panel pf-recovery-panel">
    <div class="pf-panel-head"><div><span class="pf-step">02 / RECOVERY</span><h2>Find a registered phone</h2></div><span class="pf-lock">⌑</span></div>
-   <div class="pf-map-placeholder">
+   <div class="pf-map-placeholder" id="pfMapPlaceholder">
     <div class="pf-map-grid"></div><div class="pf-map-pin">⌖</div><b>Location will appear here</b><small>No live or last-known location is available until a device is paired and has reported one.</small>
    </div>
-   <div class="pf-recovery-status"><span class="pf-status-dot"></span><div><b>Waiting for a registered device</b><small>Never display a guessed or demo location as a real location.</small></div></div>
-   <button class="pf-disabled-action" type="button" disabled>Locate device · Not available yet</button>
+   <div class="pf-recovery-status" id="pfRecoveryStatus"><span class="pf-status-dot"></span><div><b>Waiting for a registered device</b><small>Never display a guessed or demo location as a real location.</small></div></div>
+   <a class="pf-disabled-action" id="pfOpenMap" href="#" aria-disabled="true" tabindex="-1">Open in Google Maps · no location yet</a>
   </article>
  </div>
  <div class="pf-lower-grid">
@@ -2844,7 +2844,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
    <p class="pf-body-copy">This quick check only confirms whether this browser is running in a secure context and exposes the location permission API. It does not read or send your location.</p>
    <div class="pf-check-row"><div><b>Secure connection</b><small id="pfSecureState">Not checked</small></div><span id="pfSecureMark" class="pf-check-mark">—</span></div>
    <div class="pf-check-row"><div><b>Browser location support</b><small id="pfGeoState">Not checked</small></div><span id="pfGeoMark" class="pf-check-mark">—</span></div>
-   <div class="pf-check-row"><div><b>Native background recovery</b><small>Requires the Android companion; a browser check cannot verify this.</small></div><span class="pf-check-mark pf-pending">PENDING</span></div>
+   <div class="pf-check-row"><div><b>Native background recovery</b><small>The Android companion handles this separately; this browser check cannot verify its service.</small></div><span class="pf-check-mark">COMPANION</span></div>
    <button class="pf-secondary-action" type="button" id="pfBrowserCheck">Check browser support</button>
    <p class="pf-result" id="pfCheckResult" role="status" aria-live="polite">No location permission has been requested.</p>
   </article>
@@ -2858,7 +2858,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
    </ul>
   </article>
  </div>
- <div class="pf-footer-note">FIRST MILESTONE · STUDIO WORKSPACE ONLY · NO PHONE HAS BEEN LOCATED</div>
+ <div class="pf-footer-note">OWNER-ONLY RECOVERY · LAST REPORTED LOCATION · REPORT TIME AND ACCURACY SHOWN</div>
 </section>
 
 <section class="page" id="appbuilder">
@@ -3179,6 +3179,27 @@ function requestPhoneFinderPermissions(){
   setTimeout(()=>{if(window.IDRISPhoneFinderPermissionResult){window.IDRISPhoneFinderPermissionResult=null;resolve(false)}},120000);
  });
 }
+function renderPhoneFinderLocation(point,deviceName){
+ const latitude=Number(point.latitude),longitude=Number(point.longitude);
+ if(!Number.isFinite(latitude)||!Number.isFinite(longitude)||latitude < -90||latitude > 90||longitude < -180||longitude > 180)throw new Error('The saved location response did not contain valid coordinates.');
+ const reported=point.reported_at?new Date(point.reported_at):null;
+ const when=reported&&!Number.isNaN(reported.getTime())?reported.toLocaleString():'Report time unavailable';
+ const accuracy=point.accuracy_m==null?'':' · accuracy ±'+Math.round(Number(point.accuracy_m))+' m';
+ const map=$('pfMapPlaceholder'),status=$('pfRecoveryStatus'),open=$('pfOpenMap');
+ if(!map||!status||!open)return;
+ map.replaceChildren();
+ const grid=document.createElement('div');grid.className='pf-map-grid';
+ const pin=document.createElement('div');pin.className='pf-map-pin';pin.textContent='⌖';
+ const heading=document.createElement('b');heading.textContent='Last reported location';
+ const detail=document.createElement('small');detail.textContent=(deviceName||'Registered phone')+' · '+when+' · '+latitude.toFixed(5)+', '+longitude.toFixed(5)+accuracy;
+ map.append(grid,pin,heading,detail);
+ const statusTitle=status.querySelector('b'),statusDetail=status.querySelector('small'),dot=status.querySelector('.pf-status-dot');
+ if(statusTitle)statusTitle.textContent='Location report retrieved';
+ if(statusDetail)statusDetail.textContent='This is the last location sent by the phone, not a live moving marker.';
+ if(dot)dot.style.background='#299b68';
+ open.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(latitude+','+longitude);
+ open.target='_blank';open.rel='noopener noreferrer';open.removeAttribute('tabindex');open.setAttribute('aria-disabled','false');open.classList.add('is-ready');open.textContent='Open last reported location in Google Maps';
+}
 async function loadPhoneFinderDevices(){
  const host=$('pfDeviceList');if(!host)return;
  host.replaceChildren();
@@ -3217,7 +3238,13 @@ async function loadPhoneFinderDevices(){
        if(result.location){
         const point=result.location;
         report='Last fresh report: '+new Date(point.reported_at).toLocaleString()+' · '+Number(point.latitude).toFixed(5)+', '+Number(point.longitude).toFixed(5)+(point.accuracy_m==null?'':' · accuracy ±'+Math.round(point.accuracy_m)+' m');
-       }else report='No location report has arrived from this phone yet.';
+        renderPhoneFinderLocation(point,device.nickname);
+       }else{
+        report='No location report has arrived from this phone yet.';
+        const status=$('pfRecoveryStatus'),title=status?.querySelector('b'),detail=status?.querySelector('small');
+        if(title)title.textContent='No location report available';
+        if(detail)detail.textContent='The server has not returned a saved report for this device.';
+       }
        let note=card.querySelector('.pf-location-note');
        if(!note){note=document.createElement('small');note.className='pf-location-note';note.style.cssText='display:block;margin-top:8px;color:#586780;line-height:1.5';card.append(note)}
        note.textContent=report;
