@@ -32,6 +32,8 @@ jobs:
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+      - name: Prepare clearly named Phone Finder download
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/debug/IDRIS-PHONE-FINDER.apk
       - name: Publish Phone Finder APK download
         uses: softprops/action-gh-release@v2
         with:
@@ -42,7 +44,5 @@ jobs:
             This installs alongside the existing IDRIS AI STUDIO app.
             Open the app, sign into your IDRIS account, and enable recovery only on your own phone after reviewing Android permissions.
             Location sharing is visible and can be stopped from the notification.
-          files: android/app/build/outputs/apk/debug/app-debug.apk
-          asset_name: IDRIS-PHONE-FINDER.apk
-          overwrite_files: true
+          files: android/app/build/outputs/apk/debug/IDRIS-PHONE-FINDER.apk
           make_latest: true
