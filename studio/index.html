@@ -1606,6 +1606,52 @@ body{background:#f7f8f6}
  .idris-bottom-nav button span{font-size:19px;line-height:1.2}
  .idris-bottom-nav button.active{color:#49664f}
 }
+
+/* IDRIS PHONE FINDER — built-in Studio workspace, first milestone */
+.pf-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:35px 0 22px}
+.pf-kicker{font-size:10px;letter-spacing:1.8px;font-weight:850;color:#6657d9}
+.pf-heading h1{font-size:clamp(36px,5vw,55px);letter-spacing:-2px;line-height:1.05;margin:10px 0;color:#222c41}
+.pf-heading h1 em{font-style:normal;color:#6657d9}
+.pf-heading p{max-width:650px;color:#77839a;margin:0;line-height:1.7}
+.pf-mark{width:76px;height:76px;flex:0 0 76px;border-radius:24px;display:grid;place-items:center;background:linear-gradient(145deg,#efedff,#eaf3ff);color:#6557d9;font-size:40px;border:1px solid #dfddf8}
+.pf-truth-banner{display:flex;gap:12px;align-items:flex-start;padding:15px 17px;border:1px solid #f0dfb9;background:#fff9eb;color:#775b20;border-radius:16px;margin:0 0 16px}
+.pf-banner-dot{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#d9a33c;margin-top:5px;box-shadow:0 0 0 4px #f7e9c8}
+.pf-truth-banner b,.pf-truth-banner small{display:block}.pf-truth-banner b{font-size:12px}.pf-truth-banner small{font-size:11px;line-height:1.55;margin-top:4px;color:#876b32}
+.pf-overview-grid,.pf-lower-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pf-panel{background:#fff;border:1px solid #e6eaf2;border-radius:18px;padding:19px;box-shadow:0 8px 26px rgba(29,43,75,.045);min-width:0;margin-bottom:14px}
+.pf-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.pf-step{font-size:9px;font-weight:850;letter-spacing:1.5px;color:#8175d6}
+.pf-panel h2{font-size:17px;color:#26324a;margin:5px 0 0;letter-spacing:-.3px}
+.pf-pill{font-size:9px;letter-spacing:.8px;font-weight:850;border:1px solid #e8e4d7;background:#fbf8ef;color:#92743b;border-radius:30px;padding:6px 9px;white-space:nowrap}
+.pf-device-empty{min-height:150px;border:1px dashed #d8deea;background:#fafbfe;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px}
+.pf-phone-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#efedff;color:#6657d9;font-size:25px;margin-bottom:8px}
+.pf-device-empty b{font-size:13px;color:#303b52}.pf-device-empty small{max-width:300px;color:#7c879a;font-size:10px;line-height:1.6;margin-top:5px}
+.pf-device-facts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:13px 0}
+.pf-device-facts div{border:1px solid #e9edf4;border-radius:12px;padding:11px;background:#fbfcfe}
+.pf-device-facts div:last-child{grid-column:1/-1}
+.pf-device-facts span,.pf-device-facts b{display:block}.pf-device-facts span{font-size:8px;font-weight:850;letter-spacing:1px;color:#8994a7}.pf-device-facts b{font-size:10px;color:#38445b;margin-top:4px}
+.pf-disabled-action{width:100%;border:1px solid #e1e5ed;background:#f5f6f9;color:#9098a7;border-radius:12px;padding:12px;font-size:10px;font-weight:800;cursor:not-allowed}
+.pf-lock{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:#f2f3f8;color:#8e97a8}
+.pf-map-placeholder{height:176px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid #dfe7f1;border-radius:15px;background:linear-gradient(140deg,#eef4fb,#f8f9fc);padding:16px}
+.pf-map-grid{position:absolute;inset:0;opacity:.45;background-image:linear-gradient(#d4deeb 1px,transparent 1px),linear-gradient(90deg,#d4deeb 1px,transparent 1px);background-size:30px 30px;transform:rotate(-8deg) scale(1.15)}
+.pf-map-pin{position:relative;width:38px;height:38px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);display:grid;place-items:center;background:#e9e6ff;border:1px solid #d5d0fb;color:#6557d9;font-size:19px;margin-bottom:12px}
+.pf-map-placeholder b,.pf-map-placeholder small{position:relative}.pf-map-placeholder b{font-size:12px;color:#3b4860}.pf-map-placeholder small{font-size:10px;line-height:1.55;color:#78859a;max-width:285px;margin-top:5px}
+.pf-recovery-status{display:flex;gap:10px;align-items:flex-start;padding:12px 2px 13px}
+.pf-status-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#d9a33c;margin-top:5px}
+.pf-recovery-status b,.pf-recovery-status small{display:block}.pf-recovery-status b{font-size:11px;color:#3b465d}.pf-recovery-status small{font-size:10px;color:#818da1;line-height:1.5;margin-top:3px}
+.pf-body-copy{font-size:11px;line-height:1.65;color:#738097;margin:-4px 0 14px}
+.pf-check-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid #edf0f5}
+.pf-check-row div{display:grid;gap:3px}.pf-check-row b{font-size:11px;color:#344058}.pf-check-row small{font-size:10px;line-height:1.45;color:#8390a3}
+.pf-check-mark{font-size:9px;font-weight:900;color:#8b95a6;white-space:nowrap}.pf-check-mark.pf-pending{color:#967b42}
+.pf-secondary-action{margin-top:12px;border:1px solid #dcd8fb;background:#f3f1ff;color:#5a4fc7;border-radius:11px;padding:11px 13px;font-size:10px;font-weight:850}
+.pf-secondary-action:hover{background:#ebe8ff}.pf-result{font-size:10px;line-height:1.5;color:#718097;min-height:16px;margin:10px 0 0}
+.pf-privacy-list{list-style:none;padding:0;margin:0;display:grid;gap:13px}
+.pf-privacy-list li{display:flex;gap:10px;align-items:flex-start}.pf-privacy-list li>span{width:21px;height:21px;flex:0 0 21px;display:grid;place-items:center;border-radius:50%;background:#eaf8f0;color:#258552;font-weight:900;font-size:12px}
+.pf-privacy-list b,.pf-privacy-list small{display:block}.pf-privacy-list b{font-size:11px;color:#39455b}.pf-privacy-list small{font-size:10px;line-height:1.55;color:#7c889c;margin-top:3px}
+.pf-footer-note{text-align:center;padding:9px 0 24px;color:#8994a7;font-size:9px;letter-spacing:1.2px;font-weight:850}
+.pf-explore-card .explore-icon{background:#eef0ff;color:#6657d9}
+@media(max-width:760px){.pf-overview-grid,.pf-lower-grid{grid-template-columns:1fr}.pf-heading{padding:27px 0 19px}.pf-heading h1{letter-spacing:-1.5px}.pf-mark{width:58px;height:58px;flex-basis:58px;border-radius:19px;font-size:31px}}
+
 </style>
 
 <!-- Google Analytics: IDRIS AI STUDIO -->
@@ -2453,6 +2499,10 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
     <button data-page="research"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2M8 10.8h5.5M10.8 8v5.5"/></svg></span><span>Research Desk</span></button>
    </div>
    <div class="sidebar-nav-section">
+    <div class="nav-group-label">Protect</div>
+    <button data-page="phonefinder"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="2.4"/><path d="M9.5 6h5M10 18h4"/><path d="m3 8 2-2m-2 8 2 2m16-8-2-2m2 8-2 2"/></svg></span><span>Phone Finder</span></button>
+   </div>
+   <div class="sidebar-nav-section">
     <div class="nav-group-label">Manage</div>
     <button data-page="plans"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span><span>Plans &amp; Usage</span></button>
     <button data-page="about"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.2 1-1.5 2.6-1.5-.6a8 8 0 0 1-1.7 1l-.3 1.6h-3l-.3-1.6a8 8 0 0 1-1.7-1l-1.5.6-1.5-2.6 1.2-1a7 7 0 0 1 0-2l-1.2-1 1.5-2.6 1.5.6a8 8 0 0 1 1.7-1l.3-1.6h3l.3 1.6a8 8 0 0 1 1.7 1l1.5-.6 1.5 2.6-1.2 1a7 7 0 0 1 0 2Z"/></svg></span><span>Settings</span></button>
@@ -2572,6 +2622,7 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
    <button class="explore-card" data-go="aieyes"><span class="explore-icon">◎</span><span><b>AI Eyes</b><small>Upload an image and ask what it shows.</small></span><i>→</i></button>
    <button class="explore-card" data-go="videolab"><span class="explore-icon">▷</span><span><b>Video Lab</b><small>Plan a video and organise its scenes.</small></span><i>→</i></button>
    <button class="explore-card" data-go="prompts"><span class="explore-icon">⌘</span><span><b>Prompt Lab</b><small>Turn rough ideas into clear prompts.</small></span><i>→</i></button>
+   <button class="explore-card pf-explore-card" data-go="phonefinder"><span class="explore-icon">⌖</span><span><b>Phone Finder</b><small>Set up recovery for your own registered device.</small></span><i>→</i></button>
   </div>
  </section>
 
@@ -2728,6 +2779,59 @@ input:focus,textarea:focus,select:focus{border-color:#bd8668!important;outline:0
   <div class="panel"><h2>HOW THE TOOLS WORK</h2><div class="callout info">AI chat and supported image-generation requests use the secure IDRIS AI backend. Web Explorer opens an external Google News search; you can paste article text into the studio for AI analysis.</div><p class="muted small">GitHub Pages can host the public front end, but it cannot run server-side code. A separate backend is needed for private API credentials, rate limits and provider calls. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener" style="color:var(--mint)">GitHub Pages documentation ↗</a></p><h2 style="margin-top:22px">PRIVACY NOTES</h2><p class="muted small">Saved items remain in this browser's local storage. Clearing browser data can remove them, so use the vault backup. Do not save passwords, payment details or other sensitive information here.</p><h2 style="margin-top:22px">CONTACT &amp; SUPPORT</h2><p class="muted small">Need help, found a bug, or have a suggestion? Email the I D LABS support team at <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">support.idrisailabs@gmail.com</a>. Your email app will open with a support message ready to write.</p><h2 style="margin-top:22px">BUILT BY I D LABS</h2><p class="muted small">IDRIS AI STUDIO · Frontier 2.0 · AI workspace by I D LABS.</p></div></div>
  </section>
  <footer class="footer">IDRIS AI STUDIO · BY I D LABS · FRONTIER 2.0 · MADE TO CREATE · <a href="mailto:support.idrisailabs@gmail.com?subject=IDRIS%20AI%20STUDIO%20Support" style="color:var(--mint)">CONTACT SUPPORT</a></footer>
+
+<section class="page" id="phonefinder">
+ <div class="pf-heading">
+  <div>
+   <span class="pf-kicker">IDRIS AI STUDIO / DEVICE PROTECTION</span>
+   <h1>Phone <em>Finder.</em></h1>
+   <p>Prepare your own phone for recovery, then access its last reported location from another device or the web.</p>
+  </div>
+  <div class="pf-mark" aria-hidden="true">⌖</div>
+ </div>
+ <div class="pf-truth-banner"><span class="pf-banner-dot"></span><div><b>Foundation workspace added · Recovery is not active yet</b><small>This screen is the first Studio milestone. It does not currently locate or track a phone. The secure Android reporting service and recovery backend still need to be built and tested.</small></div></div>
+ <div class="pf-overview-grid">
+  <article class="pf-panel pf-device-panel">
+   <div class="pf-panel-head"><div><span class="pf-step">01 / DEVICE SETUP</span><h2>Prepare your phone</h2></div><span class="pf-pill">NOT CONNECTED</span></div>
+   <div class="pf-device-empty"><span class="pf-phone-icon">▯</span><b>No recovery device registered</b><small>When the Android companion is ready, you will pair your own phone here using your signed-in Studio account.</small></div>
+   <div class="pf-device-facts">
+    <div><span>OWNER ACCOUNT</span><b>Use your signed-in IDRIS account</b></div>
+    <div><span>DEVICE DETAILS</span><b>Nickname, brand and model</b></div>
+    <div><span>LOCATION ACCESS</span><b>Explicit Android permission required</b></div>
+   </div>
+   <button class="pf-disabled-action" type="button" disabled>Device registration unlocks after Android setup</button>
+  </article>
+  <article class="pf-panel pf-recovery-panel">
+   <div class="pf-panel-head"><div><span class="pf-step">02 / RECOVERY</span><h2>Find a registered phone</h2></div><span class="pf-lock">⌑</span></div>
+   <div class="pf-map-placeholder">
+    <div class="pf-map-grid"></div><div class="pf-map-pin">⌖</div><b>Location will appear here</b><small>No live or last-known location is available until a device is paired and has reported one.</small>
+   </div>
+   <div class="pf-recovery-status"><span class="pf-status-dot"></span><div><b>Waiting for a registered device</b><small>Never display a guessed or demo location as a real location.</small></div></div>
+   <button class="pf-disabled-action" type="button" disabled>Locate device · Not available yet</button>
+  </article>
+ </div>
+ <div class="pf-lower-grid">
+  <article class="pf-panel">
+   <div class="pf-panel-head"><div><span class="pf-step">03 / READINESS CHECK</span><h2>Check this browser</h2></div></div>
+   <p class="pf-body-copy">This quick check only confirms whether this browser is running in a secure context and exposes the location permission API. It does not read or send your location.</p>
+   <div class="pf-check-row"><div><b>Secure connection</b><small id="pfSecureState">Not checked</small></div><span id="pfSecureMark" class="pf-check-mark">—</span></div>
+   <div class="pf-check-row"><div><b>Browser location support</b><small id="pfGeoState">Not checked</small></div><span id="pfGeoMark" class="pf-check-mark">—</span></div>
+   <div class="pf-check-row"><div><b>Native background recovery</b><small>Requires the Android companion; a browser check cannot verify this.</small></div><span class="pf-check-mark pf-pending">PENDING</span></div>
+   <button class="pf-secondary-action" type="button" id="pfBrowserCheck">Check browser support</button>
+   <p class="pf-result" id="pfCheckResult" role="status" aria-live="polite">No location permission has been requested.</p>
+  </article>
+  <article class="pf-panel">
+   <div class="pf-panel-head"><div><span class="pf-step">04 / PRIVACY FIRST</span><h2>How recovery will be protected</h2></div></div>
+   <ul class="pf-privacy-list">
+    <li><span>✓</span><div><b>Owner-only access</b><small>Only the account that paired the device can request its location.</small></div></li>
+    <li><span>✓</span><div><b>Visible permission</b><small>Location access must be clearly explained and granted by the device owner.</small></div></li>
+    <li><span>✓</span><div><b>No secret tracking</b><small>No IMEI-only tracking, hidden monitoring or location lookup for someone else's phone.</small></div></li>
+    <li><span>✓</span><div><b>Honest location status</b><small>Show the report time and say when a phone is offline or its location is stale.</small></div></li>
+   </ul>
+  </article>
+ </div>
+ <div class="pf-footer-note">FIRST MILESTONE · STUDIO WORKSPACE ONLY · NO PHONE HAS BEEN LOCATED</div>
+</section>
 
 <section class="page" id="appbuilder">
  <div class="ab-heading">
@@ -3023,7 +3127,19 @@ function putItems(a){const key=accountStorageKey(KEY);if(!key){toast('Sign in to
 function save(type,title,content){const a=getItems();a.unshift({id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),type,title:String(title).slice(0,100),content:String(content).slice(0,12000),created:new Date().toISOString()});if(putItems(a)){toast('Saved to your Creation Vault.');return true}return false}
 window.idrisSaveToVault=(type,title,content)=>save(type,title,content);
 function refreshCounts(){$('statSaved').textContent=getItems().length}
-function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',appbuilder:'App Builder',about:'Settings'};$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();window.scrollTo({top:0,behavior:'smooth'})}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',appbuilder:'App Builder',phonefinder:'Phone Finder',about:'Settings'};
+$('pfBrowserCheck')?.addEventListener('click',()=>{
+ const secure=window.isSecureContext===true;
+ const geo=!!(navigator.geolocation&&typeof navigator.geolocation.getCurrentPosition==='function');
+ $('pfSecureState').textContent=secure?'Secure context detected':'Secure context unavailable';
+ $('pfGeoState').textContent=geo?'Browser location API is available':'Browser location API is unavailable';
+ $('pfSecureMark').textContent=secure?'READY':'CHECK';
+ $('pfGeoMark').textContent=geo?'READY':'UNAVAILABLE';
+ $('pfSecureMark').className='pf-check-mark '+(secure?'pf-ready':'pf-pending');
+ $('pfGeoMark').className='pf-check-mark '+(geo?'pf-ready':'pf-pending');
+ $('pfCheckResult').textContent=secure&&geo?'Browser support check passed. This did not request or read your location; background phone recovery still requires the native Android companion.': 'Some browser support is missing. This check does not test GPS or background tracking.';
+});
+$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('[data-new-chat]').forEach(b=>b.addEventListener('click',()=>{newConversation();closeMenu()}));
 function syncHistorySearch(source){
  const other=source.id==='sidebarHistorySearch'?$ ('historySearch'):$('sidebarHistorySearch');
