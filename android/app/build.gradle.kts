@@ -11,8 +11,9 @@ android {
         applicationId = "com.idris.aistudio"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.4"
+        manifestPlaceholders["appLabel"] = "IDRIS AI STUDIO"
     }
 
     signingConfigs {
@@ -25,6 +26,12 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            // Install beside any existing Studio build without replacing it.
+            applicationIdSuffix = ".phonefinder"
+            versionNameSuffix = "-finder"
+            manifestPlaceholders["appLabel"] = "IDRIS Phone Finder"
+        }
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
