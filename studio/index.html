@@ -3128,6 +3128,7 @@ function save(type,title,content){const a=getItems();a.unshift({id:(crypto.rando
 window.idrisSaveToVault=(type,title,content)=>save(type,title,content);
 function refreshCounts(){$('statSaved').textContent=getItems().length}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const labels={chat:'IDRIS AI',home:'Home',explore:'Explore',prompts:'Prompt Studio',maker:'Image Maker',aieyes:'AI Eyes',research:'Research',vault:'Library',plans:'Plans',videolab:'Video Lab',appbuilder:'App Builder',phonefinder:'Phone Finder',about:'Settings'};
+$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();window.scrollTo({top:0,behavior:'smooth'})}
 $('pfBrowserCheck')?.addEventListener('click',()=>{
  const secure=window.isSecureContext===true;
  const geo=!!(navigator.geolocation&&typeof navigator.geolocation.getCurrentPosition==='function');
@@ -3139,7 +3140,6 @@ $('pfBrowserCheck')?.addEventListener('click',()=>{
  $('pfGeoMark').className='pf-check-mark '+(geo?'pf-ready':'pf-pending');
  $('pfCheckResult').textContent=secure&&geo?'Browser support check passed. This did not request or read your location; background phone recovery still requires the native Android companion.': 'Some browser support is missing. This check does not test GPS or background tracking.';
 });
-$('crumb').textContent=labels[page]||'IDRIS AI';if(page==='vault')renderVault();if(page==='appbuilder'&&window.idrisAppBuilderLoad)window.idrisAppBuilderLoad();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('[data-new-chat]').forEach(b=>b.addEventListener('click',()=>{newConversation();closeMenu()}));
 function syncHistorySearch(source){
  const other=source.id==='sidebarHistorySearch'?$ ('historySearch'):$('sidebarHistorySearch');
