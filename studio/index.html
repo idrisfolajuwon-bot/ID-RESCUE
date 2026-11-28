@@ -3246,7 +3246,11 @@ async function loadPhoneFinderDevices(){
    if(device.recovery_enabled&&device.status==='active'){
     const seen=device.last_seen_at?new Date(device.last_seen_at):null;
     const stale=!seen||Date.now()-seen.getTime()>15*60*1000;
-    state.textContent=stale?'No recent signal · last report '+(seen?seen.toLocaleString():'not received'):'Recovery active · last report '+seen.toLocaleTimeString();
+    if(stale){
+     state.textContent=seen?'Last report is stale · received '+seen.toLocaleString():'No location report received yet';
+    }else{
+     state.textContent='Recent signal · last report '+seen.toLocaleTimeString();
+    }
    }else state.textContent=device.status==='paused'?'Recovery paused · last location remains available':device.status==='revoked'?'Recovery revoked':device.recovery_enabled?'Recovery enabled · waiting for first location':'Registered · setup not started';
    info.append(title,detail,state);
    const actions=document.createElement('div');actions.className='pf-device-actions';
