@@ -24,4 +24,7 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+      # Allow the uploaded artifact to become visible to the Pages API.
+      - name: Wait for Pages artifact registration
+        run: sleep 10
       - uses: actions/deploy-pages@v4
