@@ -122,12 +122,7 @@ class PhoneFinderService : Service(), LocationListener {
             requested = true
         }
         if (!requested) throw IllegalStateException("Turn on Location and allow location access for IDRIS AI STUDIO.")
-        val last = try {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            else locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        } catch (_: Exception) { null }
-        last?.let { reportLocation(it) }
+        // Do not re-label cached locations as fresh. Wait for a new provider update.
     }
 
     override fun onLocationChanged(location: Location) {
@@ -210,8 +205,8 @@ class PhoneFinderService : Service(), LocationListener {
         try { locationManager.removeUpdates(this) } catch (_: Exception) {}
         started = false
         val tokenToPause = deviceToken
-        if (tokenToPause.isNotBlank()) {
-            Thread {
+        Thread {
+            if (tokenToPause.isNotBlank()) {
                 var connection: HttpURLConnection? = null
                 try {
                     val payload = JSONObject().put("action", "pause")
@@ -230,13 +225,15 @@ class PhoneFinderService : Service(), LocationListener {
                 } finally {
                     connection?.disconnect()
                 }
-            }.start()
-        }
-        deviceToken = ""
-        deviceId = ""
-        getSharedPreferences(PREFS, MODE_PRIVATE).edit().clear().apply()
-        stopForeground(STOP_FOREGROUND_REMOVE)
-        stopSelf()
+            }
+            android.os.Handler(Looper.getMainLooper()).post {
+                deviceToken = ""
+                deviceId = ""
+                getSharedPreferences(PREFS, MODE_PRIVATE).edit().clear().apply()
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                stopSelf()
+            }
+        }.start()
     }
 
     private fun saveCredentials(id: String, token: String) {
